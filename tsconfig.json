@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -20,9 +20,16 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "~/*": ["./*"],
+      "~global/*": ["./src/global/*"],
+      "~shared/*": ["./src/app/shared/*"],
+      "~contexts/*": ["./src/app/shared/contexts/*"],
+      "~hooks/*": ["./src/app/shared/hooks/*"],
+      "~features/*": ["./src/app/features/*"],
+      "~utils/*": ["./src/app/shared/utils/*"],
+      "~types/*": ["./src/app/shared/types/*"],
+    },
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "jest.config.ts"],
   "exclude": ["node_modules"]
 }
