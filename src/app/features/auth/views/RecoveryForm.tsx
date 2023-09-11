@@ -36,7 +36,9 @@ export function RecoveryForm({ handleForgetPassword }: RecoveryFormProps) {
           type="button"
           className={recoveryButtonTv()}
         >
-          <Button.label text="Entrar" size="sm" color="white" />
+          <Button.contentWrapper>
+            <Button.label text="Entrar" size="sm" color="white" />
+          </Button.contentWrapper>
         </Button.root>
 
         <Title title="IALOGUE" size="xl" color="primary" />
@@ -55,7 +57,9 @@ export function RecoveryForm({ handleForgetPassword }: RecoveryFormProps) {
         </Input.root>
 
         <Button.root disabled={isSubmitting} size="medium">
-          <Button.label text="Solicitar" color="white" size="lg" weigth="bold" />
+          <Button.contentWrapper>
+            <Button.label text="Solicitar" color="white" size="lg" weigth="bold" />
+          </Button.contentWrapper>
         </Button.root>
       </Form>
     </FormProvider>

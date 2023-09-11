@@ -61,11 +61,15 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
         </Input.root>
 
         <Button.root disabled={isSubmitting} size="medium">
-          <Button.label text="Entrar" color="white" size="lg" weigth="bold" />
+          <Button.contentWrapper>
+            <Button.label text="Entrar" color="white" size="lg" weigth="bold" />
+          </Button.contentWrapper>
         </Button.root>
 
         <Button.root onClick={handleForgetPassword} color="transparent" size="small" type="button">
-          <Button.label text="Esquceu sua senha?" size="sm" color="primary" />
+          <Button.contentWrapper>
+            <Button.label text="Esquceu sua senha?" size="sm" color="primary" />
+          </Button.contentWrapper>
         </Button.root>
       </Form>
     </FormProvider>

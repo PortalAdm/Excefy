@@ -21,3 +21,11 @@ export const buttonRootTv = tv({
     color: 'primary'
   }
 });
+
+export const buttonContentWrapperTv = tv({
+  base: 'relative w-fit m-auto flex gap-x-2 items-center'
+});
+
+export const buttonIconTv = tv({
+  base: 'relative w-5 h-5 text-white'
+});
