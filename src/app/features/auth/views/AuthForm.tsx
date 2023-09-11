@@ -1,3 +1,5 @@
+'use client';
+
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useState } from 'react';
@@ -27,7 +29,7 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
 
   const {
     handleSubmit,
-    formState: { isSubmitting }
+    formState: { isSubmitting, isValid }
   } = authFormSchema;
 
   const onSubmit = (data: TAuthSubmitSchema) => {
@@ -61,9 +63,11 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
         </Input.root>
 
         <Button.root disabled={isSubmitting} size="medium">
-          <Button.contentWrapper>
-            <Button.label text="Entrar" color="white" size="lg" weigth="bold" />
-          </Button.contentWrapper>
+          <Button.link href={isValid ? '/dashboard' : '#'}>
+            <Button.contentWrapper>
+              <Button.label text="Entrar" color="white" size="lg" weigth="bold" />
+            </Button.contentWrapper>
+          </Button.link>
         </Button.root>
 
         <Button.root onClick={handleForgetPassword} color="transparent" size="small" type="button">
