@@ -5,6 +5,7 @@
   <ol>
     <li><a href="#Tecnologias">Tecnologias</a></li>
     <li><a href="#Formulários">Formulários</a></li>
+    <li><a href="#Headless Components">Headless Components</a></li>
     <li><a href="#Ícones">Ícones</a></li>
     <li><a href="#Testes">Testes</a></li>
     <li><a href="#Arquitetura">Arquitetura</a></li>
@@ -30,9 +31,14 @@ Tecnologias no Escopo da aplicação
 * React Hooks Forms
 * Zod
 
+## Headless Components
+
+* radixUi
+
 ## Ícones
 
 * React Icons
+
 ## Testes
 
 * Jest
@@ -49,6 +55,7 @@ Tecnologias no Escopo da aplicação
 ## Padronização de código
 
 - **Geral**
+    - Componentes Headless do radix devem ser importados com Radix no nome p.ex.: import * as ComponentRadix from '...'
     - Stories devem ser finalizados com .ts
     - Componentes devem ser finalizados com .tsx
     - Estrutura de componentes devem seguir Composition Pattern sempre que possível

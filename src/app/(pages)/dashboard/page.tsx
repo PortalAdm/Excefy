@@ -1,7 +1,5 @@
-import { Title } from '~shared/components/Title';
+import { DashBoard } from '~features/dashboard';
 
-interface dashboardProps {}
-
-export default function dashboard({}: dashboardProps) {
-  return <Title title="Dashboard" />;
+export default function dashboard() {
+  return <DashBoard.ProcessList />;
 }
