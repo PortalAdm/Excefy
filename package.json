@@ -43,7 +43,12 @@
     "typescript": "5.1.6",
     "uuidv4": "^6.2.13",
     "zod": "^3.22.1",
-    "zustand": "^4.4.1"
+    "zustand": "^4.4.1",
+    "bpmn-font": "0.9.3",
+    "bpmn-js": "3.1.0",
+    "bpmn-js-properties-panel": "0.32.1",
+    "camunda-bpmn-moddle": "4.1.2",
+    "camunda-dmn-moddle": "1.0.0"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.22.5",

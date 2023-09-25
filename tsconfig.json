@@ -30,6 +30,6 @@
       "~types/*": ["./src/app/shared/types/*"],
     },
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "jest.config.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "jest.config.ts", "src/app/features/diagramView/index.jsx"],
   "exclude": ["node_modules"]
 }
