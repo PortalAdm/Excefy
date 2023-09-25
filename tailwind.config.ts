@@ -18,11 +18,12 @@ const config: Config = {
 
       primary: '#3B7190',
       background: '#F1F2F5',
+      placeholder: '#6B7280',
 
       success: '#1ECE79',
       attenttion: '#E0FF20',
       error: '#C1012F',
-      Outline: '#A1A3A6',
+      outline: '#A1A3A6',
 
       green: {
         50: '#e9faf2',

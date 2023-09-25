@@ -1,3 +1,5 @@
+'use client';
+
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useState } from 'react';
@@ -27,7 +29,7 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
 
   const {
     handleSubmit,
-    formState: { isSubmitting }
+    formState: { isSubmitting, isValid }
   } = authFormSchema;
 
   const onSubmit = (data: TAuthSubmitSchema) => {
@@ -56,16 +58,22 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
         <Input.root>
           <Input.label label="Senha" name="password" />
           <Input.field type={passwordType} name="password" placeholder="Digite sua senha..." />
-          <Input.icon icon={inputIcon} onClick={handleIconChange} />
+          <Input.icon icon={inputIcon} onClick={handleIconChange} input="right" />
           <Input.error field="password" />
         </Input.root>
 
         <Button.root disabled={isSubmitting} size="medium">
-          <Button.label text="Entrar" color="white" size="lg" weigth="bold" />
+          <Button.link href={isValid ? '/dashboard' : '#'}>
+            <Button.contentWrapper>
+              <Button.label text="Entrar" color="white" size="lg" weigth="bold" />
+            </Button.contentWrapper>
+          </Button.link>
         </Button.root>
 
         <Button.root onClick={handleForgetPassword} color="transparent" size="small" type="button">
-          <Button.label text="Esquceu sua senha?" size="sm" color="primary" />
+          <Button.contentWrapper>
+            <Button.label text="Esquceu sua senha?" size="sm" color="primary" />
+          </Button.contentWrapper>
         </Button.root>
       </Form>
     </FormProvider>

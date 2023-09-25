@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
-import { Text } from '..';
 import { ThemeContext } from '../../../contexts/ThemeProvider';
+import { Text } from '../../Text';
 
 describe('<Text />', () => {
   it('should render without errors', () => {

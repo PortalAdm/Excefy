@@ -14,6 +14,8 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.2.0",
+    "@radix-ui/react-switch": "^1.0.3",
+    "@radix-ui/react-tooltip": "^1.0.6",
     "@testing-library/react": "^14.0.0",
     "@types/connect": "^3.4.35",
     "@types/node": "20.5.0",
@@ -41,7 +43,12 @@
     "typescript": "5.1.6",
     "uuidv4": "^6.2.13",
     "zod": "^3.22.1",
-    "zustand": "^4.4.1"
+    "zustand": "^4.4.1",
+    "bpmn-font": "0.9.3",
+    "bpmn-js": "3.1.0",
+    "bpmn-js-properties-panel": "0.32.1",
+    "camunda-bpmn-moddle": "4.1.2",
+    "camunda-dmn-moddle": "1.0.0"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.22.5",
