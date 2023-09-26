@@ -28,6 +28,7 @@
       "~features/*": ["./src/app/features/*"],
       "~utils/*": ["./src/app/shared/utils/*"],
       "~types/*": ["./src/app/shared/types/*"],
+      "~animations/*": ["./src/app/shared/components/animations/*"],
     },
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "jest.config.ts", "src/app/features/diagramView/index.jsx"],
