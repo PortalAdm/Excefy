@@ -2,6 +2,7 @@ import '~global/styles/globals.css';
 import type { Metadata } from 'next';
 import { Providers } from './providers';
 import { MainContainer } from './shared/components/MainContainer';
+import { Menu } from './features/menu/views/Menu';
 
 export const metadata: Metadata = {
   title: 'Portal Administração',
@@ -13,7 +14,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="pt-BR">
       <body>
         <Providers>
-          <MainContainer>{children}</MainContainer>
+          <MainContainer>
+            <Menu />
+            {children}
+          </MainContainer>
         </Providers>
       </body>
     </html>

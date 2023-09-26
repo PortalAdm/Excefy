@@ -37,5 +37,5 @@ export function BpmnView() {
     }
   }, [diagram]);
 
-  return <div className="w-screen h-screen" id="js-canvas" ref={canvaRef} />;
+  return <div className="w-full h-screen" id="js-canvas" ref={canvaRef} />;
 }
