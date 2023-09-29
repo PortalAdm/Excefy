@@ -14,12 +14,12 @@ const mockedMenuItems: MenuItemsType[] = [
   {
     icon: PiGitBranchDuotone,
     name: 'Processos',
-    navigateTo: '/process'
+    navigateTo: '/dashboard'
   },
   {
     icon: LiaRobotSolid,
     name: 'Agentes',
-    navigateTo: '/process'
+    navigateTo: '/agents'
   },
   {
     icon: AiOutlineSchedule,
