@@ -3,18 +3,18 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 
 type TTheme = '' | 'dark' | 'light';
 
-interface IThemeContextProps {
+interface IthemeContextProps {
   theme?: TTheme;
   changeTheme?: () => void;
 }
 
-interface IAppThemeProviderProps {
+interface IappThemeProviderProps {
   children: ReactNode;
 }
 
-export const ThemeContext = createContext<IThemeContextProps>({});
+export const ThemeContext = createContext<IthemeContextProps>({});
 
-export function AppThemeProvider({ children }: IAppThemeProviderProps) {
+export function AppThemeProvider({ children }: IappThemeProviderProps) {
   const { setLocalStorage, getLocalStorage } = useLocalStorage();
   const [theme, setTheme] = useState<TTheme>('dark');
 

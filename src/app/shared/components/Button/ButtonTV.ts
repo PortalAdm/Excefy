@@ -1,10 +1,10 @@
 import { tv } from 'tailwind-variants';
 
 export const buttonRootTv = tv({
-  base: 'flex justify-center items-center rounded-xl',
+  base: 'flex justify-center items-center rounded-xl overflow-hidden relative',
   variants: {
     size: {
-      small: 'py-2 px-4 w-fit',
+      small: 'px-2 py-1 sm:py-2 sm:px-4 w-fit',
       medium: 'py-4 px-16 h-12 w-full max-w-sm sm:w-72 lg:w-96',
       huge: 'py-6 px-16 h-12 w-full'
     },
@@ -14,6 +14,10 @@ export const buttonRootTv = tv({
       disabled:pointer-events-none disabled:bg-Outline active:after:w-full active:after:h-full active:after:top-0 after:left-1/2 active:after:left-0
       active:after:bg-white/5`,
       transparent: 'bg-transparent'
+    },
+    variant: {
+      bordered:
+        'bg-transparent ring-1 ring-primary hover:bg-primary/25 disabled:pointer-events-none disabled:opacity-30'
     }
   },
   defaultVariants: {
