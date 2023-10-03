@@ -4,6 +4,7 @@
 import { ReactNode } from 'react';
 import { AppThemeProvider } from '~contexts/ThemeProvider';
 import { BpmnContextProvider } from '~contexts/BpmnContext';
+import { ModalProvider } from '~contexts/ModalContext';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -22,7 +23,7 @@ export function Providers({ children }: ProvidersProps) {
         props.children
       );
 
-  const AllProviders = composeProviders(AppThemeProvider, BpmnContextProvider);
+  const AllProviders = composeProviders(AppThemeProvider, BpmnContextProvider, ModalProvider);
 
   return <AllProviders>{children}</AllProviders>;
 }

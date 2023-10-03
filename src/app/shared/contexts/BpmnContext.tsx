@@ -2,10 +2,10 @@ import { Dispatch, ReactNode, SetStateAction, createContext, useState } from 're
 import { diagramXML } from '~features/diagramView/DiagramViewUtils';
 
 interface BpmnContext {
-  xml: string;
+  xml: string | File;
   isDisabled: boolean;
   saveNewXml: () => void;
-  setXml: Dispatch<SetStateAction<string>>;
+  setXml: Dispatch<SetStateAction<string | File>>;
 }
 
 interface BpmnContextProviderProps {
@@ -15,7 +15,7 @@ interface BpmnContextProviderProps {
 export const BpmnContext = createContext({} as BpmnContext);
 
 export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
-  const [xml, setXml] = useState(diagramXML);
+  const [xml, setXml] = useState<string | File>(diagramXML);
   const [isDisabled, setIsDisabled] = useState(true);
   const currentXml =
     'xml que vem da api para ser comparado com o xml atual do fluxograma do cliente';
