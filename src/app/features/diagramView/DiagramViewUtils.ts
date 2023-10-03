@@ -1,6 +1,6 @@
 import { CiExport, CiImport } from 'react-icons/ci';
 import { BiTrash } from 'react-icons/bi';
-import { ChangeEventHandler, Dispatch, FormEvent, SetStateAction } from 'react';
+import { Dispatch, FormEvent, SetStateAction } from 'react';
 
 export const diagramXML = `
 <?xml version="1.0" encoding="UTF-8"?>
@@ -42,20 +42,16 @@ export const diagramXML = `
 </bpmn2:definitions>
 `;
 
-const handleDownload = (e: FormEvent<HTMLInputElement>) => {
-  console.log(e);
-};
-
 const handleExportFile = (
   e: FormEvent<HTMLInputElement>,
-  setXml: Dispatch<SetStateAction<File>>
+  setXml: Dispatch<SetStateAction<string | File>>
 ) => {
   const target = e.target as HTMLInputElement & {
     files: FileList;
   };
 
   if (typeof target.files[0] !== 'undefined') {
-    return setXml(target.files[0]);
+    return setXml(target.files[0]); // isso deve ir para o backend para ser validado
   }
 };
 
@@ -67,11 +63,24 @@ export const buttons = [
   },
   {
     icon: CiImport,
-    text: 'Baixar',
-    onChange: handleDownload
+    text: 'Baixar'
   },
   {
     icon: BiTrash,
     text: 'Limpar'
+  }
+];
+
+export const labels = [
+  // checar se isso virá da api
+  {
+    label: 'BPMN 2.0 file',
+    id: 'C1',
+    value: 'bpmn'
+  },
+  {
+    label: 'SVG imagem',
+    id: 'C2',
+    value: 'svg'
   }
 ];
