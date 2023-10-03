@@ -1,3 +1,7 @@
+import { CiExport, CiImport } from 'react-icons/ci';
+import { BiTrash } from 'react-icons/bi';
+import { ChangeEventHandler, Dispatch, FormEvent, SetStateAction } from 'react';
+
 export const diagramXML = `
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/BPMN/20100524/DC" xmlns:di="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
@@ -37,3 +41,37 @@ export const diagramXML = `
   </bpmndi:BPMNDiagram>
 </bpmn2:definitions>
 `;
+
+const handleDownload = (e: FormEvent<HTMLInputElement>) => {
+  console.log(e);
+};
+
+const handleExportFile = (
+  e: FormEvent<HTMLInputElement>,
+  setXml: Dispatch<SetStateAction<File>>
+) => {
+  const target = e.target as HTMLInputElement & {
+    files: FileList;
+  };
+
+  if (typeof target.files[0] !== 'undefined') {
+    return setXml(target.files[0]);
+  }
+};
+
+export const buttons = [
+  {
+    icon: CiExport,
+    text: 'Importar',
+    onChange: handleExportFile
+  },
+  {
+    icon: CiImport,
+    text: 'Baixar',
+    onChange: handleDownload
+  },
+  {
+    icon: BiTrash,
+    text: 'Limpar'
+  }
+];

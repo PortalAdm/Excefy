@@ -1,9 +1,10 @@
-import { BpmnView } from '~features/diagramView';
+import { Bpmn } from '~features/diagramView';
 
 export default function newProcesspage() {
   return (
-    <div className="w-screen h-screen flex justify-center">
-      <BpmnView />
-    </div>
+    <Bpmn.root>
+      <Bpmn.header />
+      <Bpmn.view />
+    </Bpmn.root>
   );
 }
