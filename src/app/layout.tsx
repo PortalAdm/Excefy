@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Providers } from './providers';
 import { MainContainer } from './shared/components/MainContainer';
 import { Menu } from './features/menu/views/Menu';
+import { Toast } from './features/toast';
 
 export const metadata: Metadata = {
   title: 'Portal Administração',
@@ -15,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Providers>
           <MainContainer>
+            <Toast />
             <Menu />
             {children}
           </MainContainer>
