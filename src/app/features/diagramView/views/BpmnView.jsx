@@ -8,7 +8,7 @@ import 'bpmn-font/dist/css/bpmn-embedded.css';
 import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css';
 import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
 
-export function BpmnView() {
+export function BpmnView({ children }) {
   const { xml, setXml } = useBPMN(); // setXml deve guardar o estado do xml criado pelo cliente ao mexer no fluxograma
   const canvaRef = useRef(null);
 
@@ -37,5 +37,9 @@ export function BpmnView() {
     }
   }, [xml]);
 
-  return <div className="h-full border-t-[1px] border-primary" id="js-canvas" ref={canvaRef} />;
+  return (
+    <div className="relative h-full border-t-[1px] border-primary" id="js-canvas" ref={canvaRef}>
+      {children}
+    </div>
+  );
 }
