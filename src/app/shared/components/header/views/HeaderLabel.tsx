@@ -1,10 +1,12 @@
-import { ReactNode } from 'react';
+import { Text, TextProps } from '../../Text';
 import { HeaderLabelTv } from '../HeaderTV';
 
-interface HeaderLabelProps {
-  children: ReactNode;
-}
+interface HeaderLabelProps extends TextProps {}
 
-export function HeaderLabel({ children }: HeaderLabelProps) {
-  return <div className={HeaderLabelTv()}>{children}</div>;
+export function HeaderLabel({ text }: HeaderLabelProps) {
+  return (
+    <div className={HeaderLabelTv()}>
+      <Text text={text} size="md" color="primary" />
+    </div>
+  );
 }
