@@ -1,10 +1,7 @@
-import { ReactNode } from 'react';
-import { HeaderTitleTv } from '../HeaderTV';
+import { Title, TitleProps } from '../../Title';
 
-interface HeaderTitleProps {
-  children: ReactNode;
-}
+interface HeaderTitleProps extends TitleProps {}
 
-export function HeaderTitle({ children }: HeaderTitleProps) {
-  return <div className={HeaderTitleTv()}>{children}</div>;
+export function HeaderTitle({ title }: HeaderTitleProps) {
+  return <Title title={title} color="primary" size="lg" />;
 }
