@@ -3818,6 +3818,11 @@
     "@types/connect" "*"
     "@types/node" "*"
 
+"@types/bpmn-moddle@^5.1.7":
+  "integrity" "sha512-26EsfZBjUdvUAa9ukJAidtydjtiospd4E1wYoGw4MogIx+8i+YXhhdnlHqByI+EgeBi7HW8Gqs6c7BCpJxdSsQ=="
+  "resolved" "https://registry.npmjs.org/@types/bpmn-moddle/-/bpmn-moddle-5.1.7.tgz"
+  "version" "5.1.7"
+
 "@types/connect@*", "@types/connect@^3.4.35":
   "integrity" "sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ=="
   "resolved" "https://registry.npmjs.org/@types/connect/-/connect-3.4.35.tgz"
@@ -5175,7 +5180,7 @@
     "scroll-tabs" "^1.0.1"
     "selection-update" "^0.1.2"
 
-"bpmn-js@^3.x || ^4.x", "bpmn-js@3.1.0":
+"bpmn-js@^3.1.0", "bpmn-js@^3.x || ^4.x":
   "integrity" "sha512-dUqr1364LjjONNQ1StrjT9vchQYgvcCb+e9dVY+98BsKkQnIJ6oadna2UUJ1hCEDndqhoHOF4oTk8LfyK68tNQ=="
   "resolved" "https://registry.npmjs.org/bpmn-js/-/bpmn-js-3.1.0.tgz"
   "version" "3.1.0"

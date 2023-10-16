@@ -33,6 +33,14 @@ export function BpmnView({ children }) {
         });
       };
 
+      viewer.on('element.changed', (e) => {
+        // Obter o XML do fluxograma editado
+        const element = e.element;
+
+        // Definir o XML do fluxograma editado no estado
+        console.log(e?.gfx);
+      });
+
       importXML(xml, viewer);
     }
   }, [xml]);
