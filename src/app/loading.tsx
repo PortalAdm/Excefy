@@ -1,5 +1,5 @@
-import { Title } from './shared/components/Title';
+import { DefaultLoading } from './shared/components/animations/defaultLoading';
 
 export default function loadingRoot() {
-  return <Title title="Carregando..." />;
+  return <DefaultLoading />;
 }
