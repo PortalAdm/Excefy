@@ -12,6 +12,7 @@ import { Form } from './Form';
 import { Button } from '~/src/app/shared/components/Button';
 import { authFormTv } from '../AuthTV';
 import { getToken } from '../services/GenerateToken';
+import { ButtonLoad } from '~/src/app/shared/components/animations/buttonLoad';
 
 interface AuthFormProps {
   handleForgetPassword: () => void;
@@ -19,6 +20,7 @@ interface AuthFormProps {
 
 export function AuthForm({ handleForgetPassword }: AuthFormProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleIconChange = () => setIsVisible((isVisible) => !isVisible);
   const inputIcon = isVisible ? AiFillEye : AiFillEyeInvisible;
@@ -30,13 +32,12 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
 
   const {
     handleSubmit,
-    formState: { isSubmitting, isValid }
+    formState: { isSubmitting }
   } = authFormSchema;
 
   const onSubmit = async (data: TAuthSubmitSchema) => {
-    // eslint-disable-next-line no-console
-    console.log('AUTENTICAÇÃO', data);
-    await getToken(data.userName, data.password);
+    setIsLoading(true);
+    await getToken(data.userName, data.password).then(() => setIsLoading(false));
   };
 
   return (
@@ -65,9 +66,13 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
         </Input.root>
 
         <Button.root disabled={isSubmitting} size="medium">
-          <Button.contentWrapper>
-            <Button.label text="Entrar" color="white" size="lg" weigth="bold" />
-          </Button.contentWrapper>
+          {isLoading ? (
+            <ButtonLoad />
+          ) : (
+            <Button.contentWrapper>
+              <Button.label text="Entrar" color="white" size="lg" weigth="bold" />
+            </Button.contentWrapper>
+          )}
         </Button.root>
 
         <Button.root onClick={handleForgetPassword} color="transparent" size="small" type="button">
