@@ -11,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from './Form';
 import { Button } from '~/src/app/shared/components/Button';
 import { authFormTv } from '../AuthTV';
+import { getToken } from '../services/GenerateToken';
 
 interface AuthFormProps {
   handleForgetPassword: () => void;
@@ -32,9 +33,10 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
     formState: { isSubmitting, isValid }
   } = authFormSchema;
 
-  const onSubmit = (data: TAuthSubmitSchema) => {
+  const onSubmit = async (data: TAuthSubmitSchema) => {
     // eslint-disable-next-line no-console
     console.log('AUTENTICAÇÃO', data);
+    await getToken(data.userName, data.password);
   };
 
   return (
@@ -50,9 +52,9 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
         />
 
         <Input.root>
-          <Input.label label="E-mail" name="email" />
-          <Input.field name="email" placeholder="Digite seu email..." />
-          <Input.error field="email" />
+          <Input.label label="E-mail" name="userName" />
+          <Input.field name="userName" placeholder="Digite seu usuário..." />
+          <Input.error field="userName" />
         </Input.root>
 
         <Input.root>
@@ -63,11 +65,9 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
         </Input.root>
 
         <Button.root disabled={isSubmitting} size="medium">
-          <Button.link href={isValid ? '/dashboard' : '#'}>
-            <Button.contentWrapper>
-              <Button.label text="Entrar" color="white" size="lg" weigth="bold" />
-            </Button.contentWrapper>
-          </Button.link>
+          <Button.contentWrapper>
+            <Button.label text="Entrar" color="white" size="lg" weigth="bold" />
+          </Button.contentWrapper>
         </Button.root>
 
         <Button.root onClick={handleForgetPassword} color="transparent" size="small" type="button">
