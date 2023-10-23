@@ -1,6 +1,5 @@
 'use client';
 
-import { BsSearch } from 'react-icons/bs';
 import { LiaRobotSolid } from 'react-icons/lia';
 import { PiGitBranchDuotone } from 'react-icons/pi';
 import { AiOutlineSchedule } from 'react-icons/ai';
@@ -40,7 +39,6 @@ export function Menu() {
   return (
     <MenuSidebar.root isClose={isClose}>
       <MenuSidebar.hamburguer onClick={changeMenuState} isClose={isClose} />
-      <MenuSidebar.search onClick={changeMenuState} isClose={isClose} icon={BsSearch} />
       <MenuSidebar.items onClick={changeMenuState} isClose={isClose} data={mockedMenuItems} />
     </MenuSidebar.root>
   );

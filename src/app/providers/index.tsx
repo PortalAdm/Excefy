@@ -6,6 +6,7 @@ import { AppThemeProvider } from '~contexts/ThemeProvider';
 import { BpmnContextProvider } from '~contexts/BpmnContext';
 import { ModalProvider } from '~contexts/ModalContext';
 import { ToastContextProvider } from '../shared/contexts/ToastContext';
+import { AuthContextProvider } from '../shared/contexts/AuthContext';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -28,7 +29,8 @@ export function Providers({ children }: ProvidersProps) {
     AppThemeProvider,
     BpmnContextProvider,
     ModalProvider,
-    ToastContextProvider
+    ToastContextProvider,
+    AuthContextProvider
   );
 
   return <AllProviders>{children}</AllProviders>;
