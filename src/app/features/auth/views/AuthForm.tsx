@@ -11,16 +11,18 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from './Form';
 import { Button } from '~/src/app/shared/components/Button';
 import { authFormTv } from '../AuthTV';
-import { getToken } from '../services/GenerateToken';
 import { ButtonLoad } from '~/src/app/shared/components/animations/buttonLoad';
+import { useAuthController } from '../controller/useAuthController';
+import { useAuth } from '~/src/app/shared/hooks/useAuth';
 
 interface AuthFormProps {
   handleForgetPassword: () => void;
 }
 
 export function AuthForm({ handleForgetPassword }: AuthFormProps) {
+  const { getToken } = useAuthController();
+  const { isLoading } = useAuth();
   const [isVisible, setIsVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleIconChange = () => setIsVisible((isVisible) => !isVisible);
   const inputIcon = isVisible ? AiFillEye : AiFillEyeInvisible;
@@ -35,10 +37,7 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
     formState: { isSubmitting }
   } = authFormSchema;
 
-  const onSubmit = async (data: TAuthSubmitSchema) => {
-    setIsLoading(true);
-    await getToken(data.userName, data.password).then(() => setIsLoading(false));
-  };
+  const onSubmit = (data: TAuthSubmitSchema) => getToken(data.userName, data.password);
 
   return (
     <FormProvider {...authFormSchema}>
@@ -53,7 +52,7 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
         />
 
         <Input.root>
-          <Input.label label="E-mail" name="userName" />
+          <Input.label label="Nome de Usuário" name="userName" />
           <Input.field name="userName" placeholder="Digite seu usuário..." />
           <Input.error field="userName" />
         </Input.root>

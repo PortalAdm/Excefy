@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { ReactNode, useEffect } from 'react';
-import { checkUserAuthenticated } from '~/src/app/shared/utils/checkUserAuthenticated';
+import { useAuth } from '~/src/app/shared/hooks/useAuth';
 import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
 
 interface PrivateRouteRootProps {
@@ -11,19 +11,18 @@ interface PrivateRouteRootProps {
 
 export function PrivateRouteRoot({ children }: PrivateRouteRootProps) {
   const { push } = useRouter();
-
-  const isUserAuthenticated = checkUserAuthenticated();
+  const { hasToken } = useAuth();
 
   useEffect(() => {
-    if (!isUserAuthenticated) {
-      push(APP_ROUTES.public.auth);
+    if (!hasToken) {
+      return push(APP_ROUTES.public.auth);
     }
-  }, [isUserAuthenticated, push]);
+  }, [hasToken, push]);
 
   return (
     <>
-      {!isUserAuthenticated && null}
-      {isUserAuthenticated && children}
+      {!hasToken && null}
+      {hasToken && children}
     </>
   );
 }
