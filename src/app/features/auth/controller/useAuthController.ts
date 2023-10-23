@@ -6,7 +6,7 @@ import { useAuth } from '~/src/app/shared/hooks/useAuth';
 
 export const useAuthController = () => {
   const { createSession, deleteCookie } = useCookie();
-  const { changeHasToken, authPush, setIsLoading } = useAuth();
+  const { changeHasToken, authPush, setIsLoading, setErrorMessage } = useAuth();
 
   const getToken = async (username: string, password: string) => {
     try {
@@ -34,15 +34,16 @@ export const useAuthController = () => {
 
             createSession({ access_token });
             changeHasToken();
-            setIsLoading(false);
             return authPush();
           }
 
-          return console.log('setar mensagem de erro');
+          return setErrorMessage(`Usuário ou senha incorretos`);
         });
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 

@@ -21,7 +21,7 @@ interface AuthFormProps {
 
 export function AuthForm({ handleForgetPassword }: AuthFormProps) {
   const { getToken } = useAuthController();
-  const { isLoading } = useAuth();
+  const { isLoading, errorMessage } = useAuth();
   const [isVisible, setIsVisible] = useState(false);
 
   const handleIconChange = () => setIsVisible((isVisible) => !isVisible);
@@ -50,6 +50,16 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
           weigth="light"
           className="max-w-md leading-9"
         />
+
+        {errorMessage && (
+          <Text
+            text={errorMessage}
+            size="xs"
+            color="error"
+            weigth="light"
+            className="max-w-md leading-9"
+          />
+        )}
 
         <Input.root>
           <Input.label label="Nome de Usuário" name="userName" />
