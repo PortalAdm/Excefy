@@ -17,13 +17,14 @@ export function PublicRouteRoot({ children }: PublicRouteRootProps) {
   const { hasToken } = useAuth();
   const pathName = usePathname();
 
+  const isPublicPage = checkPublickRoute(pathName!);
+
   useEffect(() => {
-    if (hasToken) {
+    if (hasToken && isPublicPage) {
       return push(APP_ROUTES.private.dashboard.name);
     }
-  }, [hasToken, push]);
+  }, [hasToken, isPublicPage, push]);
 
-  const isPublicPage = checkPublickRoute(pathName!);
   return (
     <>
       {isPublicPage && <>{children}</>}
