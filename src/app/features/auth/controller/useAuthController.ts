@@ -10,6 +10,9 @@ export const useAuthController = () => {
 
   const getToken = async (username: string, password: string) => {
     try {
+      const endpoint = '/token';
+      const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+
       setIsLoading(true);
       const myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -26,7 +29,7 @@ export const useAuthController = () => {
         redirect: 'follow'
       };
 
-      await fetch('https://spkhubapi.azurewebsites.net/token', requestOptions as RequestInit)
+      await fetch(`${baseURL}${endpoint}`, requestOptions as RequestInit)
         .then((response) => response.json())
         .then((result) => {
           if (result.access_token) {
