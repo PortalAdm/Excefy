@@ -7,9 +7,20 @@ import { listHeaders, mocckedProcessContent } from '../dashboardUtils';
 import { Button } from '~/src/app/shared/components/Button';
 import { Header } from '../../header';
 import { useAuthController } from '../../auth/controller/useAuthController';
+import { usePromise } from '~/src/app/shared/hooks/usePromise';
+import { useCallback } from 'react';
+import { getAllProcess } from '../services';
 
 export function ProcessList() {
   const { logout } = useAuthController();
+
+  const getProcess = useCallback(async () => {
+    return await getAllProcess();
+  }, []);
+
+  const { data } = usePromise(getProcess);
+
+  console.log(data);
 
   return (
     <div className="w-full">

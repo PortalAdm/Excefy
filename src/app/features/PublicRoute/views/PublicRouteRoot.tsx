@@ -2,11 +2,10 @@
 
 import { usePathname } from 'next/navigation';
 import { ReactNode, useEffect } from 'react';
-import { PrivateRoute } from '../../PrivateRoute';
 import { checkPublickRoute } from '~/src/app/shared/utils/checkPublickRoute';
-import { useAuth } from '~/src/app/shared/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
+import { useLocalStorage } from '~/src/app/shared/hooks/useLocalStorage';
 
 interface PublicRouteRootProps {
   children: ReactNode;
@@ -14,21 +13,21 @@ interface PublicRouteRootProps {
 
 export function PublicRouteRoot({ children }: PublicRouteRootProps) {
   const { push } = useRouter();
-  const { hasToken } = useAuth();
-  const pathName = usePathname();
+  const { getLocalStorage } = useLocalStorage();
 
+  const session = `_S`;
+
+  const pathName = usePathname();
+  const hasToken = getLocalStorage(session);
   const isPublicPage = checkPublickRoute(pathName!);
 
   useEffect(() => {
-    if (hasToken && isPublicPage) {
+    if (hasToken) {
       return push(APP_ROUTES.private.dashboard.name);
     }
   }, [hasToken, isPublicPage, push]);
 
-  return (
-    <>
-      {isPublicPage && <>{children}</>}
-      {!isPublicPage && <PrivateRoute.root>{children}</PrivateRoute.root>}
-    </>
-  );
+  console.log('É POSSÍVEL EXIBIR A ROTA PÚBLICA?', !hasToken && isPublicPage);
+
+  return <>{!hasToken && isPublicPage && <>{children}</>}</>;
 }

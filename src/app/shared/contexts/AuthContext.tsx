@@ -2,12 +2,12 @@
 
 import { Dispatch, ReactNode, SetStateAction, createContext, useEffect, useState } from 'react';
 import { parseCookies } from 'nookies';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { APP_ROUTES } from '../utils/constants/app-routes';
 import { useTimeout } from '../hooks/useTimeout';
 
 const cookies = parseCookies();
-const userToken = cookies.IALOGUE;
+const session = cookies.IALOGUE;
 
 interface AuthContextProps {
   hasToken: boolean;
@@ -27,13 +27,14 @@ export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const { push } = useRouter();
-  const [hasToken, setHasToken] = useState(!!userToken);
+  const [hasToken, setHasToken] = useState(!!session);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  const pathName = usePathname();
   const situation = errorMessage !== undefined;
-  const updateSituation = () => setErrorMessage('');
   const time = 3000;
+  const updateSituation = () => setErrorMessage('');
 
   const { resetSituation } = useTimeout(situation, updateSituation, time);
 
@@ -42,17 +43,18 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   }, [resetSituation]);
 
   const changeHasToken = () => setHasToken((hasToken) => !hasToken);
+  const dashboard = APP_ROUTES.private.dashboard.name;
 
   const authPush = () => {
-    if (hasToken) {
-      return push(APP_ROUTES.private.dashboard.name);
+    if (hasToken && pathName !== dashboard) {
+      return push(dashboard);
     }
 
     return push(APP_ROUTES.public.auth);
   };
 
   useEffect(() => {
-    if (userToken) return setHasToken(true);
+    if (session) return setHasToken(true);
   }, []);
 
   return (

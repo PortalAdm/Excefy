@@ -19,7 +19,7 @@ export function MenuItems({ data = [], isClose, onClick }: MenuItemsProps) {
           <React.Fragment key={i}>
             {isClose ? (
               <Link
-                className="flex items-center gap-4 active:font-bold text-white"
+                className="flex items-center gap-4 hover:font-semi-bold active:font-bold text-white"
                 key={i}
                 href={item.navigateTo}
               >
