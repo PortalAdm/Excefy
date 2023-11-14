@@ -8,6 +8,6 @@ export const getSystemToken = () => {
     return token;
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.log('Token de acesso expirado', error);
+    console.log('Token de acesso expirado: ', error);
   }
 };

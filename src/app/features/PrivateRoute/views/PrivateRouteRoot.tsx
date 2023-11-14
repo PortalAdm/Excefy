@@ -20,8 +20,6 @@ export function PrivateRouteRoot({ children }: PrivateRouteRootProps) {
   const hasToken = getLocalStorage(session);
   const isPublicPage = checkPublickRoute(pathName!);
 
-  console.log('É POSSÍVEL EXIBIR A ROTA PRIVADA?', hasToken && !isPublicPage);
-
   useEffect(() => {
     if (!hasToken) {
       return push(APP_ROUTES.public.auth);
