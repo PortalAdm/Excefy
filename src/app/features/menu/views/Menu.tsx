@@ -1,31 +1,11 @@
 'use client';
 
-import { LiaRobotSolid } from 'react-icons/lia';
-import { PiGitBranchDuotone } from 'react-icons/pi';
-import { AiOutlineSchedule } from 'react-icons/ai';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { MenuSidebar } from '~shared/components/menuSidebar';
-import { MenuItemsType } from '~shared/types';
-
-const mockedMenuItems: MenuItemsType[] = [
-  // isso deverá vir da api
-  {
-    icon: PiGitBranchDuotone,
-    name: 'Processos',
-    navigateTo: '/dashboard'
-  },
-  {
-    icon: LiaRobotSolid,
-    name: 'Agentes',
-    navigateTo: '/agents'
-  },
-  {
-    icon: AiOutlineSchedule,
-    name: 'Agenda',
-    navigateTo: '/schedule'
-  }
-];
+import { mockedMenuItems } from '../menuUtils';
+import { menuHeaderTv } from '../MenuTV';
+import Logo from '~assets/images/logo/execfy 1.png';
 
 export function Menu() {
   const [isClose, setIsClose] = useState(false);
@@ -38,7 +18,11 @@ export function Menu() {
 
   return (
     <MenuSidebar.root isClose={isClose}>
-      <MenuSidebar.hamburguer onClick={changeMenuState} isClose={isClose} />
+      <div className={menuHeaderTv()}>
+        <MenuSidebar.hamburguer onClick={changeMenuState} isClose={isClose} />
+        {isClose && <MenuSidebar.logo src={Logo} onClick={changeMenuState} />}
+      </div>
+      <MenuSidebar.divider />
       <MenuSidebar.items onClick={changeMenuState} isClose={isClose} data={mockedMenuItems} />
     </MenuSidebar.root>
   );

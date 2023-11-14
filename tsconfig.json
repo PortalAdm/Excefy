@@ -28,6 +28,7 @@
       "~features/*": ["./src/app/features/*"],
       "~utils/*": ["./src/app/shared/utils/*"],
       "~types/*": ["./src/app/shared/types/*"],
+      "~assets/*": ["./src/app/assets/*"],
       "~animations/*": ["./src/app/shared/components/animations/*"],
     },
   },
