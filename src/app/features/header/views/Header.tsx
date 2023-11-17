@@ -1,38 +1,33 @@
-'use client';
-
+import { DropdownComp } from '~/src/app/shared/components/Dropdown';
 import { Header as HeaderComponent } from '~/src/app/shared/components/header';
-import { IoAdd, IoEyeOff, IoTrash } from 'react-icons/io5';
+import { HeaderActionProps } from '~/src/app/shared/components/header/views/HeaderAction';
+import { dropdownOptions } from '../HeaderUtils';
 
-export function Header() {
+interface HeaderProps {
+  actions?: HeaderActionProps[];
+}
+
+export function Header({ actions }: HeaderProps) {
   return (
-    <HeaderComponent.body>
+    <HeaderComponent.root>
       <HeaderComponent.title title="Processos" />
       <HeaderComponent.content>
-        <HeaderComponent.action
-          size="small"
-          variant="bordered"
-          color="primary"
-          actionLabel="Desativar"
-          icon={IoEyeOff}
-          onClick={() => console.log('Teste Header')}
-        />
-        <HeaderComponent.action
-          size="small"
-          variant="bordered"
-          color="primary"
-          actionLabel="Excluir"
-          icon={IoTrash}
-          onClick={() => console.log('Teste Header')}
-        />
-        <HeaderComponent.action
-          size="small"
-          color="white"
-          actionLabel="Novo Processo"
-          icon={IoAdd}
-          onClick={() => console.log('Teste Header')}
-        />
+        {actions &&
+          actions?.map((action, i) => (
+            <HeaderComponent.action
+              key={i}
+              size={action.size}
+              variant={action.variant}
+              color={action.color}
+              actionLabel={action.actionLabel}
+              icon={action.icon}
+              onClick={action.onClick}
+              path={action.path}
+            />
+          ))}
         <HeaderComponent.label text="Olá, Cláudio!" />
+        <DropdownComp.Dropdown options={dropdownOptions} />
       </HeaderComponent.content>
-    </HeaderComponent.body>
+    </HeaderComponent.root>
   );
 }

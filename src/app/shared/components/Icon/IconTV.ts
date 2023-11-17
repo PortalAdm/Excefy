@@ -16,6 +16,9 @@ export const iconTv = tv({
     },
     button: {
       medium: 'relative w-5 h-5 text-white'
+    },
+    dropdown: {
+      base: '-ml-4 h-5 w-5'
     }
   },
   defaultVariants: {
