@@ -6,6 +6,11 @@ const config: Config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}'
   ],
+  safelist: [
+    {
+      pattern: /^bg-/
+    }
+  ],
   darkMode: 'class',
   theme: {
     fontFamily: {
@@ -16,13 +21,14 @@ const config: Config = {
       black: '#000000',
       white: '#FFFFFF',
 
-      primary: '#3B7190',
+      primary: '#185274',
       background: '#F1F2F5',
+      placeholder: '#6B7280',
 
       success: '#1ECE79',
       attenttion: '#E0FF20',
       error: '#C1012F',
-      Outline: '#A1A3A6',
+      outline: '#A1A3A6',
 
       green: {
         50: '#e9faf2',

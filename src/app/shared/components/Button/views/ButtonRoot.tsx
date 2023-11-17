@@ -2,7 +2,7 @@ import { VariantProps } from 'tailwind-variants';
 import { buttonRootTv } from '../ButtonTV';
 import { ReactNode } from 'react';
 
-interface ButtonRootProps extends VariantProps<typeof buttonRootTv> {
+export interface ButtonRootProps extends VariantProps<typeof buttonRootTv> {
   children: ReactNode;
   disabled?: boolean;
   className?: string;
@@ -16,10 +16,15 @@ export function ButtonRoot({
   size,
   color,
   className,
+  variant,
   ...props
 }: ButtonRootProps) {
   return (
-    <button {...props} disabled={disabled} className={buttonRootTv({ size, color, className })}>
+    <button
+      {...props}
+      disabled={disabled}
+      className={buttonRootTv({ size, color, className, variant })}
+    >
       {children}
     </button>
   );

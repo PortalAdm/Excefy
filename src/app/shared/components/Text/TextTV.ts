@@ -20,7 +20,10 @@ export const textTv = tv({
     },
     color: {
       primary: 'text-primary',
-      white: 'text-white'
+      placeholder: 'text-placeholder',
+      white: 'text-white',
+      success: 'text-success',
+      error: 'text-error'
     }
   },
   defaultVariants: {

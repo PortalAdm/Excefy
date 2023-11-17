@@ -6,10 +6,12 @@ export const titleTv = tv({
     size: {
       lg: 'text-lg',
       xl: 'text-xl',
-      '2xl': 'text-2xl'
+      '2xl': 'text-2xl',
+      md: 'text-md'
     },
     color: {
-      primary: 'text-primary'
+      primary: 'text-primary',
+      white: 'text-white'
     }
   },
   defaultVariants: {

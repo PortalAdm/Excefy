@@ -8,7 +8,7 @@ export const recoverySchema = z.object({
 });
 
 export const authSubmitSchema = z.object({
-  email: z.string().nonempty(`${defaultMessage} seu email`).toLowerCase(),
+  userName: z.string().nonempty(`${defaultMessage} seu usuário`).toLowerCase(),
   password: z
     .string()
     .nonempty(`${defaultMessage} sua senha`)
