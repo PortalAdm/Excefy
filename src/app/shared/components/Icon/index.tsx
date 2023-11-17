@@ -9,6 +9,6 @@ interface IconProps extends VariantProps<typeof iconTv> {
   onClick?: () => void;
 }
 
-export function Icon({ icon: Icon, color, size, input, button, ...props }: IconProps) {
-  return <Icon className={iconTv({ color, size, input, button })} {...props} />;
+export function Icon({ icon: Icon, color, size, input, button, dropdown, ...props }: IconProps) {
+  return <Icon className={iconTv({ color, size, input, button, dropdown })} {...props} />;
 }

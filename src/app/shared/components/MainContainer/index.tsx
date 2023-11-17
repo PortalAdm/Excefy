@@ -23,7 +23,7 @@ export function MainContainer({ children }: MainContainerProps) {
   const flex = isFlex ? 'flex' : '';
 
   return (
-    <main className={`${isDarkMode} ${flex} transition-colors w-screen h-screen bg-background`}>
+    <main className={`${isDarkMode} ${flex} transition-colors w-full h-screen bg-background`}>
       {children}
     </main>
   );

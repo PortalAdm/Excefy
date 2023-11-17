@@ -1,6 +1,5 @@
 import { Header } from './views/Header';
 
-export const DashBoard = {
+export const Head = {
   Header
 };
-export { Header };
