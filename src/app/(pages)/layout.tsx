@@ -1,7 +1,6 @@
 'use client';
 
 import '~global/styles/globals.css';
-import type { Metadata } from 'next';
 import { Providers } from '../providers';
 import { MainContainer } from '../shared/components/MainContainer';
 import { Menu } from '../features/menu/views/Menu';
@@ -14,11 +13,6 @@ import { Head } from '~features/header';
 import { actions } from '../(pages)/pageUtils';
 import { APP_ROUTES } from '../shared/utils/constants/app-routes';
 
-export const metadata: Metadata = {
-  title: 'Portal Administração',
-  description: 'Projeto focado em gerenciamento de tarefas automatizadas.'
-};
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const pathName = usePathname();
   const isPublicPage = checkPublickRoute(pathName!);
@@ -27,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang="pt-BR">
+      <title>IaLogue</title>
       <body>
         <Providers>
           <MainContainer>
