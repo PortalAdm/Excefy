@@ -23,6 +23,7 @@ export function RecoveryForm({ handleForgetPassword }: RecoveryFormProps) {
   } = recoveryFormSchema;
 
   const onRecovery = (data: TRecoverySchema) => {
+    // eslint-disable-next-line no-console
     console.log('RECOVERY', data);
   };
 

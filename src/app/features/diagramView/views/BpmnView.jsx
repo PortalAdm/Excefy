@@ -9,6 +9,7 @@ import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css';
 import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
 
 export function BpmnView({ children }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { xml, setXml } = useBPMN(); // setXml deve guardar o estado do xml criado pelo cliente ao mexer no fluxograma
   const canvaRef = useRef(null);
 
@@ -38,7 +39,9 @@ export function BpmnView({ children }) {
         const element = e.element;
 
         // Definir o XML do fluxograma editado no estado
-        console.log(e?.gfx);
+        // console.log(e?.gfx);
+        // eslint-disable-next-line no-console
+        console.log(element);
       });
 
       importXML(xml, viewer);

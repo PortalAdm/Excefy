@@ -7,21 +7,25 @@ export const icons = [
   {
     element: FiEdit2,
     name: 'Editar',
+    // eslint-disable-next-line no-console
     onClick: () => console.log('Editar') // criar a função dentro deste arquivo e chamar aqui
   },
   {
     element: TbChartInfographic,
     name: 'Estatísticas',
+    // eslint-disable-next-line no-console
     onClick: () => console.log('Estatísticas') // criar a função dentro deste arquivo e chamar aqui
   },
   {
     element: IoPlaySkipForwardOutline,
     name: 'Simular',
+    // eslint-disable-next-line no-console
     onClick: () => console.log('Simular') // criar a função dentro deste arquivo e chamar aqui
   },
   {
     element: BiTrash,
     name: 'Excluir',
+    // eslint-disable-next-line no-console
     onClick: () => console.log('EdiExcluirtar') // criar a função dentro deste arquivo e chamar aqui
   }
 ];

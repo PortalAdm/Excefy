@@ -27,7 +27,5 @@ export function PublicRouteRoot({ children }: PublicRouteRootProps) {
     }
   }, [hasToken, isPublicPage, push]);
 
-  console.log('É POSSÍVEL EXIBIR A ROTA PÚBLICA?', !hasToken && isPublicPage);
-
   return <>{!hasToken && isPublicPage && <>{children}</>}</>;
 }

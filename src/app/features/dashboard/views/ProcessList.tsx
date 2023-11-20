@@ -8,7 +8,8 @@ import { useDashboardController } from '../controller';
 export function ProcessList() {
   const { data } = useDashboardController();
 
-  console.log(data);
+  // eslint-disable-next-line no-console
+  console.log(data?.[0] && JSON.parse(data?.[0].content as unknown as string));
 
   return (
     <div className="w-full">

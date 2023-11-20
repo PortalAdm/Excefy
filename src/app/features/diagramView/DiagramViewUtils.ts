@@ -32,6 +32,7 @@ const handleExportFile = async (
   };
 
   if (typeof target.files[0] !== 'undefined') {
+    // eslint-disable-next-line no-console
     console.log(target.files[0]);
 
     return setXml(target.files[0]); // isso deve ir para o backend para ser validado

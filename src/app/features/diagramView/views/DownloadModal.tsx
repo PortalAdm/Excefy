@@ -12,8 +12,6 @@ export const DownloadModal = () => {
   const { changeModalState } = useModal();
 
   const downloading = () => {
-    console.log('baixando...');
-
     changeModalState();
     changeToastActive(
       { state: 'success' },

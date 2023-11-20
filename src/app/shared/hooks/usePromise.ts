@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 
 type PromiseStatus = {
@@ -9,8 +7,8 @@ type PromiseStatus = {
   done: boolean;
 };
 
-export const usePromise = (promise: () => Promise<any> | null, cleanUp?: () => void) => {
-  const [promiseStatus, setPromiseStatus] = useState<{ data: null } & PromiseStatus>({
+function usePromise<T>(promise: () => Promise<T> | null, cleanUp?: () => void) {
+  const [promiseStatus, setPromiseStatus] = useState<{ data: null | T } & PromiseStatus>({
     loading: false,
     error: false,
     success: false,
@@ -55,4 +53,6 @@ export const usePromise = (promise: () => Promise<any> | null, cleanUp?: () => v
   return {
     ...promiseStatus
   };
-};
+}
+
+export { usePromise };
