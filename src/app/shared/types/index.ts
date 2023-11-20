@@ -1,2 +1,2 @@
-export * from './TTableListContentType';
+export * from './TableListContentType';
 export * from './MenuItemsType';

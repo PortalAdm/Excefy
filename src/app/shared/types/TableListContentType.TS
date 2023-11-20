@@ -1,4 +1,4 @@
-export type TTableListContentType = {
+export type TableListContentType = {
   name: string;
   description: string;
   criation: string;
