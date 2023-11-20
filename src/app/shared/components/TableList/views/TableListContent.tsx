@@ -1,9 +1,9 @@
-import { TTableListContentType } from '~types/index';
+import { TTableListContent } from '~shared/types/TTableListContent';
 import { TableList } from '..';
 import * as tv from '../TableListTV';
 
 interface TableListContentProps {
-  content: TTableListContentType[];
+  content: TTableListContent[];
 }
 
 export function TableListContent({ content = [] }: TableListContentProps) {
