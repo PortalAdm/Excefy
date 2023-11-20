@@ -26,5 +26,10 @@ export function PrivateRouteRoot({ children }: PrivateRouteRootProps) {
     }
   }, [hasToken, isPublicPage, push]);
 
-  return <>{hasToken && !isPublicPage && children}</>;
+  return (
+    <>
+      {!hasToken && isPublicPage && null}
+      {hasToken && !isPublicPage && children}
+    </>
+  );
 }

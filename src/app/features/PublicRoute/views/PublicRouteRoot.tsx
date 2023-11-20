@@ -27,5 +27,10 @@ export function PublicRouteRoot({ children }: PublicRouteRootProps) {
     }
   }, [hasToken, isPublicPage, push]);
 
-  return <>{!hasToken && isPublicPage && <>{children}</>}</>;
+  return (
+    <>
+      {hasToken && !isPublicPage && null}
+      {!hasToken && isPublicPage && children}
+    </>
+  );
 }

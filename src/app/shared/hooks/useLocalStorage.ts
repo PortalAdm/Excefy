@@ -1,9 +1,9 @@
 'use client';
 
+const hasWindow = typeof window !== 'undefined';
+
 export const useLocalStorage = () => {
   const STORAGE_KEY = 'Padm:';
-
-  const hasWindow = typeof window !== 'undefined';
 
   const getLocalStorage = (key: string) => {
     if (hasWindow) {
@@ -11,20 +11,18 @@ export const useLocalStorage = () => {
 
       return JSON.parse(data!);
     }
+
+    return null;
   };
 
   const setLocalStorage = (key: string, value: unknown) => {
-    if (hasWindow) {
-      const data = JSON.stringify(value);
+    const data = JSON.stringify(value);
 
-      return window.localStorage.setItem(`${STORAGE_KEY}${key}`, data);
-    }
+    return window.localStorage.setItem(`${STORAGE_KEY}${key}`, data);
   };
 
   const deleteFromStorage = (key: string) => {
-    if (hasWindow) {
-      return window.localStorage.removeItem(`${STORAGE_KEY}${key}`);
-    }
+    return window.localStorage.removeItem(`${STORAGE_KEY}${key}`);
   };
 
   return {
