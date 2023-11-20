@@ -8,7 +8,7 @@ export const getAllProcess = async () => {
 
     if (!sysToken) return;
 
-    const endpoint = '/message/process/';
+    const endpoint = 'message/process/';
 
     const recipient = process.env.NEXT_PUBLIC_RECIPIENT!;
 
