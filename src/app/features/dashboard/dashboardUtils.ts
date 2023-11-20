@@ -1,8 +1,8 @@
-import { TTableListContentType } from '~shared/types/index';
+import { TableListContentType } from '~shared/types';
 
 export const listHeaders = ['Nome', 'Descrição', 'Criação', 'Ultima edição', 'Status'];
 
-export const mocckedProcessContent: TTableListContentType[] = [
+export const mocckedProcessContent: TableListContentType[] = [
   {
     name: 'Exemplo de nome de processo',
     description:
