@@ -8,8 +8,6 @@ export const getAllProcess = async () => {
   try {
     const sysToken = getSystemToken();
 
-    console.log('>>>', sysToken);
-
     if (!sysToken) return;
 
     const endpoint = 'message/process/';

@@ -15,6 +15,9 @@ export function BpmnView({ children }) {
 
   useEffect(() => {
     const viewer = new BpmnViewer({
+      config: {
+        container: document.getElementById('js-canvas')
+      },
       container: document.getElementById('js-canvas'),
       keyboard: {
         bindTo: window
