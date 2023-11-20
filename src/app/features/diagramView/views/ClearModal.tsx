@@ -7,8 +7,6 @@ export const ClearModal = () => {
   const { changeModalState } = useModal();
 
   const clearning = () => {
-    console.log('Limpando...');
-
     changeModalState();
   };
 

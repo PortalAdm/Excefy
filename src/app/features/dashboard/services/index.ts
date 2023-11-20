@@ -12,7 +12,7 @@ export const getAllProcess = async () => {
 
     const recipient = process.env.NEXT_PUBLIC_RECIPIENT!;
 
-    const resault = await api.post<Message>(endpoint, {
+    const resault = await api.post<Message[]>(endpoint, {
       recipient,
       commandName: 'ProcessSelect',
       commandParameters: [

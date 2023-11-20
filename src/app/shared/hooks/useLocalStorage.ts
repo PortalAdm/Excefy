@@ -3,20 +3,28 @@
 export const useLocalStorage = () => {
   const STORAGE_KEY = 'Padm:';
 
-  const getLocalStorage = (key: string) => {
-    const data = window.localStorage.getItem(`${STORAGE_KEY}${key}`);
+  const hasWindow = typeof window !== 'undefined';
 
-    return JSON.parse(data!);
+  const getLocalStorage = (key: string) => {
+    if (hasWindow) {
+      const data = window.localStorage.getItem(`${STORAGE_KEY}${key}`);
+
+      return JSON.parse(data!);
+    }
   };
 
   const setLocalStorage = (key: string, value: unknown) => {
-    const data = JSON.stringify(value);
+    if (hasWindow) {
+      const data = JSON.stringify(value);
 
-    return window.localStorage.setItem(`${STORAGE_KEY}${key}`, data);
+      return window.localStorage.setItem(`${STORAGE_KEY}${key}`, data);
+    }
   };
 
   const deleteFromStorage = (key: string) => {
-    return window.localStorage.removeItem(`${STORAGE_KEY}${key}`);
+    if (hasWindow) {
+      return window.localStorage.removeItem(`${STORAGE_KEY}${key}`);
+    }
   };
 
   return {
