@@ -24,8 +24,8 @@ export function BpmnView({ children }) {
       }
     });
 
-    const importXML = (xml, Viewer) => {
-      Viewer.importXML(xml, (err) => {
+    const importXML = async (xml, Viewer) => {
+      await Viewer.importXML(xml, (err) => {
         if (err) {
           // eslint-disable-next-line no-console
           return console.error('could not import BPMN 2.0 diagram', err);
@@ -43,7 +43,9 @@ export function BpmnView({ children }) {
       console.log(element);
     });
 
-    importXML(xml, viewer);
+    const getXML = async () => await importXML(xml, viewer);
+
+    getXML();
   }, [xml]);
 
   return (
