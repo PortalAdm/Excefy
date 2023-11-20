@@ -14,38 +14,36 @@ export function BpmnView({ children }) {
   const canvaRef = useRef(null);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const viewer = new BpmnViewer({
-        container: document.getElementById('js-canvas'),
-        keyboard: {
-          bindTo: window
-        },
-        moddleExtensions: {
-          camunda: camundaModdleDescriptor
+    const viewer = new BpmnViewer({
+      container: document.getElementById('js-canvas'),
+      keyboard: {
+        bindTo: window
+      },
+      moddleExtensions: {
+        camunda: camundaModdleDescriptor
+      }
+    });
+
+    const importXML = (xml, Viewer) => {
+      Viewer.importXML(xml, (err) => {
+        if (err) {
+          // eslint-disable-next-line no-console
+          return console.error('could not import BPMN 2.0 diagram', err);
         }
       });
+    };
 
-      const importXML = (xml, Viewer) => {
-        Viewer.importXML(xml, (err) => {
-          if (err) {
-            // eslint-disable-next-line no-console
-            return console.error('could not import BPMN 2.0 diagram', err);
-          }
-        });
-      };
+    viewer.on('element.changed', (e) => {
+      // Obter o XML do fluxograma editado
+      const element = e.element;
 
-      viewer.on('element.changed', (e) => {
-        // Obter o XML do fluxograma editado
-        const element = e.element;
+      // Definir o XML do fluxograma editado no estado
+      // console.log(e?.gfx);
+      // eslint-disable-next-line no-console
+      console.log(element);
+    });
 
-        // Definir o XML do fluxograma editado no estado
-        // console.log(e?.gfx);
-        // eslint-disable-next-line no-console
-        console.log(element);
-      });
-
-      importXML(xml, viewer);
-    }
+    importXML(xml, viewer);
   }, [xml]);
 
   return (

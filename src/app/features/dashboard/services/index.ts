@@ -1,3 +1,5 @@
+'use client';
+
 import { api } from '~/src/app/shared/services/axios/api';
 import { Message } from '~/src/app/shared/types/Process';
 import { getSystemToken } from '~/src/app/shared/utils/constants/getSystemToken';
