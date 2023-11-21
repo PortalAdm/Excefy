@@ -14,18 +14,14 @@ export function BpmnView({ children }) {
   const canvaRef = useRef(null);
 
   useEffect(() => {
-    const viewer = new BpmnViewer({
-      config: {
-        container: document.getElementById('js-canvas')
-      },
-      container: document.getElementById('js-canvas'),
-      keyboard: {
-        bindTo: window
-      },
+    const options = {
+      container: canvaRef.current,
       moddleExtensions: {
         camunda: camundaModdle
       }
-    });
+    }
+
+    const viewer = new BpmnViewer(options);
 
     const importXML = async (xml, Viewer) => {
       await Viewer.importXML(xml, (err) => {
