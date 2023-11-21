@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import BpmnViewer from 'bpmn-js/lib/Modeler';
-import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda';
+import camundaModdle from 'camunda-bpmn-moddle/resources/camunda.json';
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
 import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css';
@@ -23,7 +23,7 @@ export function BpmnView({ children }) {
         bindTo: window
       },
       moddleExtensions: {
-        camunda: camundaModdleDescriptor
+        camunda: camundaModdle
       }
     });
 

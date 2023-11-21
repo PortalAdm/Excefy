@@ -29,7 +29,7 @@
     "bpmn-font": "0.9.3",
     "bpmn-js": "^3.1.0",
     "bpmn-js-properties-panel": "0.32.1",
-    "camunda-bpmn-moddle": "4.1.2",
+    "camunda-bpmn-moddle": "^4.1.2",
     "camunda-dmn-moddle": "1.0.0",
     "connect": "^3.7.0",
     "dotenv-webpack": "^8.0.1",

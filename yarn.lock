@@ -5480,7 +5480,7 @@
   "resolved" "https://registry.npmjs.org/camelcase/-/camelcase-6.3.0.tgz"
   "version" "6.3.0"
 
-"camunda-bpmn-moddle@4.1.2":
+"camunda-bpmn-moddle@^4.1.2":
   "integrity" "sha512-eyrtdo3d9gecD2xExsrNsfEpgkMrmPfj/w9VUqOn6uKn5hpX7lv7RDt4YLjBxwdhPJf+1LTWrmjFKZC0dUB8pw=="
   "resolved" "https://registry.npmjs.org/camunda-bpmn-moddle/-/camunda-bpmn-moddle-4.1.2.tgz"
   "version" "4.1.2"
