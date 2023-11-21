@@ -5192,24 +5192,24 @@
     "scroll-tabs" "^1.0.1"
     "selection-update" "^0.1.2"
 
-"bpmn-js@^3.1.0", "bpmn-js@^3.x || ^4.x":
-  "integrity" "sha512-dUqr1364LjjONNQ1StrjT9vchQYgvcCb+e9dVY+98BsKkQnIJ6oadna2UUJ1hCEDndqhoHOF4oTk8LfyK68tNQ=="
-  "resolved" "https://registry.npmjs.org/bpmn-js/-/bpmn-js-3.1.0.tgz"
-  "version" "3.1.0"
+"bpmn-js@^3.5.0", "bpmn-js@^3.x || ^4.x":
+  "integrity" "sha512-PfNM0UbztNyd7+8+hQCThQTwo3ViIAJbpGff1N93dJauwTeF1sYPdjF2w2mQi5pucoYtPmf33fsH8SD3BAjd2g=="
+  "resolved" "https://registry.npmjs.org/bpmn-js/-/bpmn-js-3.5.0.tgz"
+  "version" "3.5.0"
   dependencies:
     "bpmn-font" "^0.8.0"
-    "bpmn-moddle" "^5.1.5"
+    "bpmn-moddle" "^5.1.6"
     "css.escape" "^1.5.1"
-    "diagram-js" "^3.1.0"
-    "diagram-js-direct-editing" "^1.4.0"
+    "diagram-js" "^3.3.1"
+    "diagram-js-direct-editing" "^1.4.3"
     "ids" "^0.2.0"
     "inherits" "^2.0.1"
-    "min-dash" "^3.2.0"
+    "min-dash" "^3.4.0"
     "min-dom" "^3.0.0"
     "object-refs" "^0.3.0"
-    "tiny-svg" "^2.0.0"
+    "tiny-svg" "^2.2.1"
 
-"bpmn-moddle@^5.1.5":
+"bpmn-moddle@^5.1.6":
   "integrity" "sha512-MZTlpIXWcHTelp09vR4hs23diCdeHl4JbwOXGmif10qf9v/kqreiCMeo0B9w8eEmZqdRdkulTIScKavTYOxTQw=="
   "resolved" "https://registry.npmjs.org/bpmn-moddle/-/bpmn-moddle-5.2.0.tgz"
   "version" "5.2.0"
@@ -6288,7 +6288,7 @@
     "address" "^1.0.1"
     "debug" "4"
 
-"diagram-js-direct-editing@^1.4.0":
+"diagram-js-direct-editing@^1.4.3":
   "integrity" "sha512-B4Xj+PJfgBjbPEzT3uZQEkZI5xHFB0Izc+7BhDFuHidzrEMzQKZrFGdA3PqfWhReHf3dp+iB6Tt11G9eGNjKMw=="
   "resolved" "https://registry.npmjs.org/diagram-js-direct-editing/-/diagram-js-direct-editing-1.8.0.tgz"
   "version" "1.8.0"
@@ -6296,7 +6296,7 @@
     "min-dash" "^3.5.2"
     "min-dom" "^3.1.3"
 
-"diagram-js@*", "diagram-js@^3.1.0":
+"diagram-js@*", "diagram-js@^3.3.1":
   "integrity" "sha512-O4jdbcajP8D82U8NvUVVIgA4FuA64D3le2yLuaLTkYbkZookU06lm80cXxomAznLuJugEUy0xWugW9bHeJxnoA=="
   "resolved" "https://registry.npmjs.org/diagram-js/-/diagram-js-3.3.1.tgz"
   "version" "3.3.1"
@@ -9779,7 +9779,7 @@
   "resolved" "https://registry.npmjs.org/mimic-fn/-/mimic-fn-4.0.0.tgz"
   "version" "4.0.0"
 
-"min-dash@^3.0.0", "min-dash@^3.1.0", "min-dash@^3.2.0", "min-dash@^3.5.2", "min-dash@^3.8.1":
+"min-dash@^3.0.0", "min-dash@^3.1.0", "min-dash@^3.2.0", "min-dash@^3.4.0", "min-dash@^3.5.2", "min-dash@^3.8.1":
   "integrity" "sha512-evumdlmIlg9mbRVPbC4F5FuRhNmcMS5pvuBUbqb1G9v09Ro0ImPEgz5n3khir83lFok1inKqVDjnKEg3GpDxQg=="
   "resolved" "https://registry.npmjs.org/min-dash/-/min-dash-3.8.1.tgz"
   "version" "3.8.1"
@@ -12470,7 +12470,7 @@
   "resolved" "https://registry.npmjs.org/tiny-invariant/-/tiny-invariant-1.3.1.tgz"
   "version" "1.3.1"
 
-"tiny-svg@^2.0.0", "tiny-svg@^2.2.1":
+"tiny-svg@^2.2.1":
   "integrity" "sha512-NOi39lBknf4UdDEahNkbEAJnzhu1ZcN2j75IS2vLRmIhsfxdZpTChfLKBcN1ShplVmPIXJAIafk6YY5/Aa80lQ=="
   "resolved" "https://registry.npmjs.org/tiny-svg/-/tiny-svg-2.2.4.tgz"
   "version" "2.2.4"
