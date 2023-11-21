@@ -1,27 +1,27 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import BpmnViewer from 'bpmn-js/lib/Modeler';
-import camundaModdle from 'camunda-bpmn-moddle/resources/camunda.json';
+// import BpmnViewer from 'bpmn-js/lib/Modeler';
+// import camundaModdle from 'camunda-bpmn-moddle/resources/camunda.json';
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
 import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css';
 import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
 
-export function BpmnView({ children }) {
+export function BpmnView({ children, viewer }) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { xml, setXml } = useBPMN(); // setXml deve guardar o estado do xml criado pelo cliente ao mexer no fluxograma
   const canvaRef = useRef(null);
 
   useEffect(() => {
-    const options = {
-      container: canvaRef.current,
-      moddleExtensions: {
-        camunda: camundaModdle
-      }
-    }
+    // const config = {
+    //   container: canvaRef.current,
+    //   moddleExtensions: {
+    //     camunda: camundaModdle
+    //   }
+    // }
 
-    const viewer = new BpmnViewer(options);
+    // const viewer = new BpmnViewer(config);
 
     const importXML = async (xml, Viewer) => {
       await Viewer.importXML(xml, (err) => {
