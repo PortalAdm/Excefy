@@ -1,7 +1,7 @@
 import { blurDataURL } from '~/src/app/shared/utils/constants/blurDataURL';
 import { authHeroTv } from '../AuthTV';
 import Image from 'next/image';
-import Login from '../../../assets/images/login.png';
+import Login from '../../../assets/images/Logo.svg';
 
 export function AuthHero() {
   return (
