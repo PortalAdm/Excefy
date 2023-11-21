@@ -2,11 +2,13 @@ export const APP_ROUTES = {
   private: {
     agents: {
       name: '/agents',
-      label: 'Agentes'
+      label: 'Agentes',
+      subtitle: ''
     },
     dashboard: {
       name: '/dashboard',
-      label: 'Dashboard'
+      label: 'Dashboard',
+      subtitle: ''
     },
     'new-process': {
       name: '/new-process',
@@ -15,7 +17,8 @@ export const APP_ROUTES = {
     },
     schedule: {
       name: '/schedule',
-      label: 'Agenda'
+      label: 'Agenda',
+      subtitle: 'Novo Processo'
     }
   },
   public: {

@@ -6,13 +6,15 @@ import { Title } from '../../Title';
 export function HeaderTitle() {
   const pathName = usePathname();
   const routeIndex = pathName.replace('/', '');
-  const routeName = APP_ROUTES.private[routeIndex]?.label || '';
-  const subtitleName = APP_ROUTES.private[routeIndex]?.subtitle;
+
+  const routeData = APP_ROUTES.private[routeIndex as keyof (typeof APP_ROUTES)['private']];
+  const routeName = routeData?.label || '';
+  const subtitleName = routeData?.subtitle;
 
   const formattedRouteName = routeName === 'Dashboard' ? 'Processos' : routeName;
 
   return (
-    <div className="flex  flex-col w-full relative">
+    <div className="flex flex-col w-full relative">
       <Title
         title={formattedRouteName}
         color="primary"
@@ -23,7 +25,7 @@ export function HeaderTitle() {
             : 'scale-100 translate-y-0 -translate-x-0'
         }`}
       />
-      {subtitleName && <Text text={subtitleName} color="primary" size="lg" weigth="bold" />}
+      {subtitleName !== '' && <Text text={subtitleName} color="primary" size="lg" weigth="bold" />}
     </div>
   );
 }
