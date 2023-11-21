@@ -5,7 +5,7 @@ export const authTV = tv({
 });
 
 export const authHeroTv = tv({
-  base: 'relative hidden md:flex w-full'
+  base: 'relative hidden md:flex w-full pointer-events-none'
 });
 
 export const authFormTv = tv({

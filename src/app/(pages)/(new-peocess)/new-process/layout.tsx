@@ -9,7 +9,7 @@ import { actions } from './newProcessUtils';
 export default function NewProcessLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <title>IaLogue | Novo Processo</title>
+      <title>EXECFY | Novo Processo</title>
       <Providers>
         <MainContainer>
           <div className="flex flex-col w-full">

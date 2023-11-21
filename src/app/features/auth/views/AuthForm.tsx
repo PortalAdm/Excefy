@@ -42,7 +42,7 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
   return (
     <FormProvider {...authFormSchema}>
       <Form onSubmit={handleSubmit(onSubmit)} className={authFormTv()}>
-        <Title title="IALOGUE" size="xl" color="primary" />
+        <Title title="EXECFY" size="xl" color="primary" />
         <Text
           text="Bem Vindo!"
           size="lg"

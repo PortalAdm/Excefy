@@ -42,7 +42,7 @@ export function RecoveryForm({ handleForgetPassword }: RecoveryFormProps) {
           </Button.contentWrapper>
         </Button.root>
 
-        <Title title="IALOGUE" size="xl" color="primary" />
+        <Title title="EXECFY" size="xl" color="primary" />
         <Text
           text="Enviaremos um e-mail com instruções de como redefinir sua senha!"
           size="lg"
