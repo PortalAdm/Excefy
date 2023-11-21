@@ -10,7 +10,7 @@ interface HeaderProps {
 export function Header({ actions }: HeaderProps) {
   return (
     <HeaderComponent.root>
-      <HeaderComponent.title title="Processos" />
+      <HeaderComponent.title />
       <HeaderComponent.content>
         {actions &&
           actions?.map((action, i) => (

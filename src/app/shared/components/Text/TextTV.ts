@@ -15,8 +15,8 @@ export const textTv = tv({
       bold: 'font-bold',
       normal: 'font-normal',
       light: 'font-light',
-      'semi-bold': 'font-500',
-      black: 'font-900'
+      'semi-bold': 'font-semi-bold',
+      black: 'font-black'
     },
     color: {
       primary: 'text-primary',

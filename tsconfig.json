@@ -32,6 +32,6 @@
       "~animations/*": ["./src/app/shared/components/animations/*"],
     },
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "jest.config.ts", "src/app/features/diagramView/index.tsx", "src/app/features/diagramView/views/BpmnView.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "jest.config.ts", "src/app/features/diagramView/index.tsx", "src/app/features/diagramView/views/BpmnView.js", "src/app/(pages)/(new-peocess)/new-process/page.tsx"],
   "exclude": ["node_modules"]
 }

@@ -10,7 +10,8 @@ export const APP_ROUTES = {
     },
     'new-process': {
       name: '/new-process',
-      label: 'Novo Processo'
+      label: 'Processos',
+      subtitle: 'Novo Processo'
     },
     schedule: {
       name: '/schedule',
