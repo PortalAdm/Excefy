@@ -32,6 +32,7 @@
     "camunda-bpmn-moddle": "^4.1.2",
     "camunda-dmn-moddle": "1.0.0",
     "connect": "^3.7.0",
+    "date-fns": "^2.30.0",
     "dotenv-webpack": "^8.0.1",
     "eslint-config-next": "13.4.13",
     "eslint-plugin-react": "^7.33.1",

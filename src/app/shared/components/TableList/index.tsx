@@ -4,6 +4,7 @@ import { TableListContentBody } from './views/TableListContentBody';
 import { TableListHeader } from './views/TableListHeader';
 import { TableListRoot } from './views/TableListRoot';
 import { TableListTh } from './views/TableListTh';
+import { TablePagination } from './views/TablePagination';
 import { TableStatus } from './views/TableStatus';
 
 export const TableList = {
@@ -13,5 +14,6 @@ export const TableList = {
   body: TableListContentBody,
   content: TableListContent,
   status: TableStatus,
-  buttons: TableListButtons
+  buttons: TableListButtons,
+  pagination: TablePagination
 };

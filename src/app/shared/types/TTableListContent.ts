@@ -1,7 +1,7 @@
 export type TTableListContent = {
-  name: string;
-  description: string;
-  criation: string;
-  lastEdit: string;
-  status: boolean;
+  commandDescription: string;
+  commandName: string;
+  createdAt: string | null;
+  lastEdited: string | null;
+  enable: boolean | null;
 };
