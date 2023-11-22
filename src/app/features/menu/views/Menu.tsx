@@ -23,7 +23,7 @@ export function Menu() {
         {isClose && <MenuSidebar.logo src={Logo} onClick={changeMenuState} />}
       </div>
       <MenuSidebar.divider />
-      <MenuSidebar.items onClick={changeMenuState} isClose={isClose} data={mockedMenuItems} />
+      <MenuSidebar.items isClose={isClose} data={mockedMenuItems} />
     </MenuSidebar.root>
   );
 }

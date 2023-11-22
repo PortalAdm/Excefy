@@ -6,14 +6,13 @@ import { MenuItemsType } from '~types/index';
 interface MenuItemsProps {
   data: MenuItemsType[];
   isClose: boolean;
-  onClick: () => void;
 }
 
-export function MenuItems({ data = [], isClose, onClick }: MenuItemsProps) {
+export function MenuItems({ data = [], isClose }: MenuItemsProps) {
   return (
     <>
       {data?.map((item, i) => {
-        const renderIcon = () => <Icon color="white" onClick={onClick} icon={item.icon} />;
+        const renderIcon = () => <Icon color="white" icon={item.icon} />;
 
         return (
           <React.Fragment key={i}>
@@ -27,7 +26,7 @@ export function MenuItems({ data = [], isClose, onClick }: MenuItemsProps) {
                 {item.name}
               </Link>
             ) : (
-              renderIcon()
+              <Link href={item.navigateTo}>{renderIcon()}</Link>
             )}
           </React.Fragment>
         );

@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang="pt-BR">
-      <title>EXECFY</title>
+      <title>Excefy</title>
       <body>
         <Providers>
           <MainContainer>

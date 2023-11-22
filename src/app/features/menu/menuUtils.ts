@@ -8,7 +8,7 @@ export const mockedMenuItems: MenuItemsType[] = [
   {
     icon: PiGitBranchDuotone,
     name: 'Processos',
-    navigateTo: APP_ROUTES.private['new-process'].name
+    navigateTo: APP_ROUTES.private.dashboard.name
   },
   {
     icon: LiaRobotSolid,

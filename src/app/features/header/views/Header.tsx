@@ -25,7 +25,7 @@ export function Header({ actions }: HeaderProps) {
               path={action.path}
             />
           ))}
-        <HeaderComponent.label text="Olá, Cláudio!" />
+        <HeaderComponent.label />
         <DropdownComp.Dropdown options={dropdownOptions} />
       </HeaderComponent.content>
     </HeaderComponent.root>
