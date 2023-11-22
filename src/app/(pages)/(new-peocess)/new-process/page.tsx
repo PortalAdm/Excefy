@@ -1,5 +1,3 @@
-'use client';
-
 import { Bpmn } from '~features/diagramView';
 import { KeyboardShotcut } from '~features/KeyboardShotcut';
 

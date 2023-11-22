@@ -1,3 +1,5 @@
+'use client';
+
 import { usePathname } from 'next/navigation';
 import { APP_ROUTES } from '../../../utils/constants/app-routes';
 import { Text } from '../../Text';

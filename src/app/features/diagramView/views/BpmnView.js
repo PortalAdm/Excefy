@@ -14,7 +14,7 @@ export function BpmnView({ children }) {
 
   useEffect(() => {
     const options = {
-      container: canvaRef.current,
+      container: canvaRef?.current,
       moddleExtensions: {
         camunda: camundaModdle
       }
