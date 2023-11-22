@@ -12,7 +12,13 @@ export function TableListTh({ titles = [] }: TableListThProps) {
     <>
       {titles.map((title, i) => (
         <th key={i} className={tableListThTv()}>
-          <Text text={title} weigth="black" size="sm" color="placeholder" />
+          <Text
+            text={title}
+            weigth="black"
+            size="sm"
+            color="black"
+            className="w-full min-w-[180px]"
+          />
         </th>
       ))}
     </>

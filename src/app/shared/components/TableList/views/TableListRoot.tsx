@@ -6,9 +6,5 @@ interface TableListRootProps {
 }
 
 export function TableListRoot({ children }: TableListRootProps) {
-  return (
-    <div className="p-2">
-      <table className={tableListRootTv()}>{children}</table>
-    </div>
-  );
+  return <table className={tableListRootTv()}>{children}</table>;
 }

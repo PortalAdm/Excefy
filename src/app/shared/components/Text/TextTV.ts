@@ -23,7 +23,8 @@ export const textTv = tv({
       placeholder: 'text-placeholder',
       white: 'text-white',
       success: 'text-success',
-      error: 'text-error'
+      error: 'text-error',
+      black: 'text-black'
     }
   },
   defaultVariants: {
