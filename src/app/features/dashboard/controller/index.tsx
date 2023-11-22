@@ -2,10 +2,14 @@ import { useCallback, useState } from 'react';
 import { usePromise } from '~/src/app/shared/hooks/usePromise';
 import { getAllProcess } from '../services';
 import { TTableListContent } from '~/src/app/shared/types/TTableListContent';
+import { useSystemAuth } from '../../auth/controller/useSystemAuth';
 
 export const useDashboardController = () => {
+  const { getSystemToken } = useSystemAuth();
+
   const getProcess = useCallback(async () => {
-    return await getAllProcess();
+    return await getAllProcess(getSystemToken);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { data } = usePromise(getProcess);

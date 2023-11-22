@@ -4,11 +4,11 @@ import { api } from '~/src/app/shared/services/axios/api';
 import { Message } from '~/src/app/shared/types/Process';
 import { getSystemToken } from '~/src/app/shared/utils/constants/getSystemToken';
 
-export const getAllProcess = async () => {
+export const getAllProcess = async (getSystemTokenRequest: () => void) => {
   try {
     const sysToken = getSystemToken();
 
-    if (!sysToken) return;
+    if (!sysToken) return getSystemTokenRequest();
 
     const endpoint = 'message/process/';
 
