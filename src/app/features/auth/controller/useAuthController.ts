@@ -51,7 +51,8 @@ export const useAuthController = () => {
             const access_token = result.access_token;
 
             const userSessionValue = {
-              _a: access_token
+              _a: access_token,
+              username
             };
 
             getSystemToken();
