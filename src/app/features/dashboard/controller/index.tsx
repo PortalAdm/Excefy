@@ -5,6 +5,9 @@ import { TTableListContent } from '~/src/app/shared/types/TTableListContent';
 import { useSystemAuth } from '../../auth/controller/useSystemAuth';
 
 export const useDashboardController = () => {
+  const [isFiltring, setIsFiltring] = useState(false);
+  const [value, setValue] = useState('');
+
   const { getSystemToken } = useSystemAuth();
 
   const getProcess = useCallback(async () => {
@@ -24,6 +27,8 @@ export const useDashboardController = () => {
   const endIndex = startIndex + itemsPerPage;
   const splicedContent = ProcessContent?.slice(startIndex, endIndex);
 
+  const [filtaredContent, setFiltaredContent] = useState(splicedContent);
+
   const totalPages = Math.ceil((ProcessContent?.length || 0) / itemsPerPage);
 
   const handlePreviousPage = () => {
@@ -34,13 +39,39 @@ export const useDashboardController = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
   };
 
+  const onSearch = (search: string) => {
+    if (!search) {
+      setFiltaredContent(splicedContent);
+      setIsFiltring(false);
+      return;
+    }
+
+    const filteredItems = ProcessContent?.filter((content) =>
+      new RegExp(search, 'i').test(content.commandName)
+    );
+
+    if (filteredItems) {
+      const newStartIndex = 0;
+      const newEndIndex = Math.min(filteredItems.length, itemsPerPage);
+
+      setFiltaredContent(filteredItems.slice(newStartIndex, newEndIndex));
+      setCurrentPage(1);
+      setIsFiltring(true);
+    }
+  };
+
+  const tableData = isFiltring ? filtaredContent : splicedContent;
+
   return {
-    splicedContent,
+    tableData,
     currentPage,
     totalPages,
     ProcessContent,
+    value,
+    setValue,
     handlePreviousPage,
     handleNextPage,
-    setCurrentPage
+    setCurrentPage,
+    onSearch
   };
 };

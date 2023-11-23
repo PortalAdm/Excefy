@@ -2,19 +2,32 @@
 
 import { TableList } from '~shared/components/TableList';
 import { listHeaders } from '../dashboardUtils';
-import { useDashboardController } from '../controller';
-import { Suspense } from 'react';
+import { getSystemToken } from '~/src/app/shared/utils/constants/getSystemToken';
+import { TTableListContent } from '~/src/app/shared/types/TTableListContent';
+import { Dispatch, SetStateAction } from 'react';
 
-export function ProcessList() {
-  const {
-    splicedContent,
-    currentPage,
-    totalPages,
-    ProcessContent,
-    handlePreviousPage,
-    handleNextPage,
-    setCurrentPage
-  } = useDashboardController();
+interface ProcessListProps {
+  filtaredContent: TTableListContent[];
+  currentPage: number;
+  totalPages: number;
+  ProcessContent: TTableListContent[];
+  handlePreviousPage: () => void;
+  handleNextPage: () => void;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
+}
+
+const sysToken = getSystemToken();
+
+export function ProcessList({
+  filtaredContent,
+  currentPage,
+  totalPages,
+  ProcessContent,
+  handlePreviousPage,
+  handleNextPage,
+  setCurrentPage
+}: ProcessListProps) {
+  if (!sysToken) return null;
 
   return (
     <div className="w-fit h-fit m-auto">
@@ -23,9 +36,7 @@ export function ProcessList() {
           <TableList.name titles={listHeaders} />
         </TableList.header>
         <TableList.body>
-          <Suspense fallback={<p>Carregando...</p>}>
-            <TableList.content content={splicedContent} />
-          </Suspense>
+          <TableList.content content={filtaredContent} />
         </TableList.body>
       </TableList.root>
       <TableList.pagination

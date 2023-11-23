@@ -9,10 +9,12 @@ export const iconTv = tv({
     },
     color: {
       primary: 'text-primary',
-      white: 'text-white'
+      white: 'text-white',
+      outline: 'text-outline'
     },
     input: {
-      right: 'w-6 h-24 text-black absolute right-2 top-1.5'
+      right: 'w-6 h-24 text-black absolute right-2 top-1.5',
+      left: 'absolute left-2 top-1.5'
     },
     button: {
       medium: 'relative w-5 h-5 text-white'
