@@ -30,7 +30,7 @@ export function ProcessList({
   if (!sysToken) return null;
 
   return (
-    <div className="w-fit h-fit m-auto">
+    <div className="h-fit lg:m-auto">
       <TableList.root>
         <TableList.header>
           <TableList.name titles={listHeaders} />

@@ -7,7 +7,7 @@ interface TableListHeaderProps {
 
 export function TableListHeader({ children }: TableListHeaderProps) {
   return (
-    <thead>
+    <thead className="w-[870px]">
       <tr className={tableListHeaderTV()}>{children}</tr>
     </thead>
   );

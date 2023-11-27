@@ -31,7 +31,7 @@ export function HeaderAction({
     <Button.root onClick={pushOrOnClick} color={actionBackground} size={size} variant={variant}>
       <Button.contentWrapper>
         {icon && <Button.icon icon={icon} color={color} />}
-        <Button.label text={actionLabel} as="span" color={color} />
+        <Button.label text={actionLabel} as="span" color={color} className="text-xs sm:text-md" />
       </Button.contentWrapper>
     </Button.root>
   );

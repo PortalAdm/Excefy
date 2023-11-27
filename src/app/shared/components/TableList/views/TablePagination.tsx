@@ -68,7 +68,7 @@ export function TablePagination({
   };
 
   return (
-    <nav className="flex items-center justify-between max-w-[980px]">
+    <nav className="flex items-center justify-between max-w-[870px] pr-12 lg:px-0">
       <div className="-mt-px w-0 flex-1 flex">
         <div className="-mt-px w-0 flex-1 flex">
           <button
@@ -80,11 +80,11 @@ export function TablePagination({
               className="mr-3 h-5 w-5 text-gray-400 hover:-translate-x-1 duration-300"
               aria-hidden="true"
             />
-            Anterior
+            <span className="hidden md:flex">Anterior</span>
           </button>
         </div>
       </div>
-      <div className="hidden md:-mt-px md:flex m-auto">{renderItems()}</div>
+      <div className="md:-mt-px flex m-auto">{renderItems()}</div>
       <div className="-mt-px w-0 flex-1 flex justify-end">
         <div className="-mt-px w-0 flex-1 flex justify-end">
           <button
@@ -92,7 +92,7 @@ export function TablePagination({
             onClick={handleNextPage}
             className="disabled:text-black/50 disabled:pointer-events-none border-t-2 border-transparent pt-4 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300"
           >
-            Próximo
+            <span className="hidden md:flex">Próximo</span>
             <FaArrowRight
               className="ml-3 h-5 w-5 text-gray-400 hover:translate-x-1 duration-300"
               aria-hidden="true"

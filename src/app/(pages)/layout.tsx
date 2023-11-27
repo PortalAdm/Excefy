@@ -1,5 +1,6 @@
 'use client';
 
+import '~global/styles/scrollbar.css';
 import '~global/styles/globals.css';
 import { Providers } from '../providers';
 import { MainContainer } from '../shared/components/MainContainer';

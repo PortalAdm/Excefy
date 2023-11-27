@@ -1,11 +1,11 @@
 import { tv } from 'tailwind-variants';
 
 export const tableListHeaderTV = tv({
-  base: 'h-10 text-start'
+  base: 'h-10 w-fit'
 });
 
 export const tableListThTv = tv({
-  base: 'text-start'
+  base: 'text-start w-full w-40 p-2 text-sm leading-5 text-black text-sm text-black font-black'
 });
 
 export const tableListContentTrTv = tv({
@@ -28,11 +28,11 @@ export const tableListContentStatusTv = tv({
 });
 
 export const tableListContentBodyTv = tv({
-  base: 'divide-y divide-primary h-16'
+  base: 'divide-y divide-primary h-16 w-[870px]'
 });
 
 export const tableListRootTv = tv({
-  base: 'divide-y divide-primary h-[350px] flex flex-col items-start'
+  base: 'pr-12 lg:pr-0 divide-y divide-primary h-[350px] overflow-x-auto overflow-y-hidden flex flex-col items-start w-full'
 });
 
 export const tableListButtonsTv = tv({

@@ -1,8 +1,10 @@
 import { useCallback, useState } from 'react';
-import { usePromise } from '~/src/app/shared/hooks/usePromise';
 import { getAllProcess } from '../services';
 import { TTableListContent } from '~/src/app/shared/types/TTableListContent';
 import { useSystemAuth } from '../../auth/controller/useSystemAuth';
+import { useQuery } from 'react-query';
+
+const timeToRefetchCache = 1000 * 60 * 60 * 2; // 2 hora
 
 export const useDashboardController = () => {
   const [isFiltring, setIsFiltring] = useState(false);
@@ -15,7 +17,9 @@ export const useDashboardController = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { data } = usePromise(getProcess);
+  const { data } = useQuery('userProcess', getProcess, {
+    staleTime: timeToRefetchCache
+  });
 
   const ProcessContent: TTableListContent[] =
     data?.[0] && JSON.parse(data?.[0].content as unknown as string);

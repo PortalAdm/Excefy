@@ -13,6 +13,8 @@ export function ToastRoot({ children, state, visible, ...props }: ToastRootProps
   const toastState: typeof state = toastOptions.state === 'success' ? 'success' : 'error';
   const isVisible: typeof visible = toastOptions.isActive ? 'visible' : 'hidden';
 
+  if (!toastOptions.isActive) return null;
+
   return (
     <div {...props} className={ToastRootTv({ state: toastState, visible: isVisible })}>
       {children}
