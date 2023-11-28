@@ -1,7 +1,7 @@
 import Image, { StaticImageData } from 'next/image';
-import { blurDataURL } from '../../../utils/constants/blurDataURL';
+import { blurDataURL } from '~utils/constants/blurDataURL';
 import Link from 'next/link';
-import { APP_ROUTES } from '../../../utils/constants/app-routes';
+import { APP_ROUTES } from '~utils/constants/app-routes';
 
 interface MenuLogoProps {
   src: StaticImageData;

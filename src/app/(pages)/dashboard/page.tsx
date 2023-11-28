@@ -16,17 +16,19 @@ export default function Dashboard() {
   } = useDashboardController();
 
   return (
-    <div className="p-10 flex flex-col">
+    <div className="relative h-screen p-10 flex flex-col gap-20 max-w-7xl lg:mx-auto">
       <DashBoard.search onSearch={onSearch} />
-      <DashBoard.ProcessList
-        filtaredContent={tableData}
-        currentPage={currentPage}
-        totalPages={totalPages}
-        ProcessContent={ProcessContent}
-        handlePreviousPage={handlePreviousPage}
-        handleNextPage={handleNextPage}
-        setCurrentPage={setCurrentPage}
-      />
+      <div className="w-full absolute top-32 lg:relative lg:top-0">
+        <DashBoard.ProcessList
+          filtaredContent={tableData}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          ProcessContent={ProcessContent}
+          handlePreviousPage={handlePreviousPage}
+          handleNextPage={handleNextPage}
+          setCurrentPage={setCurrentPage}
+        />
+      </div>
     </div>
   );
 }
