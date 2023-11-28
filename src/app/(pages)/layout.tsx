@@ -12,13 +12,12 @@ import { usePathname } from 'next/navigation';
 import { checkPublickRoute } from '../shared/utils/checkPublickRoute';
 import { Head } from '~features/header';
 import { actions } from '../(pages)/pageUtils';
-import { APP_ROUTES } from '../shared/utils/constants/app-routes';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const pathName = usePathname();
   const isPublicPage = checkPublickRoute(pathName!);
 
-  const shoulRenderHeader = pathName !== APP_ROUTES.private['new-process'].name;
+  const shoulRenderHeader = isPublicPage;
 
   return (
     <html lang="pt-BR">

@@ -16,15 +16,13 @@ export function HeaderTitle() {
   const formattedRouteName = routeName === 'Dashboard' ? 'Processos' : routeName;
 
   return (
-    <div className="flex flex-col w-full relative">
+    <div className="flex flex-col w-full h-fit">
       <Title
         title={formattedRouteName}
         color="primary"
         size="lg"
-        className={`transition-all duration-700 ${
-          subtitleName
-            ? 'absolute scale-50 -top-5 -left-6'
-            : 'scale-100 translate-y-0 -translate-x-0'
+        className={`transition-all w-full duration-700 ${
+          subtitleName ? 'text-xs' : 'scale-100 translate-y-0 -translate-x-0'
         }`}
       />
       {subtitleName !== '' && <Text text={subtitleName} color="primary" size="lg" weigth="bold" />}
