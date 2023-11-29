@@ -9,7 +9,6 @@ import { TabsNavigationItems as linksProps } from '~types/ITabsNavigationItems';
 
 interface TabsNavigationItemsProps extends VariantProps<typeof tabsNavigationItemsTv> {
   links: linksProps[];
-  onClick?: () => void;
 }
 
 export function TabsNavigationItems({ links = [], state, ...props }: TabsNavigationItemsProps) {

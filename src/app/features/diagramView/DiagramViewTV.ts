@@ -1,7 +1,7 @@
 import { tv } from 'tailwind-variants';
 
 export const BpmnHeaderRootTv = tv({
-  base: 'sm:px-6 h-20 sm:h-36 flex justify-between items-start py-4'
+  base: 'sm:px-9 h-20 sm:h-36 flex justify-between items-start py-4'
 });
 
 export const BpmnHeaderContentTv = tv({

@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {isPublicPage && <PublicRoute.root>{children}</PublicRoute.root>}
             {!isPublicPage && (
               <PrivateRoute.root>
-                <div className="flex flex-col w-full">
+                <div className="flex flex-col w-full h-full">
                   {shoulRenderHeader && <Head.Header actions={actions} />}
                   {children}
                 </div>

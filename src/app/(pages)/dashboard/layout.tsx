@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <title>Excefy | Painel</title>
       <Providers>
         <MainContainer>
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-full h-full">
             <Head.Header actions={actions} />
             {children}
           </div>

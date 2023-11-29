@@ -1,13 +1,5 @@
-import { Bpmn } from '~features/diagramView';
-import { KeyboardShotcut } from '~features/KeyboardShotcut';
+import { ProcessConfig } from '~/src/app/features/newProcessConfig';
 
 export default function NewProcesspage() {
-  return (
-    <Bpmn.root>
-      <Bpmn.header />
-      <Bpmn.view>
-        <KeyboardShotcut />
-      </Bpmn.view>
-    </Bpmn.root>
-  );
+  return <ProcessConfig.form />;
 }
