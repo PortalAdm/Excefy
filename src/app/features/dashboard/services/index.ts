@@ -3,6 +3,7 @@
 import { api } from '~/src/app/shared/services/axios/api';
 import { Message } from '~/src/app/shared/types/Process';
 import { getSystemToken } from '~/src/app/shared/utils/constants/getSystemToken';
+import { recipient } from '~/src/app/shared/utils/constants/recipient';
 
 export const getAllProcess = async (getSystemTokenRequest: () => void) => {
   try {
@@ -11,8 +12,6 @@ export const getAllProcess = async (getSystemTokenRequest: () => void) => {
     if (!sysToken) return getSystemTokenRequest();
 
     const endpoint = 'message/process/';
-
-    const recipient = process.env.NEXT_PUBLIC_RECIPIENT!;
 
     const resault = await api.post<Message[]>(endpoint, {
       recipient,

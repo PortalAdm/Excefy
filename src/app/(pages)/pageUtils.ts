@@ -9,6 +9,6 @@ export const actions: HeaderActionProps[] = [
     color: 'white',
     icon: AiOutlinePlus,
     size: 'small',
-    path: APP_ROUTES.private['new-process'].name
+    path: APP_ROUTES.private['new-process-config'].name
   }
 ];

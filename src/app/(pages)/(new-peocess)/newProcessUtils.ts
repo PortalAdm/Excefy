@@ -1,6 +1,6 @@
 import { IoArrowBack } from 'react-icons/io5';
-import { HeaderActionProps } from '../../../shared/components/header/views/HeaderAction';
-import { APP_ROUTES } from '../../../shared/utils/constants/app-routes';
+import { HeaderActionProps } from '../../shared/components/header/views/HeaderAction';
+import { APP_ROUTES } from '../../shared/utils/constants/app-routes';
 
 export const actions: HeaderActionProps[] = [
   {

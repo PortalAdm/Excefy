@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
-import { getAllProcess } from '../services';
-import { TTableListContent } from '~/src/app/shared/types/TTableListContent';
-import { useSystemAuth } from '../../auth/controller/useSystemAuth';
 import { useQuery } from 'react-query';
+import { TTableListContent } from '~types/TTableListContent';
+import { getAllProcess } from '../services';
+import { useSystemAuth } from '../../auth/controller/useSystemAuth';
 
 const timeToRefetchCache = 1000 * 60 * 60 * 2; // 2 hora
 

@@ -15,10 +15,15 @@ export const APP_ROUTES = {
       label: 'Processos',
       subtitle: 'Novo Processo'
     },
+    'new-process-config': {
+      name: '/new-process-config',
+      label: 'Configurações',
+      subtitle: 'Novo Processo'
+    },
     schedule: {
       name: '/schedule',
       label: 'Agenda',
-      subtitle: 'Novo Processo'
+      subtitle: ''
     }
   },
   public: {

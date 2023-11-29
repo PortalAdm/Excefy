@@ -12,7 +12,7 @@ export default function NewProcessLayout({ children }: { children: React.ReactNo
       <title>Excefy | Novo Processo</title>
       <Providers>
         <MainContainer>
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-full h-full">
             <Head.Header actions={actions} />
             {children}
           </div>

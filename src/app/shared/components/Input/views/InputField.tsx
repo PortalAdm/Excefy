@@ -7,6 +7,7 @@ import { inputFieldTv } from '../InputTV';
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   placeholder: string;
+  controlled?: boolean;
 }
 
 export function InputField({ name, type, placeholder, ...props }: InputFieldProps) {
