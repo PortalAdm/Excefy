@@ -7,28 +7,28 @@ import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
 import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css';
 import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
-import TranslateModule from 'diagram-js/lib/i18n/translate';
-import SelectionModule from 'diagram-js/lib/features/selection';
-import OverlaysModule from 'diagram-js/lib/features/overlays';
+import customTranslate from '../customTranslate/customTranslate';
 
 export function BpmnView({ children }) {
   const { xml, setXml } = useBPMN();
   const canvaRef = useRef(null);
 
   useEffect(() => {
+    const customTranslateModule = {
+      translate: [ 'value', customTranslate ]
+    };
+
     const options = {
-      container: document.getElementById('js-canvas'),
+      container: canvaRef?.current,
       keyboard: {
         bindTo: window
       },
-      _modules: [
-        TranslateModule,
-        SelectionModule,
-        OverlaysModule,
+      additionalModules: [
+        customTranslateModule
       ],
       moddleExtensions: {
-        camunda: camundaModdleDescriptor
-      }
+        camunda: camundaModdleDescriptor,
+      },
     };
 
     const viewer = new BpmnViewer(options);
