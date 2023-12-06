@@ -9,11 +9,15 @@ export const updateProcessConfiguration = async (data: ProcessConfigRequest) => 
 
     const processConfig = {
       recipient,
-      commandName: 'ProcessInsert',
+      commandName: 'ProcessUpdate',
       commandParameters: [
         {
           name: 'clientId',
-          value: 3
+          value: '3'
+        },
+        {
+          name: 'commandId',
+          value: '21'
         },
         {
           name: 'processName',
@@ -25,7 +29,7 @@ export const updateProcessConfiguration = async (data: ProcessConfigRequest) => 
         },
         {
           name: 'matchPattern',
-          value: '#Exemplo%'
+          value: '#testeUpdate%'
         },
         {
           name: 'executionPriority',

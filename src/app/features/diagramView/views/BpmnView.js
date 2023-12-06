@@ -7,6 +7,9 @@ import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
 import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css';
 import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
+import TranslateModule from 'diagram-js/lib/i18n/translate';
+import SelectionModule from 'diagram-js/lib/features/selection';
+import OverlaysModule from 'diagram-js/lib/features/overlays';
 
 export function BpmnView({ children }) {
   const { xml, setXml } = useBPMN();
@@ -15,13 +18,18 @@ export function BpmnView({ children }) {
   useEffect(() => {
     const options = {
       container: document.getElementById('js-canvas'),
-        keyboard: {
-          bindTo: window
-        },
-        moddleExtensions: {
-          camunda: camundaModdleDescriptor
-        }
-    }
+      keyboard: {
+        bindTo: window
+      },
+      _modules: [
+        TranslateModule,
+        SelectionModule,
+        OverlaysModule,
+      ],
+      moddleExtensions: {
+        camunda: camundaModdleDescriptor
+      }
+    };
 
     const viewer = new BpmnViewer(options);
 
