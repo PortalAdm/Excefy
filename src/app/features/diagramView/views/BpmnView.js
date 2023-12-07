@@ -56,12 +56,17 @@ export function BpmnView({ children }) {
       }
     };
 
+    const getupdatedXml = async () => {
+        const { xml } = await viewer.saveXML({ format: true })
+
+        if (xml) {
+          console.log(xml)
+        }
+    }
+
     viewer.on('element.changed', (e) => {
-      const element = e.element;
-
-      console.log(element);
+      getupdatedXml()
     });
-
 
     const getXML = async () => await importXML(xml);
 
