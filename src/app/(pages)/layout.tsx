@@ -2,6 +2,7 @@
 
 import '~global/styles/scrollbar.css';
 import '~global/styles/globals.css';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Providers } from '../providers';
 import { MainContainer } from '../shared/components/MainContainer';
 import { Menu } from '../features/menu/views/Menu';
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <div className="flex flex-col w-full h-full">
                   {shoulRenderHeader && <Head.Header actions={actions} />}
                   {children}
+                  <SpeedInsights />
                 </div>
               </PrivateRoute.root>
             )}
