@@ -6,6 +6,7 @@ interface ModalActionProps {
   icon?: ElementType;
   actionLabel: string;
   color: 'primary' | 'white';
+  disabled?: boolean;
   size?: 'small' | 'medium' | 'huge';
   actionBackground?: 'primary' | 'transparent';
   variant?: 'bordered';
@@ -18,10 +19,17 @@ export function ModalAction({
   size,
   actionBackground,
   variant,
+  disabled,
   onClick
 }: ModalActionProps) {
   return (
-    <Button.root onClick={onClick} color={actionBackground} size={size} variant={variant}>
+    <Button.root
+      disabled={disabled}
+      onClick={onClick}
+      color={actionBackground}
+      size={size}
+      variant={variant}
+    >
       <Button.contentWrapper>
         {icon && <Button.icon icon={icon} color={color} />}
         <Button.label text={actionLabel} as="span" color={color} />

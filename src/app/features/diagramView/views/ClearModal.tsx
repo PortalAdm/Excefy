@@ -25,7 +25,7 @@ export const ClearModal = () => {
             size="small"
             actionLabel="cancelar"
             color="primary"
-            onClick={clearning}
+            onClick={() => changeModalState()}
             actionBackground="transparent"
             variant="bordered"
           />
