@@ -1,14 +1,19 @@
 'use client';
 
 import { Button } from '~shared/components/Button';
-import { buttons } from '../DiagramViewUtils';
 import { Modal } from '~/src/app/shared/components/Modal';
 import { BpmnHeaderContentTv, BpmnHeaderRootTv } from '../DiagramViewTV';
 import { useDiagramViewController } from '../controller';
 import { TabsNavigation } from '~/src/app/shared/components/TabsNavigation';
+import BpmnViewer from 'bpmn-js/lib/Modeler';
 
-export function BpmnHeader() {
-  const { isDisabled, idx, modal, links, setXml, setIdx } = useDiagramViewController();
+interface BpmnHeaderProps {
+  viewer: BpmnViewer;
+}
+
+export function BpmnHeader({ viewer }: BpmnHeaderProps) {
+  const { isDisabled, idx, modal, links, buttons, setInitialXml, setIdx } =
+    useDiagramViewController(viewer);
 
   return (
     <div className={BpmnHeaderRootTv()}>
@@ -30,7 +35,7 @@ export function BpmnHeader() {
                   type="file"
                   className="absolute opacity-0"
                   accept=".bpmn, svg"
-                  onChange={(e) => button.onChange?.(e, setXml)}
+                  onChange={(e) => button.onChange?.(e, setInitialXml)}
                 />
               )}
               <Button.icon icon={button.icon} />

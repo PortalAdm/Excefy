@@ -6,22 +6,27 @@ import 'bpmn-js-connectors-extension/dist/connectors-extension.css';
 
 import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
 
 import BpmnViewer from 'bpmn-js/lib/Modeler';
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
 import customTranslate from '../customTranslate/customTranslate';
+import { BpmnHeader } from './BpmnHeader';
 
 export function BpmnView({ children }) {
-  const { xml, setXml, saveOrOpenFile } = useBPMN();
+  const { initialXml, getupdatedXml, saveOrOpenFile } = useBPMN();
   const canvaRef = useRef(null);
+  const [teste, setTeste] = useState();
 
   useEffect(() => {
-    function loadTemplates() {
+    const loadTemplates = () => {
       const context = require.context('../.camunda/element-templates', false, /\.json$/);
-      return context.keys().map(key => context(key)).flat();
-    }
+      return context
+        .keys()
+        .map((key) => context(key))
+        .flat();
+    };
 
     const TEMPLATES = loadTemplates();
 
@@ -34,15 +39,15 @@ export function BpmnView({ children }) {
       keyboard: {
         bindTo: window
       },
-      additionalModules: [
-        customTranslateModule
-      ],
+      additionalModules: [customTranslateModule],
       moddleExtensions: {
         camunda: camundaModdleDescriptor
       }
     };
 
     const viewer = new BpmnViewer(options);
+
+    setTeste(viewer);
 
     const importXML = async (xml) => {
       try {
@@ -56,29 +61,24 @@ export function BpmnView({ children }) {
       }
     };
 
-    const getupdatedXml = async () => {
-        const { xml } = await viewer.saveXML({ format: true })
-
-        if (xml) {
-          console.log(xml)
-        }
-    }
-
-    viewer.on('element.changed', (e) => {
-      getupdatedXml()
+    viewer.on('element.changed', () => {
+      getupdatedXml(viewer);
     });
 
-    const getXML = async () => await importXML(xml);
+    const getXML = async () => await importXML(initialXml);
 
     // viewer.get('connectorsExtension').loadTemplates(TEMPLATES);
 
     getXML();
-    saveOrOpenFile(viewer)
-  }, [xml]);
+    saveOrOpenFile(viewer);
+  }, [initialXml]);
 
   return (
-    <div className="relative h-full border-t-[1px] border-primary" id="js-canvas" ref={canvaRef}>
-      {children}
-    </div>
+      <>
+        <BpmnHeader viewer={teste} />
+        <div className="relative h-full border-t-[1px] border-primary z-0" id="js-canvas" ref={canvaRef}>
+          {children}
+        </div>
+      </>
   );
 }
