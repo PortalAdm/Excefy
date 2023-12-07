@@ -5,7 +5,7 @@ export default function customTranslate(template, replacements) {
 
   const find = Object.keys(PT).find(key => key.includes(replacements.type))
 
-  template = PT[template] || PT[find] || 'Criar tarefa';
+  template = PT[template] || PT[find] || template;
 
   return template?.replace(/{([^}]+)}/g, function(_, key) {
     return replacements[key];
