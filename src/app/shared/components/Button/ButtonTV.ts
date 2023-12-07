@@ -13,7 +13,7 @@ export const buttonRootTv = tv({
       after:hover:w-full after:w-0 after:transition-all after:duration-300 after:h-full
       disabled:pointer-events-none disabled:bg-outline active:after:w-full active:after:h-full active:after:top-0 after:left-1/2 active:after:left-0
       active:after:bg-white/5`,
-      transparent: 'bg-transparent'
+      transparent: 'bg-transparent disabled:pointer-events-none'
     },
     variant: {
       bordered:

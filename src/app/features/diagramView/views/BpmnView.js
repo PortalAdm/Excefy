@@ -12,12 +12,20 @@ import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
 import BpmnViewer from 'bpmn-js/lib/Modeler';
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
 import customTranslate from '../customTranslate/customTranslate';
-import { BpmnHeader } from './BpmnHeader';
+import { diagramXML } from '../DiagramViewUtils';
+import { Button } from '~/src/app/shared/components/Button';
+import { useDiagramViewController } from '../controller';
+import { TabsNavigation } from '~/src/app/shared/components/TabsNavigation';
+import { Modal } from '~/src/app/shared/components/Modal';
+import { BpmnHeaderContentTv, BpmnHeaderRootTv } from '../DiagramViewTV';
 
 export function BpmnView({ children }) {
-  const { initialXml, getupdatedXml, saveOrOpenFile } = useBPMN();
+  const [headerViewer, setHeaderViewer] = useState();
+
+  const { initialXml, isDisabled, getupdatedXml, saveWithCTRLandS, setInitialXml } =
+    useBPMN();
   const canvaRef = useRef(null);
-  const [teste, setTeste] = useState();
+  const { idx, modal, links, buttons, setIdx } = useDiagramViewController(headerViewer);
 
   useEffect(() => {
     const loadTemplates = () => {
@@ -47,7 +55,7 @@ export function BpmnView({ children }) {
 
     const viewer = new BpmnViewer(options);
 
-    setTeste(viewer);
+    setHeaderViewer(viewer);
 
     const importXML = async (xml) => {
       try {
@@ -68,17 +76,49 @@ export function BpmnView({ children }) {
     const getXML = async () => await importXML(initialXml);
 
     // viewer.get('connectorsExtension').loadTemplates(TEMPLATES);
-
     getXML();
-    saveOrOpenFile(viewer);
+    saveWithCTRLandS(viewer);
   }, [initialXml]);
 
   return (
-      <>
-        <BpmnHeader viewer={teste} />
-        <div className="relative h-full border-t-[1px] border-primary z-0" id="js-canvas" ref={canvaRef}>
-          {children}
+    <>
+      <div className={BpmnHeaderRootTv()}>
+        <TabsNavigation.root>
+          <TabsNavigation.items links={links} />
+        </TabsNavigation.root>
+        <div className={BpmnHeaderContentTv()}>
+          {buttons.map((button, i) => (
+            <Modal.trigger key={i}>
+              <Button.root
+                disabled={i !== 0 && isDisabled}
+                size="small"
+                color="transparent"
+                variant="bordered"
+                onClick={() => setIdx(i)}
+              >
+                {i === 0 && (
+                  <input
+                    type="file"
+                    className="absolute opacity-0"
+                    accept=".bpmn, svg"
+                    onChange={(e) => button.onChange?.(e, setInitialXml)}
+                  />
+                )}
+                <Button.icon icon={button.icon} />
+                <Button.label color="primary" text={button.text} />
+              </Button.root>
+            </Modal.trigger>
+          ))}
         </div>
-      </>
+        {modal[idx]}
+      </div>
+      <div
+        className="relative h-full border-t-[1px] border-primary z-0"
+        id="js-canvas"
+        ref={canvaRef}
+      >
+        {children}
+      </div>
+    </>
   );
 }

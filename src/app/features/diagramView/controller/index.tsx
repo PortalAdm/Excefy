@@ -1,10 +1,8 @@
 import { useEffect, useState, Dispatch, FormEvent, SetStateAction } from 'react';
 import { CiExport, CiImport } from 'react-icons/ci';
-import { BiTrash } from 'react-icons/bi';
 import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
 import { KeyValue } from '~types/IKeyValue';
 import { DownloadModal } from '../views/DownloadModal';
-import { ClearModal } from '../views/ClearModal';
 import { TabsNavigationItems } from '~/src/app/shared/types/ITabsNavigationItems';
 import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
 import { usePathname } from 'next/navigation';
@@ -17,8 +15,8 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
   const pathName = usePathname();
 
   const modal: KeyValue = {
-    1: DownloadModal(viewer),
-    2: ClearModal()
+    1: DownloadModal(viewer)
+    // adicione o index do modal e qual deve ser renderizado
   };
 
   const links: TabsNavigationItems[] = [
@@ -57,10 +55,6 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
     {
       icon: CiImport,
       text: 'Baixar'
-    },
-    {
-      icon: BiTrash,
-      text: 'Limpar'
     }
   ];
 

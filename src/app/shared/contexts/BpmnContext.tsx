@@ -7,9 +7,8 @@ import { useToast } from '../hooks/useToast';
 interface BpmnContext {
   initialXml: string | File;
   isDisabled: boolean;
-  saveNewXml: () => void;
   setInitialXml: Dispatch<SetStateAction<string | File>>;
-  saveOrOpenFile: (viewer: BpmnViewer) => void;
+  saveWithCTRLandS: (viewer: BpmnViewer) => void;
   getupdatedXml: (viewer: BpmnViewer) => void;
   downloadSVGiagram: (viewer: BpmnViewer) => void;
   downloadBPMNDiagram: (viewer: BpmnViewer) => void;
@@ -37,17 +36,12 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
     changeToastActive({ state: state }, messageTitle, messageDescription, 5000);
   };
 
-  const saveNewXml = () => {
-    return setIsDisabled(true);
-  };
-
   const getupdatedXml = async (viewer: BpmnViewer) => {
     const { xml } = await viewer.saveXML({ format: true });
     if (initialXml !== xml) return setIsDisabled(false);
 
     if (xml) {
       setInitialXml(xml);
-      // console.log(xml);
     }
   };
 
@@ -65,25 +59,22 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
   const downloadBPMNDiagram = async (viewer: BpmnViewer) => {
     const { xml, error } = await viewer.saveXML({ format: true });
 
-    console.log(error);
-
     if (error) {
       return setToast('Seu BPMN não pode ser gerado!', error.message, 'error');
     }
 
     if (xml) {
-      console.log(xml);
       setToast('BPMN gerado com sucesso!', 'Seu download está pronto', 'success');
       return download(xml, BPMNFileName, 'application/xml');
     }
   };
 
-  const saveOrOpenFile = (viewer: any) => {
+  const saveWithCTRLandS = (viewer: any) => {
     document.body.addEventListener('keydown', function (e) {
       if (e.code === 'KeyS' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
 
-        downloadSVGiagram(viewer);
+        downloadBPMNDiagram(viewer);
       }
     });
   };
@@ -93,9 +84,8 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
       value={{
         initialXml,
         isDisabled,
-        saveNewXml,
         setInitialXml,
-        saveOrOpenFile,
+        saveWithCTRLandS,
         getupdatedXml,
         downloadSVGiagram,
         downloadBPMNDiagram
