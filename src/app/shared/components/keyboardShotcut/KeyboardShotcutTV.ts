@@ -19,7 +19,7 @@ export const KeyboardShotcutHeaderTv = tv({
 });
 
 export const KeyboardShotcutContentTv = tv({
-  base: 'px-6 py-9 overflow-y-scroll overflow-x-hidden max-h-[640px]'
+  base: 'px-6 py-9 overflow-y-scroll overflow-x-hidden max-h-[440px]'
 });
 
 export const KeyboardShotcutFooterTv = tv({

@@ -1,4 +1,4 @@
-import { useEffect, useState, Dispatch, FormEvent, SetStateAction } from 'react';
+import { useEffect, useState } from 'react';
 import { CiExport, CiImport } from 'react-icons/ci';
 import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
 import { KeyValue } from '~types/IKeyValue';
@@ -10,7 +10,7 @@ import BpmnViewer from 'bpmn-js/lib/Modeler';
 
 export const useDiagramViewController = (viewer: BpmnViewer) => {
   const [idx, setIdx] = useState(0);
-  const { isDisabled, setInitialXml } = useBPMN();
+  const { isDisabled, handleImportFile } = useBPMN();
 
   const pathName = usePathname();
 
@@ -30,27 +30,11 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
     }
   ];
 
-  const handleExportFile = async (
-    e: FormEvent<HTMLInputElement>,
-    setXml: Dispatch<SetStateAction<string | File>>
-  ) => {
-    const target = e.target as HTMLInputElement & {
-      files: FileList;
-    };
-
-    if (typeof target.files[0] !== 'undefined') {
-      // eslint-disable-next-line no-console
-      console.log(target.files[0]);
-
-      return setXml(target.files[0]); // isso deve ir para o backend para ser validado
-    }
-  };
-
   const buttons = [
     {
       icon: CiExport,
       text: 'Importar',
-      onChange: handleExportFile
+      onChange: handleImportFile
     },
     {
       icon: CiImport,
@@ -70,7 +54,6 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
     modal,
     links,
     buttons,
-    setIdx,
-    setInitialXml
+    setIdx
   };
 };

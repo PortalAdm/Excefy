@@ -13,6 +13,8 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@bpmn-io/element-template-chooser": "^1.0.0",
+    "@bpmn-io/element-template-icon-renderer": "^0.5.1",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.2.0",
@@ -57,6 +59,7 @@
     "ts-node": "^10.9.1",
     "typescript": "5.1.6",
     "uuidv4": "^6.2.13",
+    "zeebe-bpmn-moddle": "^1.0.0",
     "zod": "^3.22.1",
     "zustand": "^4.4.1"
   },
