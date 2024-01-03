@@ -92,12 +92,12 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
 
   const handleImportFile = async (e: FormEvent<HTMLInputElement>) => {
     try {
-      setIsLoading(true);
       const target = e.target as HTMLInputElement & {
         files: FileList;
       };
 
       if (typeof target.files[0] !== 'undefined') {
+        setIsLoading(true);
         const file = target.files[0];
 
         const reader = new FileReader();
