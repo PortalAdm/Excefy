@@ -5,7 +5,9 @@ import 'bpmn-font/dist/css/bpmn-embedded.css';
 import 'bpmn-js-connectors-extension/dist/connectors-extension.css';
 
 // import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
-import 'bpmn-js-connectors-extension/dist/connectors-extension.css';
+
+import { BpmnPropertiesPanelModule, BpmnPropertiesProviderModule } from 'bpmn-js-properties-panel';
+import { ElementTemplatesPropertiesProviderModule } from 'bpmn-js-element-templates';
 
 import BpmnViewer from 'bpmn-js/lib/Modeler';
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
@@ -15,7 +17,7 @@ import { BaseViewerOptions } from 'bpmn-js/lib/BaseViewer';
 
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { useDiagramViewController } from '../controller';
 import { BpmnHeaderContentTv, BpmnHeaderRootTv } from '../DiagramViewTV';
 import { TabsNavigation } from '~/src/app/shared/components/TabsNavigation';
@@ -23,30 +25,61 @@ import { Modal } from '~/src/app/shared/components/Modal';
 import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
 import { Button } from '~/src/app/shared/components/Button';
 import { Icon } from '~/src/app/shared/components/Icon';
+import EventDetail from '~/src/app/features/diagramView/views/EventDetail';
 
-interface BpmnView {
+interface BpmnViewProps {
   children: ReactNode;
 }
 
-export function BpmnView({ children }: BpmnView) {
+export function BpmnView({ children }: BpmnViewProps) {
+  const canvaRef = useRef<HTMLDivElement>(null);
   const [headerViewer, setHeaderViewer] = useState<Modeler>();
-
   const { updatedXml, isDisabled, isLoading, getupdatedXml, saveWithCTRLandS } = useBPMN();
   const { idx, modal, links, buttons, setIdx } = useDiagramViewController(headerViewer as Modeler);
+  const propertiesPanelRef = useRef<HTMLDivElement>(null);
 
-  const canvaRef = useRef<HTMLDivElement>(null);
+  const getInitialXML = useCallback(async (viewer: BpmnViewer, xml: string) => {
+    try {
+      const { warnings } = await viewer.importXML(xml);
 
-  useEffect(() => {
+      if (warnings.length) {
+        throw new Error(warnings[0]);
+      }
+    } catch (err: any) {
+      throw new Error('Erro na renderização', err);
+    }
+  }, []);
+
+  const updateXml = useCallback(
+    (viewer: BpmnViewer) => {
+      viewer.on('element.changed', (e) => {
+        e.preventDefault();
+
+        getupdatedXml(viewer);
+      });
+    },
+    [getupdatedXml]
+  );
+
+  useLayoutEffect(() => {
     const customTranslateModule = {
       translate: ['value', customTranslate]
     };
 
-    const options: BaseViewerOptions & { container: HTMLDivElement } = {
+    const options: BaseViewerOptions = {
+      propertiesPanel: {
+        parent: propertiesPanelRef?.current
+      },
       container: canvaRef?.current as HTMLDivElement,
       keyboard: {
         bindTo: window
       },
-      additionalModules: [customTranslateModule],
+      additionalModules: [
+        customTranslateModule,
+        BpmnPropertiesPanelModule,
+        BpmnPropertiesProviderModule,
+        ElementTemplatesPropertiesProviderModule
+      ],
       moddleExtensions: {
         camunda: camundaModdleDescriptor
       }
@@ -54,32 +87,20 @@ export function BpmnView({ children }: BpmnView) {
 
     const viewer = new BpmnViewer(options);
 
-    setHeaderViewer(viewer);
+    if (!headerViewer) {
+      setHeaderViewer(viewer);
+    }
 
-    const importXML = async (xml: string | File) => {
-      try {
-        const { warnings } = await viewer.importXML(xml as string);
-
-        if (warnings.length) {
-          throw new Error(warnings[0]);
-        }
-      } catch (err: any) {
-        throw new Error('Erro na renderização', err);
-      }
-    };
-
-    viewer.on('element.changed', () => {
-      getupdatedXml(viewer);
-    });
-
-    const getInitialXML = async () => await importXML(updatedXml);
-
-    getInitialXML();
+    updateXml(viewer);
 
     if (viewer) {
       saveWithCTRLandS(viewer);
     }
-  }, [updatedXml, getupdatedXml, saveWithCTRLandS]);
+
+    getInitialXML(viewer, updatedXml as string);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -119,6 +140,7 @@ export function BpmnView({ children }: BpmnView) {
           id="js-canvas"
           ref={canvaRef}
         >
+          <EventDetail ref={propertiesPanelRef} />
           {children}
         </div>
       ) : (

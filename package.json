@@ -15,6 +15,7 @@
   "dependencies": {
     "@bpmn-io/element-template-chooser": "^1.0.0",
     "@bpmn-io/element-template-icon-renderer": "^0.5.1",
+    "@bpmn-io/properties-panel": "^3.15.0",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.2.0",
@@ -32,7 +33,9 @@
     "bpmn-font": "0.9.3",
     "bpmn-js": "^15.2.2",
     "bpmn-js-connectors-extension": "^0.4.6",
-    "camunda-bpmn-moddle": "^4.1.2",
+    "bpmn-js-element-templates": "^1.10.0",
+    "bpmn-js-properties-panel": "^5.7.0",
+    "camunda-bpmn-moddle": "^7.0.1",
     "camunda-dmn-moddle": "1.0.0",
     "connect": "^3.7.0",
     "date-fns": "^2.30.0",
