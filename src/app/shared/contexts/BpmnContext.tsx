@@ -3,6 +3,7 @@ import download from 'downloadjs';
 import BpmnViewer from 'bpmn-js/lib/Modeler';
 import { useToast } from '../hooks/useToast';
 import { diagramXML } from '~features/diagramView/DiagramViewUtils';
+import { useBpmnJobs } from '~/src/app/shared/hooks/useBpmnJobs';
 
 interface BpmnContext {
   updatedXml: string | File;
@@ -25,8 +26,11 @@ const SVGFileName = 'diagram.svg';
 export const BpmnContext = createContext({} as BpmnContext);
 
 export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
+  const { updateLocal, getLocal } = useBpmnJobs();
+  const localXML = getLocal();
+
   const { changeToastActive } = useToast();
-  const [updatedXml, setUpdatedXml] = useState<string | File>(diagramXML);
+  const [updatedXml, setUpdatedXml] = useState<string | File>(localXML || diagramXML);
   const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,15 +41,19 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
     [changeToastActive]
   );
 
-  const getupdatedXml = useCallback(async (viewer: BpmnViewer) => {
-    const { xml } = await viewer.saveXML({ format: true });
-    if (diagramXML !== xml) setIsDisabled(false);
-    if (diagramXML === xml) setIsDisabled(true);
+  const getupdatedXml = useCallback(
+    async (viewer: BpmnViewer) => {
+      const { xml } = await viewer.saveXML({ format: true });
+      if (diagramXML !== xml) setIsDisabled(false);
+      if (diagramXML === xml) setIsDisabled(true);
 
-    if (xml) {
-      return setUpdatedXml(xml);
-    }
-  }, []);
+      if (xml) {
+        updateLocal(xml);
+        return setUpdatedXml(xml);
+      }
+    },
+    [updateLocal]
+  );
 
   const downloadSVGiagram = useCallback(
     async (viewer: BpmnViewer) => {

@@ -98,6 +98,7 @@ export function BpmnView({ children }: BpmnViewProps) {
     }
 
     getInitialXML(viewer, updatedXml as string);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
