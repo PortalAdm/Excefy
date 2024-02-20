@@ -39,7 +39,13 @@ export const useAuthController = () => {
   } = authFormSchema;
 
   const onSubmit = async ({ password, userName }: TAuthSubmitSchema) => {
-    const res = await userAuth(userName, password, setIsLoading, setLocalStorage, setErrorMessage);
+    const res = await userAuth({
+      username: userName,
+      password,
+      loadAction: setIsLoading,
+      sessionHandler: setLocalStorage,
+      errorHandler: setErrorMessage
+    });
 
     if (res) {
       await sysAuth(setIsLoading, createSession);
