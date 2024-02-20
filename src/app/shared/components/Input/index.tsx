@@ -1,3 +1,4 @@
+import { InputFieldWrapper } from './views/InputFieldWrapper';
 import { Icon } from '../Icon';
 import { ErrorMessage } from './views/ErrorMessage';
 import { InputControlled } from './views/InputControlled';
@@ -11,6 +12,7 @@ export const Input = {
   root: InputRoot,
   label: InputLabel,
   field: InputField,
+  wrapperWithIcon: InputFieldWrapper,
   controlledField: InputControlled,
   icon: Icon,
   error: ErrorMessage,

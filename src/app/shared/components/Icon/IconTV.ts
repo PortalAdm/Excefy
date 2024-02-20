@@ -13,7 +13,7 @@ export const iconTv = tv({
       outline: 'text-outline'
     },
     input: {
-      right: 'w-6 h-24 text-black absolute right-2 top-1.5',
+      right: 'w-6 absolute right-2 text-black',
       left: 'absolute left-2 top-1.5'
     },
     button: {

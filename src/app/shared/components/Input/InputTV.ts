@@ -18,7 +18,7 @@ export const inputLabelTv = tv({
 });
 
 export const inputFieldTv = tv({
-  base: 'ring-1 focus:ring-2 ring-Outline focus:ring-primary outline-Outline bg-transparent focus:outline-primary rounded py-2 px-3 items-center'
+  base: 'ring-1 focus:ring-2 ring-Outline focus:ring-primary outline-Outline bg-transparent focus:outline-primary rounded py-2 px-3 items-center w-full'
 });
 
 export const InputTextareaTv = tv({
@@ -31,4 +31,8 @@ export const InputIconTv = tv({
 
 export const errorMessageTv = tv({
   base: 'text-xs text-red-500 mt-1'
+});
+
+export const inputFieldWrapperTv = tv({
+  base: 'relative flex items-center w-full h-fit'
 });

@@ -31,12 +31,14 @@ export const sysAuth = async (
       }
     });
 
-    const createSessionCookie: CreateSession = {
-      cookieName: sysSession,
-      value: JSON.stringify(data)
-    };
+    if (data) {
+      const createSessionCookie: CreateSession = {
+        cookieName: sysSession,
+        value: JSON.stringify(data)
+      };
 
-    return createSession(createSessionCookie);
+      return createSession(createSessionCookie);
+    }
   } catch (err) {
     if (err instanceof Error) {
       throw new Error(err.message);

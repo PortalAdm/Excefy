@@ -57,8 +57,10 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
 
         <Input.root>
           <Input.label label="Senha" name="password" />
-          <Input.field type={passwordType} name="password" placeholder="Digite sua senha..." />
-          <Input.icon icon={inputIcon} onClick={handleIconChange} input="right" />
+          <Input.wrapperWithIcon>
+            <Input.field type={passwordType} name="password" placeholder="Digite sua senha..." />
+            <Input.icon icon={inputIcon} onClick={handleIconChange} input="right" />
+          </Input.wrapperWithIcon>
           <Input.error field="password" />
         </Input.root>
 
