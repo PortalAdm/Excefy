@@ -9,6 +9,7 @@ export default function Dashboard() {
     currentPage,
     totalPages,
     ProcessContent,
+    isLoading,
     handlePreviousPage,
     handleNextPage,
     setCurrentPage,
@@ -20,6 +21,7 @@ export default function Dashboard() {
       <DashBoard.search onSearch={onSearch} />
       <div className="w-full absolute top-32 lg:relative lg:top-0">
         <DashBoard.ProcessList
+          isLoading={isLoading}
           filtaredContent={tableData}
           currentPage={currentPage}
           totalPages={totalPages}

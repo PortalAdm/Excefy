@@ -15,7 +15,7 @@ export const useDashboardController = () => {
     return userProcess;
   }, []);
 
-  const { data: userProcess } = useQuery('userProcess', getProcess, {
+  const { data: userProcess, isLoading } = useQuery('userProcess', getProcess, {
     staleTime: timeToRefetchCache
   });
 
@@ -70,6 +70,7 @@ export const useDashboardController = () => {
     totalPages,
     ProcessContent,
     value,
+    isLoading,
     setValue,
     handlePreviousPage,
     handleNextPage,

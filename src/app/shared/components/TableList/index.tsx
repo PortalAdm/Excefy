@@ -1,3 +1,4 @@
+import { TableSkeleton } from '~/src/app/shared/components/TableList/views/TableSkeleton';
 import { TableListButtons } from './views/TableListButtons';
 import { TableListContent } from './views/TableListContent';
 import { TableListContentBody } from './views/TableListContentBody';
@@ -15,5 +16,6 @@ export const TableList = {
   content: TableListContent,
   status: TableStatus,
   buttons: TableListButtons,
-  pagination: TablePagination
+  pagination: TablePagination,
+  Skeleton: TableSkeleton
 };
