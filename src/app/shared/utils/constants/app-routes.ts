@@ -27,6 +27,6 @@ export const APP_ROUTES = {
     }
   },
   public: {
-    auth: '/'
+    home: '/'
   }
 };

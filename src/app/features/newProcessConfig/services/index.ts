@@ -1,7 +1,7 @@
 import { api } from '~/src/app/shared/services/axios/api';
 import { recipient } from '~utils/constants/recipient';
-import { ProcessConfigResponse } from '~types/ProcessConfigResponse';
-import { ProcessConfigRequest } from '~types/ProcessConfigRequest';
+import { ProcessConfigResponse } from '~/src/app/shared/types/responses/ProcessConfigResponse';
+import { ProcessConfigRequest } from '~/src/app/shared/types/requests/ProcessConfigRequest';
 
 export const updateProcessConfiguration = async (data: ProcessConfigRequest) => {
   try {

@@ -2,7 +2,6 @@ import { useCallback, useState } from 'react';
 import { useQuery } from 'react-query';
 import { TTableListContent } from '~types/TTableListContent';
 import { getAllProcess } from '../services';
-import { useSystemAuth } from '../../auth/controller/useSystemAuth';
 
 const timeToRefetchCache = 1000 * 60 * 60 * 2; // 2 hora
 
@@ -10,19 +9,18 @@ export const useDashboardController = () => {
   const [isFiltring, setIsFiltring] = useState(false);
   const [value, setValue] = useState('');
 
-  const { getSystemToken } = useSystemAuth();
-
   const getProcess = useCallback(async () => {
-    return await getAllProcess(getSystemToken);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const userProcess = await getAllProcess();
+
+    return userProcess;
   }, []);
 
-  const { data } = useQuery('userProcess', getProcess, {
+  const { data: userProcess } = useQuery('userProcess', getProcess, {
     staleTime: timeToRefetchCache
   });
 
   const ProcessContent: TTableListContent[] =
-    data?.[0] && JSON.parse(data?.[0].content as unknown as string);
+    userProcess?.[0] && JSON.parse(userProcess?.[0].content as unknown as string);
 
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);

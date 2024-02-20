@@ -50,7 +50,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       return push(dashboard);
     }
 
-    return push(APP_ROUTES.public.auth);
+    return push(APP_ROUTES.public.home);
   };
 
   useEffect(() => {

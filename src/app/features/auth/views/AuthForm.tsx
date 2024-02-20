@@ -1,18 +1,14 @@
 'use client';
 
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { FormProvider } from 'react-hook-form';
 import { Input } from '~shared/components/Input';
 import { Text } from '~shared/components/Text';
 import { Title } from '~shared/components/Title';
-import { TAuthSubmitSchema, authSubmitSchema } from '../AuthUtils';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from './Form';
 import { Button } from '~/src/app/shared/components/Button';
 import { authFormTv } from '../AuthTV';
 import { ButtonLoad } from '~/src/app/shared/components/animations/buttonLoad';
-import { useAuthController } from '../controller/useAuthController';
+import { useAuthController } from '../controller';
 import { useAuth } from '~/src/app/shared/hooks/useAuth';
 
 interface AuthFormProps {
@@ -20,24 +16,16 @@ interface AuthFormProps {
 }
 
 export function AuthForm({ handleForgetPassword }: AuthFormProps) {
-  const { getToken } = useAuthController();
   const { isLoading, errorMessage } = useAuth();
-  const [isVisible, setIsVisible] = useState(false);
-
-  const handleIconChange = () => setIsVisible((isVisible) => !isVisible);
-  const inputIcon = isVisible ? AiFillEye : AiFillEyeInvisible;
-  const passwordType = isVisible ? 'text' : 'password';
-
-  const authFormSchema = useForm<TAuthSubmitSchema>({
-    resolver: zodResolver(authSubmitSchema)
-  });
-
   const {
+    isSubmitting,
+    authFormSchema,
+    inputIcon,
+    passwordType,
     handleSubmit,
-    formState: { isSubmitting }
-  } = authFormSchema;
-
-  const onSubmit = (data: TAuthSubmitSchema) => getToken(data.userName, data.password);
+    onSubmit,
+    handleIconChange
+  } = useAuthController();
 
   return (
     <FormProvider {...authFormSchema}>
