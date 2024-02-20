@@ -1,1 +1,1 @@
-export const userSession = process.env.NEXT_PUBLIC_AUTH_USER_SESSION ?? '';
+export const userSession = process.env.NEXT_PUBLIC_USER_SESSION ?? '';
