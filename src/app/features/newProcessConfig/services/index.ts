@@ -2,11 +2,10 @@ import { api } from '~/src/app/shared/services/axios/api';
 import { recipient } from '~utils/constants/recipient';
 import { ProcessConfigResponse } from '~/src/app/shared/types/responses/ProcessConfigResponse';
 import { ProcessConfigRequest } from '~/src/app/shared/types/requests/ProcessConfigRequest';
+import { baseEndpoint } from '~/src/app/shared/utils/constants/baseEndpoint';
 
 export const updateProcessConfiguration = async (data: ProcessConfigRequest) => {
   try {
-    const endpoint = 'message/process/';
-
     const processConfig = {
       recipient,
       commandName: 'ProcessUpdate',
@@ -38,7 +37,7 @@ export const updateProcessConfiguration = async (data: ProcessConfigRequest) => 
       ]
     };
 
-    const result = await api.post<ProcessConfigResponse[]>(endpoint, processConfig);
+    const result = await api.post<ProcessConfigResponse[]>(baseEndpoint, processConfig);
 
     return result.data;
   } catch (error) {
