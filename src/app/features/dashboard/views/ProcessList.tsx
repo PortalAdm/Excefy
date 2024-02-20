@@ -9,6 +9,7 @@ interface ProcessListProps {
   filtaredContent: TTableListContent[];
   currentPage: number;
   totalPages: number;
+  isLoading: boolean;
   ProcessContent: TTableListContent[];
   handlePreviousPage: () => void;
   handleNextPage: () => void;
@@ -19,6 +20,7 @@ export function ProcessList({
   filtaredContent,
   currentPage,
   totalPages,
+  isLoading,
   ProcessContent,
   handlePreviousPage,
   handleNextPage,
@@ -31,7 +33,8 @@ export function ProcessList({
           <TableList.name titles={listHeaders} />
         </TableList.header>
         <TableList.body>
-          <TableList.content content={filtaredContent} />
+          {isLoading && <TableList.Skeleton />}
+          {!isLoading && <TableList.content content={filtaredContent} />}
         </TableList.body>
       </TableList.root>
       <TableList.pagination
