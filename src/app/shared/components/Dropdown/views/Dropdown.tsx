@@ -4,7 +4,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { IoMdArrowDropdown } from 'react-icons/io';
 import { Icon } from '../../Icon';
 import Link from 'next/link';
-import { useAuthController } from '~/src/app/features/auth/controller/useAuthController';
+import { useAuthController } from '~/src/app/features/auth/controller';
 
 interface DropdownRootProps {
   options: MenuOptions[];

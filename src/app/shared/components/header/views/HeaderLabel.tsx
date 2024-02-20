@@ -1,15 +1,14 @@
 'use client';
 
-import { useLocalStorage } from '../../../hooks/useLocalStorage';
-import { capitalizeName } from '../../../utils/transformers';
+import { userSession } from '~/src/app/shared/utils/constants/userSession';
+import { useLocalStorage } from '~shared/hooks/useLocalStorage';
+import { capitalizeName } from '~shared/utils/transformers';
 import { Text } from '../../Text';
-
-const session = '_S';
 
 export function HeaderLabel() {
   const { getLocalStorage } = useLocalStorage();
 
-  const userData = getLocalStorage(session);
+  const userData = getLocalStorage(userSession);
 
   const username = capitalizeName(userData.username) || '';
 

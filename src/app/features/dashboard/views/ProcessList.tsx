@@ -2,7 +2,6 @@
 
 import { TableList } from '~shared/components/TableList';
 import { listHeaders } from '../dashboardUtils';
-import { getSystemToken } from '~/src/app/shared/utils/constants/getSystemToken';
 import { TTableListContent } from '~/src/app/shared/types/TTableListContent';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -16,8 +15,6 @@ interface ProcessListProps {
   setCurrentPage: Dispatch<SetStateAction<number>>;
 }
 
-const sysToken = getSystemToken();
-
 export function ProcessList({
   filtaredContent,
   currentPage,
@@ -27,8 +24,6 @@ export function ProcessList({
   handleNextPage,
   setCurrentPage
 }: ProcessListProps) {
-  if (!sysToken) return null;
-
   return (
     <div className="h-fit lg:m-auto">
       <TableList.root>

@@ -1,5 +1,11 @@
-import Auth from './auth/page';
+import { Auth } from '~/src/app/features/auth';
+import { authTV } from '~/src/app/features/auth/AuthTV';
 
 export default function Home() {
-  return <Auth />;
+  return (
+    <div className={authTV()}>
+      <Auth.hero />
+      <Auth.forms />
+    </div>
+  );
 }

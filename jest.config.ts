@@ -1,22 +1,15 @@
 import type { JestConfigWithTsJest } from 'ts-jest';
+import { pathsToModuleNameMapper } from 'ts-jest';
+import { compilerOptions } from './tsconfig.json';
 
 const jestConfig: JestConfigWithTsJest = {
   testEnvironment: 'jsdom',
-  testPathIgnorePatterns: [
-    '/node_modules/',
-    '/.next/',
-    '/\\.storybook/',
-    '\\.stories\\.(jsx?|tsx?)$'
-  ],
-  collectCoverage: true,
+  testPathIgnorePatterns: ['/node_modules/', '/.next/'],
   collectCoverageFrom: ['src/**/*.ts(x)'],
   setupFilesAfterEnv: ['<rootDir>/.jest/setup.ts'],
-  moduleNameMapper: {
-    '^~/(.+)': '<rootDir>/$1',
-    '^~hooks/(.+)': '<rootDir>/src/app/shared/hooks/$1',
-    '^~contexts/(.+)': '<rootDir>/src/app/shared/contexts/$1',
-    '^~shared/(.+)': '<rootDir>/src/app/shared/$1'
-  }
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+    prefix: '<rootDir>/'
+  })
 };
 
 export default jestConfig;

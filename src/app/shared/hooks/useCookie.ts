@@ -2,7 +2,7 @@ import { setCookie, destroyCookie } from 'nookies';
 
 export interface CreateSession {
   cookieName: string;
-  value: any;
+  value: string;
 }
 
 export const useCookie = () => {

@@ -6,6 +6,7 @@ import { checkPublickRoute } from '~/src/app/shared/utils/checkPublickRoute';
 import { useRouter } from 'next/navigation';
 import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
 import { useLocalStorage } from '~/src/app/shared/hooks/useLocalStorage';
+import { userSession } from '~/src/app/shared/utils/constants/userSession';
 
 interface PublicRouteRootProps {
   children: ReactNode;
@@ -15,10 +16,8 @@ export function PublicRouteRoot({ children }: PublicRouteRootProps) {
   const { push } = useRouter();
   const { getLocalStorage } = useLocalStorage();
 
-  const session = `_S`;
-
   const pathName = usePathname();
-  const hasToken = getLocalStorage(session);
+  const hasToken = getLocalStorage(userSession);
   const isPublicPage = checkPublickRoute(pathName!);
 
   useEffect(() => {
