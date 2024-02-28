@@ -30,7 +30,6 @@ export const userAuth = async ({
 
     if (data) {
       const accessToken = data.access_token;
-
       const userSessionValue = {
         _a: accessToken,
         username

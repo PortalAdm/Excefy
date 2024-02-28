@@ -1,14 +1,19 @@
-import { FormEvent, ReactNode, createContext, useCallback, useState } from 'react';
+'use client';
+
+import { FormEvent, ReactNode, createContext, useCallback, useEffect, useState } from 'react';
 import download from 'downloadjs';
 import BpmnViewer from 'bpmn-js/lib/Modeler';
 import { useToast } from '../hooks/useToast';
 import { diagramXML } from '~features/diagramView/DiagramViewUtils';
-import { useBpmnJobs } from '~/src/app/shared/hooks/useBpmnJobs';
+import { updateProcess } from '~/src/app/features/diagramView/services';
+import { useUserInfo } from '~/src/app/shared/hooks/useUserInfo';
+import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 
 interface BpmnContext {
   updatedXml: string | File;
   isDisabled: boolean;
   isLoading: boolean;
+  lastUpdate: string;
   saveWithCTRLandS: (viewer: BpmnViewer) => void;
   getupdatedXml: (viewer: BpmnViewer) => void;
   downloadSVGiagram: (viewer: BpmnViewer) => void;
@@ -26,13 +31,14 @@ const SVGFileName = 'diagram.svg';
 export const BpmnContext = createContext({} as BpmnContext);
 
 export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
-  const { updateLocal, getLocal } = useBpmnJobs();
-  const localXML = getLocal();
+  const { draft, updateLocalXml } = useLocalBPMN();
+  const { user } = useUserInfo();
 
   const { changeToastActive } = useToast();
-  const [updatedXml, setUpdatedXml] = useState<string | File>(localXML || diagramXML);
+  const [updatedXml, setUpdatedXml] = useState<string | File>(draft?.xml || diagramXML);
   const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [lastUpdate, setLastUpdate] = useState('');
 
   const setToast = useCallback(
     (messageTitle: string, messageDescription: string, state: 'success' | 'error') => {
@@ -41,18 +47,32 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
     [changeToastActive]
   );
 
+  useEffect(() => {
+    if (updatedXml === diagramXML) {
+      return setIsDisabled(false);
+    }
+
+    return setIsDisabled(false);
+  }, [updatedXml]);
+
   const getupdatedXml = useCallback(
     async (viewer: BpmnViewer) => {
       const { xml } = await viewer.saveXML({ format: true });
-      if (diagramXML !== xml) setIsDisabled(false);
-      if (diagramXML === xml) setIsDisabled(true);
+      setIsDisabled(false);
 
       if (xml) {
-        updateLocal(xml);
-        return setUpdatedXml(xml);
+        const errorHandler = () =>
+          setToast('Ocorreu um erro!', 'Suas alterações não serão salvas', 'error');
+        const updateRes = await updateProcess(xml, user?.id, draft?.commandId, errorHandler);
+
+        if (updateRes) {
+          updateLocalXml(xml);
+          setLastUpdate(updateRes);
+          return setUpdatedXml(xml);
+        }
       }
     },
-    [updateLocal]
+    [draft?.commandId, setToast, updateLocalXml, user?.id]
   );
 
   const downloadSVGiagram = useCallback(
@@ -138,8 +158,9 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
     <BpmnContext.Provider
       value={{
         updatedXml,
-        isDisabled,
         isLoading,
+        isDisabled,
+        lastUpdate,
         saveWithCTRLandS,
         getupdatedXml,
         downloadSVGiagram,

@@ -3,27 +3,40 @@ import { TUpdateProcessRequest } from '~/src/app/shared/types/requests/TUpdatePr
 import { baseEndpoint } from '~/src/app/shared/utils/constants/baseEndpoint';
 import { recipient } from '~/src/app/shared/utils/constants/recipient';
 
-export const updateProcess = async (xml: string) => {
-  const body: TUpdateProcessRequest = {
-    commandName: 'UpdateModelProcess',
-    recipient,
-    commandParameters: [
-      {
-        name: 'clientId',
-        value: '3'
-      },
-      {
-        name: 'commandId',
-        value: '19'
-      },
-      {
-        name: 'xml',
-        value: xml
-      }
-    ]
-  };
+export const updateProcess = async (
+  xml: string,
+  userId: string,
+  commandId: number,
+  errorHandler: () => void
+): Promise<string | undefined> => {
+  try {
+    const body: TUpdateProcessRequest = {
+      commandName: 'UpdateModelProcess',
+      recipient,
+      commandParameters: [
+        {
+          name: 'clientId',
+          // value: userId
+          value: '3'
+        },
+        {
+          name: 'commandId',
+          value: commandId
+        },
+        {
+          name: 'xml',
+          value: xml
+        }
+      ]
+    };
 
-  const { data } = await api.post(baseEndpoint, body);
+    const { data } = await api.post(baseEndpoint, body);
 
-  console.log(data);
+    if (data) {
+      return data?.[0].dispatch;
+    }
+  } catch (err) {
+    errorHandler();
+    if (err instanceof Error) throw new Error('Falha na atualização do Processo', err);
+  }
 };

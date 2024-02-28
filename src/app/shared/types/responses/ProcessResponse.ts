@@ -1,4 +1,4 @@
-export type ProcessConfigResponse = {
+export type ProcessResponse = {
   id: string;
   content: string;
   sender: string;

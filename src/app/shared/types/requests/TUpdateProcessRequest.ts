@@ -1,6 +1,6 @@
 type TCommandParameters = {
   name: string;
-  value: string;
+  value: number | string;
 };
 
 export type TUpdateProcessRequest = {

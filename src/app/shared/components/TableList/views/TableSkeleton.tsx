@@ -6,5 +6,9 @@ export function TableSkeleton() {
     />
   ));
 
-  return <div className="w-full py-4 flex flex-col gap-4 overflow-x-hidden">{rows}</div>;
+  return (
+    <>
+      <div className="w-full py-4 flex flex-col gap-4 overflow-x-hidden">{rows}</div>
+    </>
+  );
 }

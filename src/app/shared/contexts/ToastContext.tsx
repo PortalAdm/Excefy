@@ -1,3 +1,5 @@
+'use client';
+
 import { ReactNode, createContext, useCallback, useEffect, useState } from 'react';
 import { useTimeout } from '~hooks/useTimeout';
 import { ToastType } from '~types/ToastType';

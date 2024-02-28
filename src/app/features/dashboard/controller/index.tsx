@@ -1,19 +1,27 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { TTableListContent } from '~types/TTableListContent';
 import { getAllProcess } from '../services';
+import { useUserInfo } from '~/src/app/shared/hooks/useUserInfo';
+import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 
 const timeToRefetchCache = 1000 * 60 * 60 * 2; // 2 hora
 
 export const useDashboardController = () => {
+  const { clearLocalDraft } = useLocalBPMN();
+  const { user } = useUserInfo();
   const [isFiltring, setIsFiltring] = useState(false);
   const [value, setValue] = useState('');
 
+  useEffect(() => {
+    clearLocalDraft();
+  }, [clearLocalDraft]);
+
   const getProcess = useCallback(async () => {
-    const userProcess = await getAllProcess();
+    const userProcess = await getAllProcess(user?.id);
 
     return userProcess;
-  }, []);
+  }, [user?.id]);
 
   const { data: userProcess, isLoading } = useQuery('userProcess', getProcess, {
     staleTime: timeToRefetchCache
