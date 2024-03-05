@@ -1,5 +1,5 @@
-import { MenuOptions } from '../../shared/components/Dropdown/views/Dropdown';
-import { APP_ROUTES } from '../../shared/utils/constants/app-routes';
+import { MenuOptions } from '~/src/app/shared/components/Dropdown';
+import { APP_ROUTES } from '~shared/utils/constants/app-routes';
 
 export const dropdownOptions: MenuOptions[] = [
   {

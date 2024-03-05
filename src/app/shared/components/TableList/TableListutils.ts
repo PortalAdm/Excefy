@@ -3,29 +3,30 @@ import { TbChartInfographic } from 'react-icons/tb';
 import { IoPlaySkipForwardOutline } from 'react-icons/io5';
 import { BiTrash } from 'react-icons/bi';
 
-export const icons = [
+export const icons = (
+  editAction: () => void,
+  statisticAction: () => void,
+  simulateAction: () => void,
+  deleteAction: () => void
+) => [
   {
     element: FiEdit2,
     name: 'Editar',
-    // eslint-disable-next-line no-console
-    onClick: () => console.log('Editar') // criar a função dentro deste arquivo e chamar aqui
+    onClick: () => editAction()
   },
   {
     element: TbChartInfographic,
     name: 'Estatísticas',
-    // eslint-disable-next-line no-console
-    onClick: () => console.log('Estatísticas') // criar a função dentro deste arquivo e chamar aqui
+    onClick: () => statisticAction()
   },
   {
     element: IoPlaySkipForwardOutline,
     name: 'Simular',
-    // eslint-disable-next-line no-console
-    onClick: () => console.log('Simular') // criar a função dentro deste arquivo e chamar aqui
+    onClick: () => simulateAction()
   },
   {
     element: BiTrash,
     name: 'Excluir',
-    // eslint-disable-next-line no-console
-    onClick: () => console.log('EdiExcluirtar') // criar a função dentro deste arquivo e chamar aqui
+    onClick: () => deleteAction()
   }
 ];

@@ -3,7 +3,7 @@
 const hasWindow = typeof window !== 'undefined';
 
 export const useLocalStorage = () => {
-  const STORAGE_KEY = 'Padm:';
+  const STORAGE_KEY = 'Execfy:';
 
   const getLocalStorage = (key: string) => {
     if (hasWindow) {

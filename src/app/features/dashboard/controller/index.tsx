@@ -1,26 +1,43 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { TTableListContent } from '~types/TTableListContent';
-import { getAllProcess } from '../services';
-
-const timeToRefetchCache = 1000 * 60 * 60 * 2; // 2 hora
+import { getAllProcess, getXMLByCommandId } from '../services';
+import { useUserInfo } from '~/src/app/shared/hooks/useUserInfo';
+import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 
 export const useDashboardController = () => {
+  const { clearLocalDraft } = useLocalBPMN();
+  const { user } = useUserInfo();
   const [isFiltring, setIsFiltring] = useState(false);
   const [value, setValue] = useState('');
 
+  useEffect(() => {
+    clearLocalDraft();
+  }, [clearLocalDraft]);
+
+  const getXml = useCallback(
+    async (commandId: number) => {
+      if (user?.id) {
+        const xml = await getXMLByCommandId(user?.id, commandId);
+
+        return xml;
+      }
+    },
+    [user?.id]
+  );
+
   const getProcess = useCallback(async () => {
-    const userProcess = await getAllProcess();
+    const userProcess = await getAllProcess(user?.id);
 
     return userProcess;
-  }, []);
+  }, [user?.id]);
 
-  const { data: userProcess } = useQuery('userProcess', getProcess, {
-    staleTime: timeToRefetchCache
+  const { data: userProcess, isLoading } = useQuery('userProcess', getProcess, {
+    refetchOnWindowFocus: false
   });
 
   const ProcessContent: TTableListContent[] =
-    userProcess?.[0] && JSON.parse(userProcess?.[0].content as unknown as string);
+    userProcess && JSON.parse(userProcess as unknown as string);
 
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
@@ -70,10 +87,12 @@ export const useDashboardController = () => {
     totalPages,
     ProcessContent,
     value,
+    isLoading,
     setValue,
     handlePreviousPage,
     handleNextPage,
     setCurrentPage,
-    onSearch
+    onSearch,
+    getXml
   };
 };

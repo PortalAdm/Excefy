@@ -16,6 +16,7 @@ import Modeler from 'bpmn-js/lib/Modeler';
 import { BaseViewerOptions } from 'bpmn-js/lib/BaseViewer';
 
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { FaCheck } from 'react-icons/fa6';
 
 import React, { ReactNode, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { useDiagramViewController } from '../controller';
@@ -26,33 +27,41 @@ import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
 import { Button } from '~/src/app/shared/components/Button';
 import { Icon } from '~/src/app/shared/components/Icon';
 import EventDetail from '~/src/app/features/diagramView/views/EventDetail';
+import { Text } from '~/src/app/shared/components/Text';
+import { Title } from '~/src/app/shared/components/Title';
+import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
+import { formateHour } from '~/src/app/shared/utils/dateUtils';
 
 interface BpmnViewProps {
   children: ReactNode;
 }
 
 export function BpmnView({ children }: BpmnViewProps) {
+  const { draft } = useLocalBPMN();
   const canvaRef = useRef<HTMLDivElement>(null);
   const [headerViewer, setHeaderViewer] = useState<Modeler>();
-  const { updatedXml, isDisabled, isLoading, getupdatedXml, saveWithCTRLandS } = useBPMN();
+  const { updatedXml, isDisabled, isLoading, lastUpdate, getupdatedXml, saveWithCTRLandS } =
+    useBPMN();
   const { idx, modal, links, buttons, setIdx } = useDiagramViewController(headerViewer as Modeler);
   const propertiesPanelRef = useRef<HTMLDivElement>(null);
 
   const getInitialXML = useCallback(async (viewer: BpmnViewer, xml: string) => {
-    try {
-      const { warnings } = await viewer.importXML(xml);
+    if (xml) {
+      try {
+        const { warnings } = await viewer.importXML(xml);
 
-      if (warnings.length) {
-        throw new Error(warnings[0]);
+        if (warnings.length) {
+          throw new Error(warnings[0]);
+        }
+      } catch (err: any) {
+        throw new Error('Erro na renderização', err);
       }
-    } catch (err: any) {
-      throw new Error('Erro na renderização', err);
     }
   }, []);
 
   const updateXml = useCallback(
     (viewer: BpmnViewer) => {
-      viewer.on('element.changed', (e) => {
+      viewer.on('element.changed', async (e) => {
         e.preventDefault();
 
         getupdatedXml(viewer);
@@ -108,6 +117,20 @@ export function BpmnView({ children }: BpmnViewProps) {
         <TabsNavigation.root>
           <TabsNavigation.items links={links} />
         </TabsNavigation.root>
+        <div className="flex flex-col gap-2 absolute bottom-0 w-full max-w-[280px]">
+          <Title title={draft?.commandName} size="md" className="truncate" />
+          {lastUpdate && (
+            <div className="flex gap-2 items-center">
+              <Text
+                text={`Salvo automaticamente ${formateHour(lastUpdate)}`}
+                as="span"
+                color="placeholder"
+                size="sm"
+              />
+              <Icon icon={FaCheck} color="outline" size="small" />
+            </div>
+          )}
+        </div>
         <div className={BpmnHeaderContentTv()}>
           {buttons.map((button, i) => (
             <Modal.trigger key={i}>
@@ -134,7 +157,8 @@ export function BpmnView({ children }: BpmnViewProps) {
         </div>
         {modal[idx]}
       </div>
-      {!isLoading ? (
+      {!draft && <Text text="Você deve ter criado eu estar editanto um diagrama para continuar" />}
+      {draft && !isLoading ? (
         <div
           className="relative h-full border-t-[1px] border-primary z-0"
           id="js-canvas"

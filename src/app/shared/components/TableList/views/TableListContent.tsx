@@ -36,7 +36,7 @@ export function TableListContent({ content = [] }: TableListContentProps) {
             <TableList.status checked={item.enable || false} />
           </td>
           <td className={tv.tableListContentStatusTv()}>
-            <TableList.buttons />
+            <TableList.buttons listItem={item} />
           </td>
         </tr>
       ))}

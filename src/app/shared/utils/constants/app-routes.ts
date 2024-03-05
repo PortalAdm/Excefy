@@ -1,3 +1,7 @@
+/**
+ * routes that end with / must receive some parameter when called
+ */
+
 export const APP_ROUTES = {
   private: {
     agents: {
@@ -7,18 +11,23 @@ export const APP_ROUTES = {
     },
     dashboard: {
       name: '/dashboard',
-      label: 'Dashboard',
+      label: 'Processos',
       subtitle: ''
+    },
+    'edit-process': {
+      name: '/edit-process/',
+      label: 'Processos',
+      subtitle: 'Editar Processo'
     },
     'new-process': {
       name: '/new-process',
       label: 'Processos',
       subtitle: 'Novo Processo'
     },
-    'new-process-config': {
-      name: '/new-process-config',
+    'process-config': {
+      name: '/process-config',
       label: 'Configurações',
-      subtitle: 'Novo Processo'
+      subtitle: 'Configure o Processo'
     },
     schedule: {
       name: '/schedule',
