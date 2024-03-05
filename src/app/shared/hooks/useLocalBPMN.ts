@@ -22,12 +22,12 @@ export const useLocalBPMN = () => {
 
   const updateLocalDraft = useCallback(
     (newDraft: TBPMNDraft) => {
-      setLocalStorage(localDraftName, {
+      return setLocalStorage(localDraftName, {
         ...newDraft,
-        xml: draft?.xml
+        xml: newDraft.xml
       });
     },
-    [draft?.xml, setLocalStorage]
+    [setLocalStorage]
   );
 
   const clearLocalDraft = useCallback(() => deleteFromStorage(localDraftName), [deleteFromStorage]);

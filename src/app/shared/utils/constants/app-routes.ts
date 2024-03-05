@@ -22,12 +22,12 @@ export const APP_ROUTES = {
     'new-process': {
       name: '/new-process',
       label: 'Processos',
-      subtitle: 'Editar Processo'
+      subtitle: 'Novo Processo'
     },
     'process-config': {
       name: '/process-config',
       label: 'Configurações',
-      subtitle: 'Novo Processo'
+      subtitle: 'Configure o Processo'
     },
     schedule: {
       name: '/schedule',

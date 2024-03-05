@@ -31,6 +31,7 @@ export const userAuth = async ({
     if (data) {
       const accessToken = data.access_token;
       const userSessionValue = {
+        id: data.clientId,
         _a: accessToken,
         username
       };

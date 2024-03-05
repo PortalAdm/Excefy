@@ -6,11 +6,6 @@ export default function ProcessLayout({ children }: { children: React.ReactNode 
   return (
     <>
       <title>Execfy | Novo Processo</title>
-      <link
-        rel="stylesheet"
-        href="https://unpkg.com/@bpmn-io/properties-panel/dist/assets/properties-panel.css"
-      ></link>
-
       <Providers>
         <Toast />
         <NavBar />

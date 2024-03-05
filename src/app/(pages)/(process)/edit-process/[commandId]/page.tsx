@@ -7,7 +7,7 @@ interface EditProcesspage {
   };
 }
 
-export default function EditProcesspage({ params }: EditProcesspage) {
+export default function EditProcesspage() {
   return (
     <Bpmn.root>
       <Bpmn.view>

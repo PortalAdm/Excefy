@@ -1,6 +1,6 @@
 import { IoArrowBack } from 'react-icons/io5';
-import { HeaderActionProps } from '../../shared/components/header/views/HeaderAction';
 import { APP_ROUTES } from '../../shared/utils/constants/app-routes';
+import { HeaderActionProps } from '~/src/app/features/header/views/HeaderAction';
 
 export const action: HeaderActionProps = {
   actionLabel: 'Voltar',

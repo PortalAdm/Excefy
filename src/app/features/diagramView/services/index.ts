@@ -16,8 +16,7 @@ export const updateProcess = async (
       commandParameters: [
         {
           name: 'clientId',
-          // value: userId
-          value: '3'
+          value: userId
         },
         {
           name: 'commandId',

@@ -3,4 +3,6 @@ export interface TUpdateProcessConfigurationRequest {
   processDescription: string;
   userId: string;
   commandId: number;
+  lastEdited: string;
+  createdAt: string;
 }

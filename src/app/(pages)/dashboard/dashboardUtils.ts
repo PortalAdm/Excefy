@@ -1,16 +1,23 @@
 import { AiOutlinePlus } from 'react-icons/ai';
-import { HeaderActionProps } from '../../shared/components/header/views/HeaderAction';
 import { createNewDraftProcess } from '~/src/app/features/dashboard/services';
 import { localStorage } from '~/src/app/shared/utils/constants/localStorage';
 import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
+import { HeaderActionProps } from '~/src/app/features/header/views/HeaderAction';
+import { AuthResponse } from '~/src/app/shared/types/responses/AuthResponse';
 
 const createDraft = async () => {
-  const draft = await createNewDraftProcess('3');
+  const stringifyUser = window?.localStorage.getItem(`Execfy:${localStorage.user}`);
 
-  if (draft?.commandId) {
-    window?.localStorage.setItem(`Execfy:${localStorage.process.draft}`, JSON.stringify(draft));
+  const user: AuthResponse = stringifyUser && JSON.parse(stringifyUser);
 
-    window.location.href = APP_ROUTES.private['new-process'].name;
+  if (user) {
+    const draft = await createNewDraftProcess(user?.id);
+
+    if (draft?.commandId) {
+      window?.localStorage.setItem(`Execfy:${localStorage.process.draft}`, JSON.stringify(draft));
+
+      window.location.href = APP_ROUTES.private['new-process'].name;
+    }
   }
 };
 

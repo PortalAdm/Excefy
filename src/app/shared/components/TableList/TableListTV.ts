@@ -5,7 +5,7 @@ export const tableListHeaderTV = tv({
 });
 
 export const tableListThTv = tv({
-  base: 'text-start w-full w-40 p-2 text-sm leading-5 text-black text-sm text-black font-black'
+  base: 'text-start w-full w-40 p-2 text-sm text-black text-sm text-black font-black'
 });
 
 export const tableListContentTrTv = tv({
@@ -13,18 +13,18 @@ export const tableListContentTrTv = tv({
 });
 
 export const tableListContentNameTv = tv({
-  base: 'w-36 p-2 text-sm leading-5 h-16'
+  base: 'w-40 p-2 text-sm h-16'
 });
 
 export const tableListContentDescriptionTv = tv({
-  base: 'w-96 p-2 text-sm leading-5 h-16'
+  base: 'w-40 p-2 text-sm h-16'
 });
 export const tableDateTv = tv({
-  base: 'w-28 p-2 text-sm leading-5 h-16'
+  base: 'w-40 p-2 text-sm h-16'
 });
 
 export const tableListContentStatusTv = tv({
-  base: 'w-20 p-2 leading-5 h-16'
+  base: 'w-20 p-2 h-16'
 });
 
 export const tableListContentBodyTv = tv({
@@ -32,7 +32,7 @@ export const tableListContentBodyTv = tv({
 });
 
 export const tableListRootTv = tv({
-  base: 'pr-12 lg:pr-0 divide-y divide-primary h-[350px] overflow-x-auto overflow-y-hidden flex flex-col items-start w-full'
+  base: 'pr-12 lg:pr-0 divide-y divide-primary h-[370px] overflow-x-auto overflow-y-hidden flex flex-col items-start w-full'
 });
 
 export const tableListButtonsTv = tv({

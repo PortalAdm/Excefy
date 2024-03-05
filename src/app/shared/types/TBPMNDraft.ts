@@ -5,4 +5,5 @@ export type TBPMNDraft = {
   processDescription?: string;
   xml: string;
   isEdditing: boolean;
+  createdAt?: string;
 };

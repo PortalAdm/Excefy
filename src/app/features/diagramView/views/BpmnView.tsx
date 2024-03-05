@@ -46,14 +46,16 @@ export function BpmnView({ children }: BpmnViewProps) {
   const propertiesPanelRef = useRef<HTMLDivElement>(null);
 
   const getInitialXML = useCallback(async (viewer: BpmnViewer, xml: string) => {
-    try {
-      const { warnings } = await viewer.importXML(xml);
+    if (xml) {
+      try {
+        const { warnings } = await viewer.importXML(xml);
 
-      if (warnings.length) {
-        throw new Error(warnings[0]);
+        if (warnings.length) {
+          throw new Error(warnings[0]);
+        }
+      } catch (err: any) {
+        throw new Error('Erro na renderização', err);
       }
-    } catch (err: any) {
-      throw new Error('Erro na renderização', err);
     }
   }, []);
 

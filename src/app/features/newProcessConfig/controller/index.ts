@@ -35,6 +35,25 @@ export const useNewProcessConfigController = () => {
     }
   ];
 
+  const updateProcessConfigCallback = (situation: boolean) => {
+    if (situation) {
+      updateLocalDraft({
+        ...draft,
+        commandName: processName,
+        processDescription
+      });
+
+      return changeToastActive({ state: 'success' }, 'Processo atualizado com sucesso! ', '', 5000);
+    }
+
+    return changeToastActive(
+      { state: 'error' },
+      'Encontramos um erro!',
+      'Suas alterações não serão salvas.',
+      delayToRemoveToast
+    );
+  };
+
   useEffect(() => {
     const getFormData = async () => {
       if (processName || processDescription) {
@@ -42,32 +61,14 @@ export const useNewProcessConfigController = () => {
           processDescription,
           processName,
           commandId: draft?.commandId,
-          // userId: user?.id
-          userId: '3'
+          userId: user?.id,
+          lastEdited: new Date().toISOString(),
+          createdAt: draft?.createdAt || ''
         };
 
         return await updateProcessConfiguration(updateConfig).then((res) => {
-          if (res?.[0].content.includes('Base de dados atualizada com sucesso!')) {
-            updateLocalDraft({
-              ...draft,
-              commandName: processName,
-              processDescription
-            });
-
-            return changeToastActive(
-              { state: 'success' },
-              'Processo atualizado com sucesso! ',
-              '',
-              5000
-            );
-          }
-
-          return changeToastActive(
-            { state: 'error' },
-            'Encontramos um erro!',
-            'Suas alterações não serão salvas.',
-            delayToRemoveToast
-          );
+          const situation = res?.[0].content.includes('Base de dados atualizada com sucesso!');
+          updateProcessConfigCallback(situation || false);
         });
       }
       return;

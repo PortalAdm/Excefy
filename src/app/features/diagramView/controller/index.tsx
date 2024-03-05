@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CiExport, CiImport } from 'react-icons/ci';
 import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
 import { KeyValue } from '~types/IKeyValue';
 import { DownloadModal } from '../views/DownloadModal';
 import { TabsNavigationItems } from '~/src/app/shared/types/ITabsNavigationItems';
 import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
-import { usePathname } from 'next/navigation';
 import BpmnViewer from 'bpmn-js/lib/Modeler';
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 
@@ -13,8 +12,6 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
   const [idx, setIdx] = useState(0);
   const { draft } = useLocalBPMN();
   const { isDisabled, handleImportFile } = useBPMN();
-
-  const pathName = usePathname();
 
   const modal: KeyValue = {
     1: DownloadModal(viewer)
@@ -46,12 +43,6 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
       text: 'Baixar'
     }
   ];
-
-  useEffect(() => {
-    if (pathName === APP_ROUTES.private['new-process'].name) {
-      return console.log('chequei o diagrama no banco');
-    }
-  }, [pathName]);
 
   return {
     isDisabled,

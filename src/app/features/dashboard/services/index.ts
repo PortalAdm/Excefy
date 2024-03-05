@@ -15,13 +15,12 @@ export const getAllProcess = async (clientId: string) => {
     commandParameters: [
       {
         name: 'clientId',
-        // value: clientId
-        value: '3'
+        value: clientId
       }
     ]
   });
 
-  return data;
+  return data?.[0].content;
 };
 
 export const createNewDraftProcess = async (clientId: string) => {
@@ -73,4 +72,24 @@ export const createNewDraftProcess = async (clientId: string) => {
       throw new Error('falha na criação do novo processo', error);
     }
   }
+};
+
+export const getXMLByCommandId = async (clientId: string, commandId: number): Promise<string> => {
+  const processConfig = {
+    recipient,
+    commandName: 'ModelProcessSelect',
+    commandParameters: [
+      {
+        name: 'clientId',
+        value: clientId
+      },
+      {
+        name: 'commandId',
+        value: commandId
+      }
+    ]
+  };
+  const { data } = await api.post<TProcessInsertContentResponse[]>(baseEndpoint, processConfig);
+
+  return data[0].content;
 };

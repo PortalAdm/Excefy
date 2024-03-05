@@ -5,7 +5,6 @@ import { Providers } from '../providers';
 import { MainContainer } from '../shared/components/MainContainer';
 import { Menu } from '../features/menu/views/Menu';
 import { Toast } from '../features/toast';
-import { MainNavBar } from '~/src/app/(pages)/MainNavBar';
 import Head from 'next/head';
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -15,12 +14,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <title>Execfy</title>
       </Head>
       <body>
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/@bpmn-io/properties-panel/dist/assets/properties-panel.css"
+        ></link>
         <Providers>
           <MainContainer>
             <Toast />
             <Menu />
             <div className="flex flex-col w-full h-full">
-              <MainNavBar />
               {children}
               <SpeedInsights />
             </div>

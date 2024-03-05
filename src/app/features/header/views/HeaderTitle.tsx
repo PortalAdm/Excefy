@@ -1,37 +1,35 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { VariantProps } from 'tailwind-variants';
+import { HeaderTitleTv } from '~/src/app/features/header/HeaderTV';
 import { Text } from '~/src/app/shared/components/Text';
 import { Title } from '~/src/app/shared/components/Title';
-import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
 
-export function HeaderTitle() {
-  const { draft } = useLocalBPMN();
+type HeaderTitleProps = VariantProps<typeof HeaderTitleTv>;
+
+export function HeaderTitle({ position }: HeaderTitleProps) {
   const pathName = usePathname();
   const routeIndex = pathName.split('/')[1];
+  const routes = Object.keys(APP_ROUTES.private);
+  const findIndex = routes.find((key) => key.startsWith(routeIndex));
+  const index = findIndex as keyof (typeof APP_ROUTES)['private'];
+  const currentRoute = APP_ROUTES.private[index];
 
-  const routeData = APP_ROUTES.private[routeIndex as keyof (typeof APP_ROUTES)['private']];
-  const routeLabel = routeData?.label || '';
-  const subtitleName = routeData?.subtitle;
-
-  if (routeData?.subtitle) {
-    draft?.isEdditing
-      ? (routeData.subtitle = 'Editando Processo')
-      : (routeData.subtitle = 'Novo Processo');
-  }
+  const titleSIze: typeof position = currentRoute.subtitle ? 'subtitle' : 'label';
 
   return (
     <div className="flex flex-col w-full h-fit">
       <Title
-        title={routeLabel}
+        title={currentRoute.label}
         color="primary"
         size="lg"
-        className={`transition-all w-full duration-700 ${
-          subtitleName ? 'text-xs' : 'scale-100 translate-y-0 -translate-x-0'
-        }`}
+        className={HeaderTitleTv({ position: titleSIze })}
       />
-      {subtitleName !== '' && <Text text={subtitleName} color="primary" size="lg" weigth="bold" />}
+      {currentRoute.subtitle !== '' && (
+        <Text text={currentRoute.subtitle} color="primary" size="lg" weigth="bold" />
+      )}
     </div>
   );
 }

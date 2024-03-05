@@ -10,7 +10,7 @@ export function HeaderLabel() {
 
   const userData = getLocalStorage(userSession);
 
-  const username = capitalizeName(userData.username) || '';
+  const username = capitalizeName(userData?.username) || '';
 
   return <Text text={`Olá, ${username}`} size="md" color="primary" />;
 }

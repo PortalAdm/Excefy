@@ -7,3 +7,13 @@ export const HeaderRootTv = tv({
 export const HeaderContentTv = tv({
   base: 'flex w-full items-center justify-end gap-5'
 });
+
+export const HeaderTitleTv = tv({
+  base: 'transition-all w-full duration-700',
+  variants: {
+    position: {
+      subtitle: 'text-xs',
+      label: 'scale-100 translate-y-0 -translate-x-0'
+    }
+  }
+});
