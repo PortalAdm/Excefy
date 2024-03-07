@@ -23,6 +23,8 @@ export function TableListButtons({ listItem }: TableListButtonPtops) {
   const editAction = async () => {
     const xml = await getXml(listItem.commandId);
 
+    console.log(listItem);
+
     if (xml) {
       clearLocalDraft();
       updateLocalDraft({
