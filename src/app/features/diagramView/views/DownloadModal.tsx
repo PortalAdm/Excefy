@@ -49,17 +49,15 @@ export const DownloadModal = (viewer: BpmnViewer) => {
         <Modal.header title="Baixar" />
         <Modal.body>
           <Text text="Selecione o tipo de arquivo que deseja baixar" weigth="bold" />
-          {labels.map((label, i) => {
-            return (
-              <CheckboxComp
-                checked={value.includes(label.value[0])}
-                key={i}
-                onClick={() => handleCheckboxChange(label.value[0])}
-                label={label.label}
-                id={label.id}
-              />
-            );
-          })}
+          {labels.map((label, i) => (
+            <CheckboxComp
+              checked={value.includes(label.value[0])}
+              key={i}
+              onClick={() => handleCheckboxChange(label.value[0])}
+              label={label.label}
+              id={label.id}
+            />
+          ))}
         </Modal.body>
         <Modal.footer>
           <Modal.action

@@ -4,9 +4,11 @@ import { Text } from '~shared/components/Text';
 import { Title } from '~shared/components/Title';
 import { TRecoverySchema, recoverySchema } from '../AuthUtils';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Form } from './Form';
 import { Button } from '~/src/app/shared/components/Button';
 import { authFormTv, recoveryButtonTv } from '../AuthTV';
+import { Form } from '~/src/app/shared/components/Form';
+
+// a lógica ainda está aqui porque isso deve ser uma feature desacoplada posteriormente, quando realmente for existir
 
 interface RecoveryFormProps {
   handleForgetPassword: () => void;

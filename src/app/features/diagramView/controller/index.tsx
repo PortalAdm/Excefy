@@ -1,12 +1,11 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { CiExport, CiImport } from 'react-icons/ci';
 import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
-import { KeyValue } from '~types/IKeyValue';
 import { DownloadModal } from '../views/DownloadModal';
-import { TabsNavigationItems } from '~/src/app/shared/types/ITabsNavigationItems';
 import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
 import BpmnViewer from 'bpmn-js/lib/Modeler';
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
+import { TabsNavigationItems, KeyValue } from '~/src/app/shared/types';
 
 export const useDiagramViewController = (viewer: BpmnViewer) => {
   const [idx, setIdx] = useState(0);
@@ -44,12 +43,39 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
     }
   ];
 
+  const getInitialXML = useCallback(async (viewer: BpmnViewer, xml: string) => {
+    if (xml) {
+      try {
+        const { warnings } = await viewer.importXML(xml);
+
+        if (warnings.length) {
+          throw new Error(warnings[0]);
+        }
+      } catch (err: any) {
+        throw new Error('Erro na renderização', err);
+      }
+    }
+  }, []);
+
+  const updateXml = useCallback(
+    (viewer: BpmnViewer, getupdatedXml: (viewer: BpmnViewer) => void) => {
+      viewer.on('element.changed', async (e) => {
+        e.preventDefault();
+
+        getupdatedXml(viewer);
+      });
+    },
+    []
+  );
+
   return {
     isDisabled,
     idx,
     modal,
     links,
     buttons,
-    setIdx
+    setIdx,
+    getInitialXML,
+    updateXml
   };
 };

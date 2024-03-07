@@ -4,3 +4,6 @@ export * from './requests/TUpdateProcessConfigurationRequest';
 
 export * from './MenuItemsType';
 export * from './TBPMNDraft';
+export * from './TRootComponent';
+export * from './ITabsNavigationItems';
+export * from './IKeyValue';

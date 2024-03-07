@@ -24,8 +24,8 @@ export function NewProcessConfigForm() {
           <Input.label labelSize="small" label="Nome" name="processName" />
           <Text
             size="xs"
-            className="text-end h-0.5"
-            text={`${processName.length}/${maxProcessNameLength}`}
+            className="text-end h-1"
+            text={`${processName?.length || 0}/${maxProcessNameLength}`}
           />
         </span>
         <Input.controlledField
@@ -42,8 +42,8 @@ export function NewProcessConfigForm() {
           <Input.label labelSize="small" label="Descrição" name="processDescription" />
           <Text
             size="xs"
-            className="text-end h-0.5"
-            text={`${processDescription.length}/${maxProcessDescriptionLength}`}
+            className="text-end h-1"
+            text={`${processDescription?.length || 0}/${maxProcessDescriptionLength}`}
           />
         </span>
         <Input.controlledTextarea
