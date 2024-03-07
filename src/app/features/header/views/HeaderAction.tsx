@@ -1,5 +1,5 @@
-import { useRouter } from 'next/navigation';
 import { ElementType } from 'react';
+import { useHeaderController } from '~/src/app/features/header/controller';
 import { Button } from '~shared/components/Button';
 
 export interface HeaderActionProps {
@@ -23,12 +23,15 @@ export function HeaderAction({
   path,
   onClick
 }: HeaderActionProps) {
-  const { push } = useRouter();
-
-  const pushOrOnClick = () => (path ? push?.(path) : onClick?.());
+  const { pushOrOnClick } = useHeaderController();
 
   return (
-    <Button.root onClick={pushOrOnClick} color={actionBackground} size={size} variant={variant}>
+    <Button.root
+      onClick={() => pushOrOnClick(path, onClick)}
+      color={actionBackground}
+      size={size}
+      variant={variant}
+    >
       <Button.contentWrapper>
         {icon && <Button.icon icon={icon} color={color} />}
         <Button.label text={actionLabel} as="span" color={color} className="text-xs sm:text-md" />

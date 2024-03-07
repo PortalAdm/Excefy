@@ -1,27 +1,23 @@
 import React from 'react';
 import Link from 'next/link';
-import { Icon } from '../../Icon';
-import { MenuItemsType } from '~types/index';
+import { Icon } from '~/src/app/shared/components/Icon';
+import { MenuItemTv } from '~/src/app/features/menuSidebar/MenuSidebarTv';
+import { menuItems } from '~/src/app/features/menuSidebar/MenuSidebarUtils';
 
 interface MenuItemsProps {
-  data: MenuItemsType[];
   isClose: boolean;
 }
 
-export function MenuItems({ data = [], isClose }: MenuItemsProps) {
+export function MenuItems({ isClose }: MenuItemsProps) {
   return (
     <>
-      {data?.map((item, i) => {
+      {menuItems?.map((item, i) => {
         const renderIcon = () => <Icon color="white" icon={item.icon} />;
 
         return (
           <React.Fragment key={i}>
             {isClose ? (
-              <Link
-                className="flex items-center gap-4 hover:font-semi-bold active:font-bold text-white"
-                key={i}
-                href={item.navigateTo}
-              >
+              <Link className={MenuItemTv()} key={i} href={item.navigateTo}>
                 {renderIcon()}
                 {item.name}
               </Link>

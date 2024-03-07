@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { infos } from './KeyboardShotcutUtils';
+import { infos } from '../DiagramViewUtils';
 import { KeyboardShotcut as KeyboardShotcutComp } from '~shared/components/keyboardShotcut';
 
 export function KeyboardShotcut() {
