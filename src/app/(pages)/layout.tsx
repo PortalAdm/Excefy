@@ -3,9 +3,9 @@ import '~global/styles/globals.css';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Providers } from '../providers';
 import { MainContainer } from '../shared/components/MainContainer';
-import { Menu } from '../features/menu/views/Menu';
 import { Toast } from '../features/toast';
 import Head from 'next/head';
+import { Menu } from '~/src/app/(pages)/Menu';
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (

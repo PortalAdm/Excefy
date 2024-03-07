@@ -4,7 +4,7 @@ import { AiOutlineSchedule } from 'react-icons/ai';
 import { MenuItemsType } from '~shared/types';
 import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
 
-export const mockedMenuItems: MenuItemsType[] = [
+export const menuItems: MenuItemsType[] = [
   {
     icon: PiGitBranchDuotone,
     name: 'Processos',

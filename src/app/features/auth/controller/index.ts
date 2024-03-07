@@ -54,8 +54,6 @@ export const useAuthController = () => {
   };
 
   const logout = () => {
-    console.log('sai do LOCAL STORAGE', userSession);
-    console.log('sai do COOKIE', SYS_AUTH_STORAGE_NAME);
     deleteCookie(SYS_AUTH_STORAGE_NAME);
     deleteFromStorage(userSession);
     return push(APP_ROUTES.public.home);

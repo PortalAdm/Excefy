@@ -1,6 +1,7 @@
 import { ElementType } from 'react';
-import { Icon } from '../../Icon';
-import { Search } from '../../Search';
+import { SearchMenuTv } from '~/src/app/features/menuSidebar/MenuSidebarTv';
+import { Icon } from '~/src/app/shared/components/Icon';
+import { Search } from '~/src/app/shared/components/Search';
 
 interface SearchMenuProps {
   isClose: boolean;
@@ -10,7 +11,7 @@ interface SearchMenuProps {
 
 export function SearchMenu({ isClose, icon, onClick }: SearchMenuProps) {
   return (
-    <div className="w-full h-16 relative border-t-2 border-b-2 border-white flex items-center justify-center">
+    <div className={SearchMenuTv()}>
       <Search.root>
         {isClose ? <Search.input /> : <Icon onClick={onClick} icon={icon} color="white" />}
       </Search.root>
