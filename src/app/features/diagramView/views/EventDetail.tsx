@@ -1,4 +1,8 @@
 import { forwardRef, memo } from 'react';
+import {
+  EventDetailContentTv,
+  EventDetailRootTv
+} from '~/src/app/features/diagramView/DiagramViewTV';
 import { Text } from '~/src/app/shared/components/Text';
 
 interface EventDetailProps {}
@@ -6,13 +10,8 @@ interface EventDetailProps {}
 const EventDetail = forwardRef<HTMLDivElement, EventDetailProps>(
   ({ ...props }, propertiesPanelRef) => {
     return (
-      <div
-        {...props}
-        id="properties"
-        ref={propertiesPanelRef}
-        className="absolute bg-white ring-1 ring-primary w-68 max-h-[650px] overflow-y-scroll right-0 z-20"
-      >
-        <div className="relative h-10 w-full bg-primary left-0 flex p-2 items-center mb-2">
+      <div {...props} id="properties" ref={propertiesPanelRef} className={EventDetailRootTv()}>
+        <div className={EventDetailContentTv()}>
           <Text text="Detalhes do Evento" color="white" size="md" weigth="bold" />
         </div>
       </div>

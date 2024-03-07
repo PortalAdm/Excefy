@@ -4,12 +4,12 @@ import { FormProvider } from 'react-hook-form';
 import { Input } from '~shared/components/Input';
 import { Text } from '~shared/components/Text';
 import { Title } from '~shared/components/Title';
-import { Form } from './Form';
 import { Button } from '~/src/app/shared/components/Button';
 import { authFormTv } from '../AuthTV';
 import { ButtonLoad } from '~/src/app/shared/components/animations/buttonLoad';
 import { useAuthController } from '../controller';
 import { useAuth } from '~/src/app/shared/hooks/useAuth';
+import { Form } from '~/src/app/shared/components/Form';
 
 interface AuthFormProps {
   handleForgetPassword: () => void;

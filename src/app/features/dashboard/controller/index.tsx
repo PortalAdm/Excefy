@@ -1,15 +1,19 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
 import { TTableListContent } from '~types/TTableListContent';
 import { getAllProcess, getXMLByCommandId } from '../services';
 import { useUserInfo } from '~/src/app/shared/hooks/useUserInfo';
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 
+const itemsPerPage = 5;
+
 export const useDashboardController = () => {
   const { clearLocalDraft } = useLocalBPMN();
   const { user } = useUserInfo();
   const [isFiltring, setIsFiltring] = useState(false);
   const [value, setValue] = useState('');
+  const [filtaredContent, setFiltaredContent] = useState<TTableListContent[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     clearLocalDraft();
@@ -36,27 +40,36 @@ export const useDashboardController = () => {
     refetchOnWindowFocus: false
   });
 
-  const ProcessContent: TTableListContent[] =
-    userProcess && JSON.parse(userProcess as unknown as string);
+  const ProcessContent: TTableListContent[] = useMemo(
+    () => userProcess && JSON.parse(userProcess as unknown as string),
+    [userProcess]
+  );
 
-  const itemsPerPage = 5;
-  const [currentPage, setCurrentPage] = useState(1);
+  const splicedContent = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const splicedContent = ProcessContent?.slice(startIndex, endIndex);
+    return ProcessContent?.slice(startIndex, endIndex);
+  }, [ProcessContent, currentPage]);
 
-  const [filtaredContent, setFiltaredContent] = useState(splicedContent);
+  const increaseFiltaredContent = useCallback(
+    (splicedContent: TTableListContent[]) => setFiltaredContent(splicedContent),
+    []
+  );
+
+  useEffect(() => {
+    increaseFiltaredContent(splicedContent);
+  }, [increaseFiltaredContent, splicedContent]);
 
   const totalPages = Math.ceil((ProcessContent?.length || 0) / itemsPerPage);
 
-  const handlePreviousPage = () => {
+  const handlePreviousPage = useCallback(() => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
-  };
+  }, []);
 
-  const handleNextPage = () => {
+  const handleNextPage = useCallback(() => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
-  };
+  }, [totalPages]);
 
   const onSearch = (search: string) => {
     if (!search) {

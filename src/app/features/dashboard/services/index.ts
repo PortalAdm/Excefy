@@ -79,7 +79,6 @@ export const getXMLByCommandId = async (
   commandId: number
 ): Promise<string | undefined> => {
   try {
-    console.log(commandId);
     const processConfig = {
       recipient,
       commandName: 'ModelProcessSelect',

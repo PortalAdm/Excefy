@@ -1,9 +1,5 @@
-import { ReactNode } from 'react';
+import { TRootComponent } from '~/src/app/shared/types';
 
-interface BpmnRootProps {
-  children: ReactNode;
-}
-
-export function BpmnRoot({ children }: BpmnRootProps) {
+export function BpmnRoot({ children }: TRootComponent) {
   return <div className="w-full h-full overflow-hidden justify-center">{children}</div>;
 }
