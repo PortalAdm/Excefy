@@ -1,6 +1,7 @@
 import { TTableListContent } from '~shared/types/TTableListContent';
 import { TableList } from '..';
 import * as tv from '../TableListTV';
+import { formatDate, formatModificationDate } from '../../../utils/dateUtils';
 
 interface TableListContentProps {
   content: TTableListContent[];
@@ -9,20 +10,12 @@ interface TableListContentProps {
 export function TableListContent({ content = [] }: TableListContentProps) {
   if (!content.length) return null;
 
-  const formatDate = (dateString: string) => {
-    if (dateString === '') return;
-
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-
-    const formattedDate = `${day}/${month}/${year}`;
-    return formattedDate;
+  const createdAt = (date: string) => formatDate(new Date(date));
+  const lastEdited = (date: string) => {
+    const originalDate = new Date(date);
+    const adjustedDate = isNaN(originalDate?.getTime()) ? null : new Date(originalDate.getTime() - 3 * 60 * 60 * 1000);
+    return adjustedDate ? formatModificationDate(adjustedDate.toISOString(), true) : '';
   };
-
-  const createdAt = (date: string) => formatDate(date);
-  const lastEdited = (date: string) => formatDate(date);
 
   return (
     <>
