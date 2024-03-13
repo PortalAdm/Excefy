@@ -8,11 +8,11 @@ export const tabsNavigationItemsTv = tv({
   base: 'w-fit h-fit border-b-2 p-1',
   variants: {
     state: {
-      isActive: 'border-primary',
-      notActive: 'border-b-0'
+      true: 'border-primary',
+      false: 'border-b-0'
     }
   },
   defaultVariants: {
-    state: 'notActive'
+    state: false
   }
 });

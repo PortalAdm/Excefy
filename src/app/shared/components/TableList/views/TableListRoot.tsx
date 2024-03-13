@@ -1,10 +1,6 @@
-import { ReactNode } from 'react';
 import { tableListRootTv } from '../TableListTV';
+import { TRootComponent } from '~/src/app/shared/types';
 
-interface TableListRootProps {
-  children: ReactNode;
-}
-
-export function TableListRoot({ children }: TableListRootProps) {
+export function TableListRoot({ children }: TRootComponent) {
   return <table className={tableListRootTv()}>{children}</table>;
 }

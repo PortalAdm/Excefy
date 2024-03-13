@@ -4,8 +4,8 @@ export const ModalTv = tv({
   base: 'transform-all duration-300 inset-0 z-50 overflow-hidden bg-black/30 fixed flex justify-center items-center p-2 sm:p-4',
   variants: {
     modalState: {
-      open: 'scale-100',
-      closed: 'scale-0'
+      true: 'scale-100',
+      false: 'scale-0'
     }
   }
 });
@@ -24,4 +24,8 @@ export const ModalBodyTv = tv({
 
 export const ModalFooterTv = tv({
   base: 'bg-outline/50 relative p-2 sm:p-6 w-full h-16 rounded-b-lg bottom-0 left-0 flex justify-end'
+});
+
+export const ModalFooterContentTv = tv({
+  base: 'flex items-center gap-2 p-1'
 });

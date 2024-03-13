@@ -1,7 +1,7 @@
-import { ProcessList } from './views/ProcessList';
-import { ProcessListSearch } from './views/ProcessListSearch';
+import { DashboardContent } from '~/src/app/features/dashboard/views/DashboardContent';
+import { DashboardRoot } from '~/src/app/features/dashboard/views/DashboardRoot';
 
 export const DashBoard = {
-  search: ProcessListSearch,
-  ProcessList
+  root: DashboardRoot,
+  content: DashboardContent
 };

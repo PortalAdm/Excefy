@@ -7,7 +7,10 @@ export default function ProcessLayout({ children }: { children: React.ReactNode 
     <>
       <title>Execfy | Novo Processo</title>
       <Providers>
-        <Toast />
+        <Toast.root>
+          <Toast.header />
+          <Toast.info />
+        </Toast.root>
         <NavBar />
         {children}
       </Providers>

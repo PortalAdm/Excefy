@@ -1,10 +1,6 @@
-import { ReactNode } from 'react';
+import { TRootComponent } from '~/src/app/shared/types';
 import { HeaderRootTv } from '../HeaderTV';
 
-interface HeaderRootProps {
-  children: ReactNode;
-}
-
-export function HeaderRoot({ children }: HeaderRootProps) {
+export function HeaderRoot({ children }: TRootComponent) {
   return <div className={HeaderRootTv()}>{children}</div>;
 }

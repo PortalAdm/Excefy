@@ -40,5 +40,11 @@ export const tableListButtonsTv = tv({
 });
 
 export const paginationNumberButtonTv = tv({
-  base: 'border-transparent text-gray-500 font-black border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium'
+  base: 'border-transparent text-gray-500 font-black border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium',
+  variants: {
+    currentPage: {
+      true: 'font-bold text-primary',
+      false: ''
+    }
+  }
 });

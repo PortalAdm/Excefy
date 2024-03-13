@@ -1,10 +1,6 @@
-import { ReactNode } from 'react';
+import { TRootComponent } from '~/src/app/shared/types';
 import { ModalContentTv } from '../ModalTV';
 
-interface ModalContentProps {
-  children: ReactNode;
-}
-
-export function ModalContent({ children }: ModalContentProps) {
+export function ModalContent({ children }: TRootComponent) {
   return <div className={ModalContentTv()}>{children}</div>;
 }

@@ -1,12 +1,10 @@
 import { TableSkeleton } from '~/src/app/shared/components/TableList/views/TableSkeleton';
-import { TableListButtons } from './views/TableListButtons';
 import { TableListContent } from './views/TableListContent';
 import { TableListContentBody } from './views/TableListContentBody';
 import { TableListHeader } from './views/TableListHeader';
 import { TableListRoot } from './views/TableListRoot';
 import { TableListTh } from './views/TableListTh';
 import { TablePagination } from './views/TablePagination';
-import { TableStatus } from './views/TableStatus';
 
 export const TableList = {
   root: TableListRoot,
@@ -14,8 +12,6 @@ export const TableList = {
   name: TableListTh,
   body: TableListContentBody,
   content: TableListContent,
-  status: TableStatus,
-  buttons: TableListButtons,
   pagination: TablePagination,
   Skeleton: TableSkeleton
 };

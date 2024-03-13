@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, createContext, useCallback, useEffect, useState } from 'react';
+import { ReactNode, createContext, useCallback, useState } from 'react';
 import { useTimeout } from '~hooks/useTimeout';
 import { ToastType } from '~types/ToastType';
 
@@ -38,11 +38,7 @@ export const ToastContextProvider = ({ children }: ToastContextProviderProps) =>
     }));
   }, []);
 
-  const { resetSituation } = useTimeout(
-    toastOptions.isActive,
-    updateSituation,
-    toastOptions.timeActive!
-  );
+  useTimeout(toastOptions.isActive, updateSituation, toastOptions.timeActive!);
 
   const changeToastActive = (
     state?: Pick<ToastType, 'state'>,
@@ -57,10 +53,6 @@ export const ToastContextProvider = ({ children }: ToastContextProviderProps) =>
       messageDescription,
       timeActive: time || timeRef
     });
-
-  useEffect(() => {
-    resetSituation();
-  }, [resetSituation]);
 
   return (
     <ToastContext.Provider value={{ toastOptions, changeToastActive }}>

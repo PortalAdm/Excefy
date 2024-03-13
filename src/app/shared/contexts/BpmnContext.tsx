@@ -14,7 +14,7 @@ interface BpmnContext {
   isDisabled: boolean;
   isLoading: boolean;
   lastUpdate: string;
-  saveWithCTRLandS: (viewer: BpmnViewer) => void;
+  saveWithCTRLAndS: (viewer: BpmnViewer) => void;
   getupdatedXml: (viewer: BpmnViewer) => void;
   downloadSVGiagram: (viewer: BpmnViewer) => void;
   downloadBPMNDiagram: (viewer: BpmnViewer) => void;
@@ -105,7 +105,7 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
     [setToast]
   );
 
-  const saveWithCTRLandS = useCallback(
+  const saveWithCTRLAndS = useCallback(
     (viewer: BpmnViewer) => {
       document.body.addEventListener('keydown', (e) => {
         if (e.code === 'KeyS' && (e.metaKey || e.ctrlKey)) {
@@ -161,7 +161,7 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
         isLoading,
         isDisabled,
         lastUpdate,
-        saveWithCTRLandS,
+        saveWithCTRLAndS,
         getupdatedXml,
         downloadSVGiagram,
         downloadBPMNDiagram,

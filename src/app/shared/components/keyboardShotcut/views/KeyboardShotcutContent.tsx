@@ -1,10 +1,6 @@
-import { ReactNode } from 'react';
+import { TRootComponent } from '~/src/app/shared/types';
 import { KeyboardShotcutContentTv } from '../KeyboardShotcutTV';
 
-interface KeyboardShotcutContentProps {
-  children: ReactNode;
-}
-
-export function KeyboardShotcutContent({ children }: KeyboardShotcutContentProps) {
+export function KeyboardShotcutContent({ children }: TRootComponent) {
   return <div className={KeyboardShotcutContentTv()}>{children}</div>;
 }

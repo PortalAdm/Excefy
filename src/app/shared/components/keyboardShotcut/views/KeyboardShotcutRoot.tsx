@@ -1,9 +1,8 @@
-import { HtmlHTMLAttributes, ReactNode } from 'react';
+import { HtmlHTMLAttributes } from 'react';
+import { TRootComponent } from '~/src/app/shared/types';
 
-interface KeyboardShotcutRootProps extends HtmlHTMLAttributes<HTMLElement> {
-  children: ReactNode;
-}
+type TKeyboardShotcutRootProps = HtmlHTMLAttributes<HTMLElement> & TRootComponent;
 
-export function KeyboardShotcutRoot({ children }: KeyboardShotcutRootProps) {
+export function KeyboardShotcutRoot({ children }: TKeyboardShotcutRootProps) {
   return <div onClick={(e) => e.stopPropagation()}>{children}</div>;
 }

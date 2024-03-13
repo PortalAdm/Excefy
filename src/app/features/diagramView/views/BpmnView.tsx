@@ -18,9 +18,9 @@ import { BaseViewerOptions } from 'bpmn-js/lib/BaseViewer';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { FaCheck } from 'react-icons/fa6';
 
-import React, { ReactNode, useCallback, useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useDiagramViewController } from '../controller';
-import { BpmnHeaderContentTv, BpmnHeaderRootTv } from '../DiagramViewTV';
+import * as tv from '../DiagramViewTV';
 import { TabsNavigation } from '~/src/app/shared/components/TabsNavigation';
 import { Modal } from '~/src/app/shared/components/Modal';
 import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
@@ -31,44 +31,17 @@ import { Text } from '~/src/app/shared/components/Text';
 import { Title } from '~/src/app/shared/components/Title';
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 import { formateHour } from '~/src/app/shared/utils/dateUtils';
+import { TRootComponent } from '~/src/app/shared/types';
 
-interface BpmnViewProps {
-  children: ReactNode;
-}
-
-export function BpmnView({ children }: BpmnViewProps) {
+export function BpmnView({ children }: TRootComponent) {
   const { draft } = useLocalBPMN();
   const canvaRef = useRef<HTMLDivElement>(null);
   const [headerViewer, setHeaderViewer] = useState<Modeler>();
-  const { updatedXml, isDisabled, isLoading, lastUpdate, getupdatedXml, saveWithCTRLandS } =
+  const { updatedXml, isDisabled, isLoading, lastUpdate, getupdatedXml, saveWithCTRLAndS } =
     useBPMN();
-  const { idx, modal, links, buttons, setIdx } = useDiagramViewController(headerViewer as Modeler);
+  const { idx, modal, links, buttons, changeModalState, updateIdIndex, getInitialXML, updateXml } =
+    useDiagramViewController(headerViewer as Modeler);
   const propertiesPanelRef = useRef<HTMLDivElement>(null);
-
-  const getInitialXML = useCallback(async (viewer: BpmnViewer, xml: string) => {
-    if (xml) {
-      try {
-        const { warnings } = await viewer.importXML(xml);
-
-        if (warnings.length) {
-          throw new Error(warnings[0]);
-        }
-      } catch (err: any) {
-        throw new Error('Erro na renderização', err);
-      }
-    }
-  }, []);
-
-  const updateXml = useCallback(
-    (viewer: BpmnViewer) => {
-      viewer.on('element.changed', async (e) => {
-        e.preventDefault();
-
-        getupdatedXml(viewer);
-      });
-    },
-    [getupdatedXml]
-  );
 
   useLayoutEffect(() => {
     const customTranslateModule = {
@@ -100,24 +73,23 @@ export function BpmnView({ children }: BpmnViewProps) {
       setHeaderViewer(viewer);
     }
 
-    updateXml(viewer);
+    updateXml(viewer, getupdatedXml);
 
     if (viewer) {
-      saveWithCTRLandS(viewer);
+      saveWithCTRLAndS(viewer);
     }
 
     getInitialXML(viewer, updatedXml as string);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      <div className={BpmnHeaderRootTv()}>
+      <div className={tv.BpmnHeaderRootTv()}>
         <TabsNavigation.root>
           <TabsNavigation.items links={links} />
         </TabsNavigation.root>
-        <div className="flex flex-col gap-2 absolute bottom-0 w-full max-w-[280px]">
+        <div className={tv.bpmnViewerHeaderTv()}>
           <Title title={draft?.commandName} size="md" className="truncate" />
           {lastUpdate && (
             <div className="flex gap-2 items-center">
@@ -131,15 +103,15 @@ export function BpmnView({ children }: BpmnViewProps) {
             </div>
           )}
         </div>
-        <div className={BpmnHeaderContentTv()}>
+        <div className={tv.BpmnHeaderContentTv()}>
           {buttons.map((button, i) => (
-            <Modal.trigger key={i}>
+            <Modal.trigger changeModalState={changeModalState} key={i}>
               <Button.root
                 disabled={i !== 0 && isDisabled}
                 size="small"
                 color="transparent"
                 variant="bordered"
-                onClick={() => setIdx(i)}
+                onClick={() => updateIdIndex(i)}
               >
                 {i === 0 && (
                   <input
@@ -159,11 +131,7 @@ export function BpmnView({ children }: BpmnViewProps) {
       </div>
       {!draft && <Text text="Você deve ter criado eu estar editanto um diagrama para continuar" />}
       {draft && !isLoading ? (
-        <div
-          className="relative h-full border-t-[1px] border-primary z-0"
-          id="js-canvas"
-          ref={canvaRef}
-        >
+        <div className={tv.bpmnCanvasTv()} id="js-canvas" ref={canvaRef}>
           <EventDetail ref={propertiesPanelRef} />
           {children}
         </div>

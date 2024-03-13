@@ -1,9 +1,5 @@
 import { tv } from 'tailwind-variants';
 
-export const authTV = tv({
-  base: 'flex'
-});
-
 export const authHeroTv = tv({
   base: 'relative hidden md:flex w-full pointer-events-none'
 });

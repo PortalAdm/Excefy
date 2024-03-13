@@ -1,13 +1,10 @@
-import { ReactNode } from 'react';
-import { useModal } from '~hooks/useModal';
+import { TRootComponent } from '~/src/app/shared/types';
 
-interface ModalTriggerProps {
-  children: ReactNode;
+interface ModalTriggerProps extends TRootComponent {
+  changeModalState: () => void;
 }
 
-export function ModalTrigger({ children }: ModalTriggerProps) {
-  const { changeModalState } = useModal();
-
+export function ModalTrigger({ children, changeModalState }: ModalTriggerProps) {
   return (
     <div id="Trigger" onClick={changeModalState}>
       {children}

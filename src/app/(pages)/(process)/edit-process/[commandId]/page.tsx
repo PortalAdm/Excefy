@@ -1,5 +1,4 @@
 import { Bpmn } from '~features/diagramView';
-import { KeyboardShotcut } from '~features/KeyboardShotcut';
 
 interface EditProcesspage {
   params: {
@@ -11,7 +10,7 @@ export default function EditProcesspage() {
   return (
     <Bpmn.root>
       <Bpmn.view>
-        <KeyboardShotcut />
+        <Bpmn.keyboardShotcut />
       </Bpmn.view>
     </Bpmn.root>
   );

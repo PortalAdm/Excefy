@@ -4,8 +4,8 @@ export const keyboardShotcutContainerTv = tv({
   base: 'absolute transition-all ease-in-out duration-300 right-0 z-50 bg-white',
   variants: {
     state: {
-      open: '-translate-x-0',
-      closed: 'translate-x-80'
+      true: '-translate-x-0',
+      false: 'translate-x-80'
     }
   }
 });

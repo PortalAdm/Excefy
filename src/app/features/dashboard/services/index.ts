@@ -73,23 +73,3 @@ export const createNewDraftProcess = async (clientId: string) => {
     }
   }
 };
-
-export const getXMLByCommandId = async (clientId: string, commandId: number): Promise<string> => {
-  const processConfig = {
-    recipient,
-    commandName: 'ModelProcessSelect',
-    commandParameters: [
-      {
-        name: 'clientId',
-        value: clientId
-      },
-      {
-        name: 'commandId',
-        value: commandId
-      }
-    ]
-  };
-  const { data } = await api.post<TProcessInsertContentResponse[]>(baseEndpoint, processConfig);
-
-  return data[0].content;
-};
