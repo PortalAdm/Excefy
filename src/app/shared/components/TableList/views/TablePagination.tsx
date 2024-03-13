@@ -30,9 +30,7 @@ export function TablePagination({
       return Array.from({ length: totalPages }, (_, i) => (
         <button
           key={i + 1}
-          className={`${paginationNumberButtonTv()} ${
-            currentPage === i + 1 ? 'font-bold text-primary' : ''
-          }`}
+          className={paginationNumberButtonTv({ currentPage: currentPage === i + 1 })}
           onClick={() => setCurrentPage(i + 1)}
         >
           {i + 1}
@@ -51,13 +49,10 @@ export function TablePagination({
 
       return Array.from({ length: endPage - startPage + 1 }, (_, i) => {
         const pageNumber = startPage + i;
-
         return (
           <button
             key={pageNumber}
-            className={`${paginationNumberButtonTv()} ${
-              currentPage === pageNumber ? 'font-bold text-primary' : ''
-            }`}
+            className={paginationNumberButtonTv({ currentPage: currentPage === pageNumber })}
             onClick={() => setCurrentPage(pageNumber)}
           >
             {pageNumber}

@@ -1,24 +1,18 @@
 'use client';
 
-import { Input } from '~shared/components/Input';
-import { TabsNavigation } from '~shared/components/TabsNavigation';
-import { useNewProcessConfigController } from './controller';
+import { useNewProcessConfigController } from '~/src/app/features/processConfig/controller';
+import { Input } from '~/src/app/shared/components/Input';
 import { Text } from '~/src/app/shared/components/Text';
 
 const maxProcessDescriptionLength = 75;
 const maxProcessNameLength = 30;
 
-export function NewProcessConfigForm() {
-  const { links, processName, processDescription, setProcessName, setProcessDescription } =
+export function ProcessConfigFields() {
+  const { processName, processDescription, setProcessName, setProcessDescription } =
     useNewProcessConfigController();
 
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
-      <div className="pb-16">
-        <TabsNavigation.root>
-          <TabsNavigation.items links={links} />
-        </TabsNavigation.root>
-      </div>
+    <>
       <Input.root>
         <span className="pt-4">
           <Input.label labelSize="small" label="Nome" name="processName" />
@@ -54,6 +48,6 @@ export function NewProcessConfigForm() {
           placeholder="Digite uma descrição para o processo"
         />
       </Input.root>
-    </form>
+    </>
   );
 }

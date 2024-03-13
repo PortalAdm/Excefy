@@ -1,3 +1,5 @@
+'use client';
+
 import { Text } from '~shared/components/Text';
 import { Icon } from '~shared/components/Icon';
 import { IoMdClose } from 'react-icons/io';
@@ -8,11 +10,10 @@ import { useToast } from '~hooks/useToast';
 
 interface ToastHeaderProps extends VariantProps<typeof textTv> {
   title?: string;
-  onClick: () => void;
 }
 
-export function ToastHeader({ title, color, onClick }: ToastHeaderProps) {
-  const { toastOptions } = useToast();
+export function ToastHeader({ title, color }: ToastHeaderProps) {
+  const { toastOptions, changeToastActive } = useToast();
 
   const toastStateColor: typeof color = toastOptions.state === 'success' ? 'success' : 'error';
 
@@ -24,7 +25,7 @@ export function ToastHeader({ title, color, onClick }: ToastHeaderProps) {
         size="sm"
         color={toastStateColor}
       />
-      <Icon icon={IoMdClose} onClick={onClick} />
+      <Icon icon={IoMdClose} onClick={changeToastActive} />
     </div>
   );
 }

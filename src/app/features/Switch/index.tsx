@@ -1,18 +1,16 @@
 'use client';
 
-import { useState } from 'react';
 import { switchRootTv, switchThumbTv } from './SwitchTv';
 import { VariantProps } from 'tailwind-variants';
 import * as SwitchRadix from '@radix-ui/react-switch';
+import { useSwitchController } from '~/src/app/features/Switch/controller';
 
 interface SwitchProps extends VariantProps<typeof switchRootTv> {
   checked: boolean;
 }
 
 export function Switch({ checked, size }: SwitchProps) {
-  const [isChecked, setIsChecked] = useState(checked);
-
-  const handleCheckChange = () => setIsChecked((isChecked) => !isChecked);
+  const { handleCheckChange, isChecked } = useSwitchController(checked);
 
   return (
     <SwitchRadix.Root

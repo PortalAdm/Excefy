@@ -1,10 +1,6 @@
-import { ReactNode } from 'react';
+import { TRootComponent } from '~/src/app/shared/types';
 import { tabsNavigationRootTv } from '../TabsNavigationTV';
 
-interface TabsNavigationRootProps {
-  children: ReactNode;
-}
-
-export function TabsNavigationRoot({ children }: TabsNavigationRootProps) {
+export function TabsNavigationRoot({ children }: TRootComponent) {
   return <div className={tabsNavigationRootTv()}>{children}</div>;
 }

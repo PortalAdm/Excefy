@@ -23,6 +23,4 @@ export const useTimeout = (situation: boolean, updateSituation: () => void, time
   useEffect(() => {
     resetSituation();
   }, [resetSituation]);
-
-  return { resetSituation };
 };

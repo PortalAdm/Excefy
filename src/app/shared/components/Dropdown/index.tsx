@@ -5,6 +5,7 @@ import { IoMdArrowDropdown } from 'react-icons/io';
 import { Icon } from '../Icon';
 import Link from 'next/link';
 import { useAuthController } from '~/src/app/features/auth/controller';
+import * as tv from '~/src/app/shared/components/Dropdown/DropsownTV';
 
 interface DropdownRootProps {
   options: MenuOptions[];
@@ -15,17 +16,13 @@ export type MenuOptions = {
   label: string;
 };
 
-function classNames(...classes: string[]): string {
-  return classes.filter(Boolean).join(' ');
-}
-
 export function Dropdown({ options }: DropdownRootProps) {
   const { logout } = useAuthController();
 
   return (
-    <Menu as="div" className="relative inline-block text-left z-50">
+    <Menu as="div" className={tv.dropdownMenuRootTV()}>
       <div>
-        <Menu.Button className="w-fit h-fit bg-transparent transition-transform duration-300 hover:translate-y-1 translate-y-0.5 cursor-pointer">
+        <Menu.Button className={tv.dropdownMenuButtonTV()}>
           <Icon
             icon={IoMdArrowDropdown}
             color="primary"
@@ -44,17 +41,11 @@ export function Dropdown({ options }: DropdownRootProps) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-primary ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className={tv.dropdownMenuItemsTV()}>
           {options.map((option, i) => (
             <Menu.Item key={`menu-item-${i}`}>
               {({ active }) => (
-                <Link
-                  href={option.href}
-                  className={classNames(
-                    active ? 'bg-gray-100 text-white' : 'text-white/70',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
+                <Link href={option.href} className={tv.dropdownMenuLinkTV({ state: active })}>
                   {option.label}
                 </Link>
               )}
@@ -62,13 +53,7 @@ export function Dropdown({ options }: DropdownRootProps) {
           ))}
           <Menu.Item>
             {({ active }) => (
-              <button
-                className={classNames(
-                  active ? 'bg-gray-100 text-white' : 'text-white/70',
-                  'block px-4 py-2 text-sm w-full text-start'
-                )}
-                onClick={logout}
-              >
+              <button className={tv.dropdownMenuItemTV({ state: active })} onClick={logout}>
                 Sair
               </button>
             )}

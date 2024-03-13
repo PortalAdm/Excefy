@@ -1,15 +1,10 @@
-import { ReactNode } from 'react';
 import { ModalTv } from '../ModalTV';
-import { useModal } from '~hooks/useModal';
-import { VariantProps } from 'tailwind-variants';
+import { TRootComponent } from '~/src/app/shared/types';
 
-interface ModalRootProps extends VariantProps<typeof ModalTv> {
-  children: ReactNode;
+interface ModalRootProps extends TRootComponent {
+  modalState: boolean;
 }
 
 export function ModalRoot({ children, modalState }: ModalRootProps) {
-  const { isModalOpen } = useModal();
-  const modalStates: typeof modalState = isModalOpen ? 'open' : 'closed';
-
-  return <div className={ModalTv({ modalState: modalStates })}>{children}</div>;
+  return <div className={ModalTv({ modalState: modalState })}>{children}</div>;
 }

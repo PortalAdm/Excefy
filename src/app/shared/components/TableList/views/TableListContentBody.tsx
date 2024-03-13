@@ -1,10 +1,6 @@
-import { ReactNode } from 'react';
+import { TRootComponent } from '~/src/app/shared/types';
 import { tableListContentBodyTv } from '../TableListTV';
 
-interface TableListContentBodyProps {
-  children: ReactNode;
-}
-
-export function TableListContentBody({ children }: TableListContentBodyProps) {
+export function TableListContentBody({ children }: TRootComponent) {
   return <tbody className={tableListContentBodyTv()}>{children}</tbody>;
 }

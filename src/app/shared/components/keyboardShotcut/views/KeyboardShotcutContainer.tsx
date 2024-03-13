@@ -1,20 +1,13 @@
-import { ReactNode } from 'react';
 import { keyboardShotcutContainerTv } from '../KeyboardShotcutTV';
-import { VariantProps } from 'tailwind-variants';
+import { TRootComponent } from '~/src/app/shared/types';
 
-interface KeyboardShotcutContainerProps extends VariantProps<typeof keyboardShotcutContainerTv> {
-  children: ReactNode;
+interface KeyboardShotcutContainerProps extends TRootComponent {
   isShotcutOpen: boolean;
 }
 
 export function KeyboardShotcutContainer({
   children,
-  isShotcutOpen,
-  state
+  isShotcutOpen
 }: KeyboardShotcutContainerProps) {
-  const keyboardShotcutState: typeof state = isShotcutOpen ? 'open' : 'closed';
-
-  return (
-    <div className={keyboardShotcutContainerTv({ state: keyboardShotcutState })}>{children}</div>
-  );
+  return <div className={keyboardShotcutContainerTv({ state: isShotcutOpen })}>{children}</div>;
 }

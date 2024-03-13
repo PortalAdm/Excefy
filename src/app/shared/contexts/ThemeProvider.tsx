@@ -3,7 +3,7 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 
 type TTheme = '' | 'dark' | 'light';
 
-interface IthemeContextProps {
+export interface IthemeContextProps {
   theme?: TTheme;
   changeTheme?: () => void;
 }

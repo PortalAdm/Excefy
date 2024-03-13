@@ -1,38 +1,47 @@
 import { TTableListContent } from '~shared/types/TTableListContent';
-import { TableList } from '..';
+import { TableListController } from '~/src/app/shared/components/TableList/controller';
+import { Switch } from '~/src/app/features/Switch';
+import { Tooltip } from '~shared/components/Tooltip';
+import { Icon } from '~/src/app/shared/components/Icon';
 import * as tv from '../TableListTV';
-import { formatDate, formatModificationDate } from '../../../utils/dateUtils';
 
 interface TableListContentProps {
   content: TTableListContent[];
 }
 
 export function TableListContent({ content = [] }: TableListContentProps) {
-  if (!content.length) return null;
+  const { createdAt, lastEdited, actions } = TableListController();
 
-  const createdAt = (date: string) => formatDate(new Date(date));
-  const lastEdited = (date: string) => {
-    const originalDate = new Date(date);
-    const adjustedDate = isNaN(originalDate?.getTime()) ? null : new Date(originalDate.getTime() - 3 * 60 * 60 * 1000);
-    return adjustedDate ? formatModificationDate(adjustedDate.toISOString(), true) : '';
-  };
+  if (!content.length) return null;
 
   return (
     <>
-      {content.map((item, i) => (
-        <tr key={i} className={tv.tableListContentTrTv()}>
-          <td className={tv.tableListContentNameTv()}>{item.commandName}</td>
-          <td className={tv.tableListContentDescriptionTv()}>{item.commandDescription}</td>
-          <td className={tv.tableDateTv()}>{createdAt(item.createdAt || '')}</td>
-          <td className={tv.tableDateTv()}>{lastEdited(item.lastEdited || '')}</td>
-          <td className={tv.tableListContentStatusTv()}>
-            <TableList.status checked={item.enable || false} />
-          </td>
-          <td className={tv.tableListContentStatusTv()}>
-            <TableList.buttons listItem={item} />
-          </td>
-        </tr>
-      ))}
+      {content.map((item, i) => {
+        const checked = item.enable || false;
+        const tooltipText = checked ? 'Ativar' : 'Inativar';
+        return (
+          <tr key={i} className={tv.tableListContentTrTv()}>
+            <td className={tv.tableListContentNameTv()}>{item.commandName}</td>
+            <td className={tv.tableListContentDescriptionTv()}>{item.commandDescription}</td>
+            <td className={tv.tableDateTv()}>{createdAt(item.createdAt || '')}</td>
+            <td className={tv.tableDateTv()}>{lastEdited(item.lastEdited || '')}</td>
+            <td className={tv.tableListContentStatusTv()}>
+              <Tooltip text={tooltipText}>
+                <Switch size="small" checked={checked} />
+              </Tooltip>
+            </td>
+            <td className={tv.tableListContentStatusTv()}>
+              <div className={tv.tableListButtonsTv()}>
+                {actions.map((icon, i) => (
+                  <Tooltip key={i} text={icon.name}>
+                    <Icon icon={icon.element} onClick={() => icon.onClick(item)} />
+                  </Tooltip>
+                ))}
+              </div>
+            </td>
+          </tr>
+        );
+      })}
     </>
   );
 }

@@ -36,11 +36,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const time = 3000;
   const updateSituation = () => setErrorMessage('');
 
-  const { resetSituation } = useTimeout(situation, updateSituation, time);
-
-  useEffect(() => {
-    resetSituation();
-  }, [resetSituation]);
+  useTimeout(situation, updateSituation, time);
 
   const changeHasToken = () => setHasToken((hasToken) => !hasToken);
   const dashboard = APP_ROUTES.private.dashboard.name;

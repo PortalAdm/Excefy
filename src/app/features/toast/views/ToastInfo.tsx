@@ -1,8 +1,10 @@
+'use client';
+
 import { Text } from '~shared/components/Text';
 import { useToast } from '~hooks/useToast';
 
 interface ToastInfoProps {
-  text: string;
+  text?: string;
 }
 
 export function ToastInfo({ text }: ToastInfoProps) {

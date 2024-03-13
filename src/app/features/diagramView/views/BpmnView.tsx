@@ -37,11 +37,10 @@ export function BpmnView({ children }: TRootComponent) {
   const { draft } = useLocalBPMN();
   const canvaRef = useRef<HTMLDivElement>(null);
   const [headerViewer, setHeaderViewer] = useState<Modeler>();
-  const { updatedXml, isDisabled, isLoading, lastUpdate, getupdatedXml, saveWithCTRLandS } =
+  const { updatedXml, isDisabled, isLoading, lastUpdate, getupdatedXml, saveWithCTRLAndS } =
     useBPMN();
-  const { idx, modal, links, buttons, setIdx, getInitialXML, updateXml } = useDiagramViewController(
-    headerViewer as Modeler
-  );
+  const { idx, modal, links, buttons, changeModalState, updateIdIndex, getInitialXML, updateXml } =
+    useDiagramViewController(headerViewer as Modeler);
   const propertiesPanelRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -77,7 +76,7 @@ export function BpmnView({ children }: TRootComponent) {
     updateXml(viewer, getupdatedXml);
 
     if (viewer) {
-      saveWithCTRLandS(viewer);
+      saveWithCTRLAndS(viewer);
     }
 
     getInitialXML(viewer, updatedXml as string);
@@ -106,13 +105,13 @@ export function BpmnView({ children }: TRootComponent) {
         </div>
         <div className={tv.BpmnHeaderContentTv()}>
           {buttons.map((button, i) => (
-            <Modal.trigger key={i}>
+            <Modal.trigger changeModalState={changeModalState} key={i}>
               <Button.root
                 disabled={i !== 0 && isDisabled}
                 size="small"
                 color="transparent"
                 variant="bordered"
-                onClick={() => setIdx(i)}
+                onClick={() => updateIdIndex(i)}
               >
                 {i === 0 && (
                   <input

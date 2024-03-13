@@ -1,9 +1,8 @@
-import { ReactNode } from 'react';
 import { VariantProps } from 'tailwind-variants';
 import { titleTv } from './TitleTV';
 
 interface TitleProps extends VariantProps<typeof titleTv> {
-  title: ReactNode;
+  title: string;
   className?: string;
   as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }

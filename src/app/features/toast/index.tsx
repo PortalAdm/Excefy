@@ -1,15 +1,9 @@
-'use client';
+import { ToastHeader } from '~/src/app/features/toast/views/ToastHeader';
+import { ToastInfo } from '~/src/app/features/toast/views/ToastInfo';
+import { ToastRoot } from '~/src/app/features/toast/views/ToastRoot';
 
-import { Toast as ToastComp } from '~shared/components/toast';
-import { useToast } from '~shared/hooks/useToast';
-
-export function Toast() {
-  const { changeToastActive } = useToast();
-
-  return (
-    <ToastComp.root>
-      <ToastComp.header onClick={changeToastActive} />
-      <ToastComp.info text="Exemplo de texto para recuperação.." />
-    </ToastComp.root>
-  );
-}
+export const Toast = {
+  root: ToastRoot,
+  header: ToastHeader,
+  info: ToastInfo
+};

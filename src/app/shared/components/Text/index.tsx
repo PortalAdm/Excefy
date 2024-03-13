@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
 import { VariantProps } from 'tailwind-variants';
 import { textTv } from './TextTV';
+import { ReactNode } from 'react';
 
 export interface TextProps extends VariantProps<typeof textTv> {
   text: ReactNode;

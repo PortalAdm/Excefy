@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
 import { TTableListContent } from '~types/TTableListContent';
-import { getAllProcess, getXMLByCommandId } from '../services';
+import { getAllProcess } from '../services';
 import { useUserInfo } from '~/src/app/shared/hooks/useUserInfo';
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 
@@ -18,17 +18,6 @@ export const useDashboardController = () => {
   useEffect(() => {
     clearLocalDraft();
   }, [clearLocalDraft]);
-
-  const getXml = useCallback(
-    async (commandId: number) => {
-      if (user?.id) {
-        const xml = await getXMLByCommandId(user?.id, commandId);
-
-        return xml;
-      }
-    },
-    [user?.id]
-  );
 
   const getProcess = useCallback(async () => {
     const userProcess = await getAllProcess(user?.id);
@@ -105,7 +94,6 @@ export const useDashboardController = () => {
     handlePreviousPage,
     handleNextPage,
     setCurrentPage,
-    onSearch,
-    getXml
+    onSearch
   };
 };

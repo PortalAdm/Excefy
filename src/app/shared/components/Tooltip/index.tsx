@@ -1,11 +1,10 @@
 import * as TooltipRadix from '@radix-ui/react-tooltip';
-import { ReactNode } from 'react';
 import { Text } from '~shared/components/Text';
 import { capitalizeName } from '~utils/transformers';
 import { arrowTv, contentTv } from './TooltipTv';
+import { TRootComponent } from '~/src/app/shared/types';
 
-interface TooltipProps {
-  children: ReactNode;
+interface TooltipProps extends TRootComponent {
   text: string;
 }
 

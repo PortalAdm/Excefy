@@ -2,6 +2,7 @@ import * as Checkbox from '@radix-ui/react-checkbox';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { Icon } from '../Icon';
 import { Text } from '../Text';
+import { checkboxRootTV, checkboxWrapperTV } from '~/src/app/shared/components/Checkbox/CheckboxTV';
 
 interface CheckboxComp {
   label: string;
@@ -13,13 +14,8 @@ interface CheckboxComp {
 const CheckboxComp = ({ label, id, checked, onClick }: CheckboxComp) => {
   return (
     <form>
-      <div className="flex items-center gap-2">
-        <Checkbox.Root
-          checked={checked}
-          onClick={onClick}
-          className="ring-1 ring-placeholder flex h-4 w-4 appearance-none items-center justify-center outline-none"
-          id={id}
-        >
+      <div className={checkboxWrapperTV()}>
+        <Checkbox.Root checked={checked} onClick={onClick} className={checkboxRootTV()} id={id}>
           <Checkbox.Indicator className="text-violet11">
             <Icon icon={AiOutlineCheck} size="small" />
           </Checkbox.Indicator>

@@ -4,24 +4,20 @@
 import { ReactNode } from 'react';
 import { AppThemeProvider } from '~contexts/ThemeProvider';
 import { BpmnContextProvider } from '~contexts/BpmnContext';
-import { ModalProvider } from '~contexts/ModalContext';
 import { ToastContextProvider } from '../shared/contexts/ToastContext';
 import { AuthContextProvider } from '../shared/contexts/AuthContext';
 import { QueryClientProvider } from 'react-query';
 import { queryClient } from '../shared/services/reactQuery';
+import { TRootComponent } from '~/src/app/shared/types';
 
-interface ProvidersProps {
-  children: ReactNode;
-}
-
-export function Providers({ children }: ProvidersProps) {
+export function Providers({ children }: TRootComponent) {
   const composeProviders =
     (
       ...providers: {
-        ({ children }: any): JSX.Element;
+        ({ children }: TRootComponent): JSX.Element;
       }[]
     ) =>
-    (props: { children: any }) =>
+    (props: { children: ReactNode }) =>
       providers.reduceRight(
         (children, Provider) => <Provider {...props}>{children}</Provider>,
         props.children
@@ -30,7 +26,6 @@ export function Providers({ children }: ProvidersProps) {
   const AllProviders = composeProviders(
     AppThemeProvider,
     BpmnContextProvider,
-    ModalProvider,
     ToastContextProvider,
     AuthContextProvider
   );

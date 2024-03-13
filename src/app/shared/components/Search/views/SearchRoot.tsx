@@ -1,9 +1,9 @@
-import { HTMLAttributes, ReactNode } from 'react';
+import { HTMLAttributes } from 'react';
+import { searchRootTv } from '~/src/app/shared/components/Search/SearchTV';
+import { TRootComponent } from '~/src/app/shared/types';
 
-interface SearchRootProps extends HTMLAttributes<HTMLFormElement> {
-  children: ReactNode;
-}
+type TSearchRootProps = HTMLAttributes<HTMLFormElement> & TRootComponent;
 
-export function SearchRoot({ children }: SearchRootProps) {
-  return <form className="w-full h-8 flex relative">{children}</form>;
+export function SearchRoot({ children }: TSearchRootProps) {
+  return <form className={searchRootTv()}>{children}</form>;
 }

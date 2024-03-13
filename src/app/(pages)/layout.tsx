@@ -2,7 +2,7 @@ import '~global/styles/scrollbar.css';
 import '~global/styles/globals.css';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Providers } from '../providers';
-import { MainContainer } from '../shared/components/MainContainer';
+import { MainContainer } from '../features/MainContainer';
 import { Toast } from '../features/toast';
 import Head from 'next/head';
 import { Menu } from '~/src/app/(pages)/Menu';
@@ -20,7 +20,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         ></link>
         <Providers>
           <MainContainer>
-            <Toast />
+            <Toast.root>
+              <Toast.header />
+              <Toast.info />
+            </Toast.root>
             <Menu />
             <div className="flex flex-col w-full h-full">
               {children}

@@ -1,10 +1,9 @@
-import { HTMLAttributes, ReactNode } from 'react';
+import { HTMLAttributes } from 'react';
 import { ModalBodyTv } from '../ModalTV';
+import { TRootComponent } from '~/src/app/shared/types';
 
-interface ModalBodyProps extends HTMLAttributes<HTMLElement> {
-  children: ReactNode;
-}
+type TModalBodyProps = HTMLAttributes<HTMLElement> & TRootComponent;
 
-export function ModalBody({ children }: ModalBodyProps) {
+export function ModalBody({ children }: TModalBodyProps) {
   return <div className={ModalBodyTv()}>{children}</div>;
 }
