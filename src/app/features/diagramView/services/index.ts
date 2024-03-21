@@ -6,6 +6,7 @@ import { recipient } from '~/src/app/shared/utils/constants/recipient';
 export const updateProcess = async (
   xml: string,
   userId: string,
+  clientId: string,
   commandId: number,
   errorHandler: () => void
 ): Promise<string | undefined> => {
@@ -16,6 +17,10 @@ export const updateProcess = async (
       commandParameters: [
         {
           name: 'clientId',
+          value: clientId
+        },
+        {
+          name: 'userId',
           value: userId
         },
         {

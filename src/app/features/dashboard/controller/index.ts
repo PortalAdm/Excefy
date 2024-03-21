@@ -20,10 +20,10 @@ export const useDashboardController = () => {
   }, [clearLocalDraft]);
 
   const getProcess = useCallback(async () => {
-    const userProcess = await getAllProcess(user?.id);
+    const userProcess = await getAllProcess(user?.clientId);
 
     return userProcess;
-  }, [user?.id]);
+  }, [user?.clientId]);
 
   const { data: userProcess, isLoading } = useQuery('userProcess', getProcess, {
     refetchOnWindowFocus: false

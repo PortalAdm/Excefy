@@ -1,17 +1,29 @@
 import { TTableListContent } from '~shared/types/TTableListContent';
-import { TableListController } from '~/src/app/shared/components/TableList/controller';
 import { Switch } from '~/src/app/features/Switch';
 import { Tooltip } from '~shared/components/Tooltip';
 import { Icon } from '~/src/app/shared/components/Icon';
 import * as tv from '../TableListTV';
+import { ElementType } from 'react';
+
+type TTableListActions = {
+  element: ElementType;
+  name: string;
+  onClick: (listItem: TTableListContent) => void;
+};
 
 interface TableListContentProps {
   content: TTableListContent[];
+  createdAt: (date: string) => string | undefined;
+  lastEdited: (date: string) => string;
+  actions: TTableListActions[];
 }
 
-export function TableListContent({ content = [] }: TableListContentProps) {
-  const { createdAt, lastEdited, actions } = TableListController();
-
+export function TableListContent({
+  content = [],
+  createdAt,
+  lastEdited,
+  actions
+}: TableListContentProps) {
   if (!content.length) return null;
 
   return (

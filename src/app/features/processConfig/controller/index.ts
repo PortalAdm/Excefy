@@ -69,7 +69,8 @@ export const useNewProcessConfigController = () => {
         processDescription,
         processName,
         commandId: draft?.commandId,
-        userId: user?.id,
+        clientId: user?.clientId,
+        userId: user?.userId,
         lastEdited: new Date().toISOString(),
         createdAt: draft?.createdAt || ''
       };
@@ -88,8 +89,9 @@ export const useNewProcessConfigController = () => {
     draft?.createdAt,
     processDescription,
     processName,
-    user?.id,
-    updateProcessConfigCallback
+    updateProcessConfigCallback,
+    user?.clientId,
+    user?.userId
   ]);
 
   useEffect(() => {

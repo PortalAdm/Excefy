@@ -1,5 +1,6 @@
 export type AuthResponse = {
-  id: string;
+  clientId: string;
+  userId: string;
   access_token: string;
   token_type: string;
   expires_in: number;

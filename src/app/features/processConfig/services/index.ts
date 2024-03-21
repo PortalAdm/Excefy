@@ -8,7 +8,8 @@ export const updateProcessConfiguration = async ({
   processDescription,
   processName,
   commandId,
-  userId
+  userId,
+  clientId
 }: TUpdateProcessConfigurationRequest) => {
   try {
     const processConfig = {
@@ -16,8 +17,12 @@ export const updateProcessConfiguration = async ({
       commandName: 'ProcessUpdate',
       commandParameters: [
         {
-          name: 'clientId',
+          name: 'userId',
           value: userId
+        },
+        {
+          name: 'clientId',
+          value: clientId
         },
         {
           name: 'commandId',

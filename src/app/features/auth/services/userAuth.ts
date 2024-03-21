@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { TUserAuthRequest } from '~/src/app/shared/types/requests/TUserAuthRequest';
+import { AuthResponse } from '~/src/app/shared/types/responses/AuthResponse';
 import { userSession } from '~/src/app/shared/utils/constants/userSession';
 
 export const userAuth = async ({
@@ -26,12 +27,13 @@ export const userAuth = async ({
       password: password
     };
 
-    const { data } = await api.post(endpoint, body);
+    const { data } = await api.post<AuthResponse>(endpoint, body);
 
     if (data) {
       const accessToken = data.access_token;
       const userSessionValue = {
-        id: data.clientId,
+        userId: data.userId,
+        clientId: data.clientId,
         _a: accessToken,
         username
       };
