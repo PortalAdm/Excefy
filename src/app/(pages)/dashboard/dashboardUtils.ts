@@ -11,7 +11,7 @@ const createDraft = async () => {
   const user: AuthResponse = stringifyUser && JSON.parse(stringifyUser);
 
   if (user) {
-    const draft = await createNewDraftProcess(user?.id);
+    const draft = await createNewDraftProcess(user?.clientId, user.userId);
 
     if (draft?.commandId) {
       window?.localStorage.setItem(`Execfy:${localStorage.process.draft}`, JSON.stringify(draft));

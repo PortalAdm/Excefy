@@ -23,7 +23,7 @@ export const getAllProcess = async (clientId: string) => {
   return data?.[0].content;
 };
 
-export const createNewDraftProcess = async (clientId: string) => {
+export const createNewDraftProcess = async (clientId: string, userId: string) => {
   try {
     const processConfig = {
       recipient,
@@ -32,6 +32,10 @@ export const createNewDraftProcess = async (clientId: string) => {
         {
           name: 'clientId',
           value: clientId
+        },
+        {
+          name: 'userId',
+          value: userId
         },
         {
           name: 'processName',

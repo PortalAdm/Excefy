@@ -8,7 +8,7 @@ export const icons = (
   editAction: (listItem: TTableListContent) => void,
   statisticAction: () => void,
   simulateAction: () => void,
-  deleteAction: () => void
+  deleteAction: (listItem: TTableListContent) => void
 ) => [
   {
     element: FiEdit2,
@@ -28,6 +28,6 @@ export const icons = (
   {
     element: BiTrash,
     name: 'Excluir',
-    onClick: () => deleteAction()
+    onClick: deleteAction
   }
 ];

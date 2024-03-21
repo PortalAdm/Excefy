@@ -40,19 +40,22 @@ export const ToastContextProvider = ({ children }: ToastContextProviderProps) =>
 
   useTimeout(toastOptions.isActive, updateSituation, toastOptions.timeActive!);
 
-  const changeToastActive = (
-    state?: Pick<ToastType, 'state'>,
-    messageTitle?: string,
-    messageDescription?: string,
-    time?: number
-  ) =>
-    setToastOptions({
-      isActive: !toastOptions.isActive,
-      state: state?.state || toastOptions.state,
-      messageTitle,
-      messageDescription,
-      timeActive: time || timeRef
-    });
+  const changeToastActive = useCallback(
+    (
+      state?: Pick<ToastType, 'state'>,
+      messageTitle?: string,
+      messageDescription?: string,
+      time?: number
+    ) =>
+      setToastOptions({
+        isActive: !toastOptions.isActive,
+        state: state?.state || toastOptions.state,
+        messageTitle,
+        messageDescription,
+        timeActive: time || timeRef
+      }),
+    [toastOptions.isActive, toastOptions.state]
+  );
 
   return (
     <ToastContext.Provider value={{ toastOptions, changeToastActive }}>

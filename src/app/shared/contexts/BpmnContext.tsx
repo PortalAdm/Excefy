@@ -63,7 +63,13 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
       if (xml) {
         const errorHandler = () =>
           setToast('Ocorreu um erro!', 'Suas alterações não serão salvas', 'error');
-        const updateRes = await updateProcess(xml, user?.id, draft?.commandId, errorHandler);
+        const updateRes = await updateProcess(
+          xml,
+          user?.userId,
+          user?.clientId,
+          draft?.commandId,
+          errorHandler
+        );
 
         if (updateRes) {
           updateLocalXml(xml);
@@ -72,7 +78,7 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
         }
       }
     },
-    [draft?.commandId, setToast, updateLocalXml, user?.id]
+    [draft?.commandId, setToast, updateLocalXml, user?.clientId, user?.userId]
   );
 
   const downloadSVGiagram = useCallback(

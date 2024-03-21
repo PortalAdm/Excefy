@@ -1,11 +1,11 @@
 import { tv } from 'tailwind-variants';
 
 export const ModalTv = tv({
-  base: 'transform-all duration-300 inset-0 z-50 overflow-hidden bg-black/30 fixed flex justify-center items-center p-2 sm:p-4',
+  base: 'transform-all duration-500 inset-0 z-50 overflow-hidden bg-black/30 fixed flex justify-center items-center p-2 sm:p-4',
   variants: {
     modalState: {
-      true: 'scale-100',
-      false: 'scale-0'
+      true: 'opacity-100',
+      false: 'opacity-0 -z-50'
     }
   }
 });

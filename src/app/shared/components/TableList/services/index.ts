@@ -31,3 +31,37 @@ export const getXMLByCommandId = async (
     }
   }
 };
+
+export const deleteProcess = async (
+  clientId: string,
+  userId: string,
+  commandId: number
+): Promise<string | undefined> => {
+  try {
+    const processConfig = {
+      recipient,
+      commandName: 'ProcessDelete',
+      commandParameters: [
+        {
+          name: 'clientId',
+          value: clientId
+        },
+        {
+          name: 'userId',
+          value: userId
+        },
+        {
+          name: 'commandId',
+          value: commandId
+        }
+      ]
+    };
+    const { data } = await api.post<TProcessInsertContentResponse[]>(baseEndpoint, processConfig);
+
+    return data[0].content;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error('Falha ao deletar o processo do usuário', error);
+    }
+  }
+};
