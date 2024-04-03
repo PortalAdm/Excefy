@@ -3,14 +3,24 @@
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
 import 'bpmn-js-connectors-extension/dist/connectors-extension.css';
+import '../style.css';
 
-// import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
+import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
+import { CreateAppendAnythingModule } from 'bpmn-js-create-append-anything';
 
-import { BpmnPropertiesPanelModule, BpmnPropertiesProviderModule } from 'bpmn-js-properties-panel';
-import { ElementTemplatesPropertiesProviderModule } from 'bpmn-js-element-templates';
+import { CloudElementTemplatesPropertiesProviderModule } from 'bpmn-js-element-templates';
+import {
+  BpmnPropertiesPanelModule,
+  BpmnPropertiesProviderModule,
+  ZeebePropertiesProviderModule
+} from 'bpmn-js-properties-panel';
+import zeebeModdle from 'zeebe-bpmn-moddle/resources/zeebe.json';
+import ZeebeBehaviorModule from 'camunda-bpmn-js-behaviors/lib/camunda-cloud';
+
+import AddExporterModule from '@bpmn-io/add-exporter';
 
 import BpmnViewer from 'bpmn-js/lib/Modeler';
-import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
+import { default as camundaModdleDescriptor } from 'camunda-bpmn-moddle/resources/camunda.json';
 import customTranslate from '../customTranslate/customTranslate';
 import Modeler from 'bpmn-js/lib/Modeler';
 import { BaseViewerOptions } from 'bpmn-js/lib/BaseViewer';
@@ -18,7 +28,7 @@ import { BaseViewerOptions } from 'bpmn-js/lib/BaseViewer';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { FaCheck } from 'react-icons/fa6';
 
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { useDiagramViewController } from '../controller';
 import * as tv from '../DiagramViewTV';
 import { TabsNavigation } from '~/src/app/shared/components/TabsNavigation';
@@ -33,6 +43,16 @@ import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 import { formateHour } from '~/src/app/shared/utils/dateUtils';
 import { TRootComponent } from '~/src/app/shared/types';
 
+import BpmnColorPickerModule from 'bpmn-js-color-picker';
+import TemplateIconRendererModule from '@bpmn-io/element-templates-icons-renderer';
+import ResizeTask from 'bpmn-js-task-resize/lib';
+
+import { templates } from '../.camunda/element-templates';
+
+const url = new URL(window.location.href);
+
+const appendAnything = url.searchParams.has('aa');
+
 export function BpmnView({ children }: TRootComponent) {
   const { draft } = useLocalBPMN();
   const canvaRef = useRef<HTMLDivElement>(null);
@@ -43,10 +63,14 @@ export function BpmnView({ children }: TRootComponent) {
     useDiagramViewController(headerViewer as Modeler);
   const propertiesPanelRef = useRef<HTMLDivElement>(null);
 
+  const loadTemplates = useCallback(() => templates.map((key) => key).flat(), []);
+
   useLayoutEffect(() => {
     const customTranslateModule = {
       translate: ['value', customTranslate]
     };
+
+    const elementTemplates = loadTemplates();
 
     const options: BaseViewerOptions = {
       propertiesPanel: {
@@ -58,12 +82,32 @@ export function BpmnView({ children }: TRootComponent) {
       },
       additionalModules: [
         customTranslateModule,
+
+        AddExporterModule,
+        ConnectorsExtensionModule,
+        CreateAppendAnythingModule,
         BpmnPropertiesPanelModule,
         BpmnPropertiesProviderModule,
-        ElementTemplatesPropertiesProviderModule
+        ZeebePropertiesProviderModule,
+        CloudElementTemplatesPropertiesProviderModule,
+        TemplateIconRendererModule,
+        ZeebeBehaviorModule,
+        BpmnColorPickerModule,
+        ResizeTask
       ],
+      elementTemplates,
+      taskResizingEnabled: true,
+      eventResizingEnabled: true,
+      exporter: {
+        name: 'connectors-modeling-demo',
+        version: '0.0.0'
+      },
+      connectorsExtension: {
+        appendAnything
+      },
       moddleExtensions: {
-        camunda: camundaModdleDescriptor
+        camunda: camundaModdleDescriptor,
+        zeebe: zeebeModdle
       }
     };
 

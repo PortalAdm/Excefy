@@ -1,0 +1,38 @@
+{
+ "$schema": "https://unpkg.com/@camunda/element-templates-json-schema/resources/schema.json",
+ "name": "Slack Message Task",
+ "id": "com.camunda.example.SlackMessageTask",
+ "appliesTo": ["bpmn:ServiceTask"],
+ "properties": [
+ {
+ "label": "Implementation Type",
+ "type": "String",
+ "value": "com.mycompany.SlackMessageTaskImpl",
+ "editable": false,
+ "binding": {
+ "type": "property",
+ "name": "camunda:class"
+ }
+ },
+ {
+ "label": "Slack Channel",
+ "type": "String",
+ "value": "",
+ "editable": true,
+ "binding": {
+ "type": "property",
+ "name": "camunda:slackChannel"
+ }
+ },
+ {
+ "label": "Slack Message",
+ "type": "String",
+ "value": "",
+ "editable": true,
+ "binding": {
+ "type": "property",
+ "name": "camunda:slackMessage"
+ }
+ }
+ ]
+}
