@@ -1,4 +1,5 @@
 import { DiagramDownload } from '~types/DiagramDownload';
+import { TKeyboardShotcutInfo } from '~types/TKeyboardShotcutInfo';
 
 interface Labels {
   label: string;
@@ -40,8 +41,6 @@ export const labels: Labels[] = [
     value: ['svg']
   }
 ];
-
-import { TKeyboardShotcutInfo } from '~types/TKeyboardShotcutInfo';
 
 export const infos: TKeyboardShotcutInfo[] = [
   {

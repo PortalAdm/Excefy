@@ -13,3 +13,11 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+.bio-properties-panel-group {
+  background-color: rgb(241 242 245 / var(--tw-bg-opacity)) !important;
+  border-radius: 0.5rem !important;
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.25rem !important;
+  border: 0 !important;
+}

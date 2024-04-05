@@ -1,9 +1,12 @@
 import { useCallback, useMemo, useState } from 'react';
-import { CiExport, CiImport } from 'react-icons/ci';
-import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
-import { DownloadModal } from '../views/DownloadModal';
-import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
+
 import BpmnViewer from 'bpmn-js/lib/Modeler';
+
+import { CiExport, CiImport } from 'react-icons/ci';
+
+import { DownloadModal } from '../views/DownloadModal';
+import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
+import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 import { TabsNavigationItems, KeyValue } from '~/src/app/shared/types';
 import { DiagramDownload } from '~/src/app/shared/types/DiagramDownload';
@@ -91,14 +94,11 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
 
   const getInitialXML = useCallback(async (viewer: BpmnViewer, xml: string) => {
     if (xml) {
-      try {
-        const { warnings } = await viewer.importXML(xml);
+      const { warnings } = await viewer.importXML(xml);
 
-        if (warnings.length) {
-          throw new Error(warnings[0]);
-        }
-      } catch (err: any) {
-        throw new Error('Erro na renderização', err);
+      if (warnings.length) {
+        // eslint-disable-next-line no-console
+        console.warn(`Possível problema na inicialização do xml inicial:`, warnings[0]);
       }
     }
   }, []);
