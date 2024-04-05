@@ -14,7 +14,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link
           rel="stylesheet"
           href="https://unpkg.com/@bpmn-io/properties-panel/dist/assets/properties-panel.css"
-        ></link>
+        />
         <Providers>
           <MainContainer>
             <Toast.root>

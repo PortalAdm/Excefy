@@ -3,6 +3,11 @@
   height: .3rem;
 }
 
+::-webkit-scrollbar:hover {
+  width: .6rem;
+  height: .6rem;
+}
+
 ::-webkit-scrollbar-thumb {
   background-color: #185274;
   border-radius: .3rem;

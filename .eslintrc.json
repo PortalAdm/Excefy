@@ -23,25 +23,6 @@
   },
   "plugins": ["react", "@typescript-eslint", "react-hooks"],
   "rules": {
-    "@typescript-eslint/naming-convention": [
-      "error",
-      {
-        "selector": "typeLike",
-        "format": ["PascalCase"],
-        "custom": {
-            "regex": "^I[A-Z]",
-            "match": false
-        }
-      },
-      {
-        "selector": "interface",
-        "format": ["PascalCase"],
-        "custom": {
-            "regex": "^I[A-Z]",
-            "match": false
-        }
-    }
-    ],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/react-in-jsx-scope": "off",

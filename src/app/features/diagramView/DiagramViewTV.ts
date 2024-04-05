@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 export const BpmnHeaderRootTv = tv({
   base: 'pl-1 sm:px-9 h-20 sm:h-24 flex justify-between items-start py-1 relative'
 });
-// class="h-24"
+
 export const BpmnHeaderContentTv = tv({
   base: 'w-full px-2 h-full flex flex-row justify-end overflow-y-hidden sm:overflow-auto flex-wrap gap-2 items-end pb-1'
 });
@@ -24,6 +24,10 @@ export const ToggleDetailsTv = tv({
 
 export const EventDetailContentTv = tv({
   base: 'relative h-10 w-96 bg-primary left-0 flex p-2 items-center mb-2'
+});
+
+export const EventDetailContentWrapperTv = tv({
+  base: 'w-full h-[calc(100%-4rem)] px-2 overflow-y-scroll z-50'
 });
 
 export const bpmnViewerHeaderTv = tv({

@@ -1,66 +1,57 @@
 'use client';
-
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
 import 'bpmn-js-connectors-extension/dist/connectors-extension.css';
 
-import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
-import { CreateAppendAnythingModule } from 'bpmn-js-create-append-anything';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { CloudElementTemplatesPropertiesProviderModule } from 'bpmn-js-element-templates';
-import {
-  BpmnPropertiesPanelModule,
-  BpmnPropertiesProviderModule,
-  ZeebePropertiesProviderModule
-} from 'bpmn-js-properties-panel';
-import zeebeModdle from 'zeebe-bpmn-moddle/resources/zeebe.json';
-import ZeebeBehaviorModule from 'camunda-bpmn-js-behaviors/lib/camunda-cloud';
-
-import AddExporterModule from '@bpmn-io/add-exporter';
-
-import BpmnViewer from 'bpmn-js/lib/Modeler';
-import { default as camundaModdleDescriptor } from 'camunda-bpmn-moddle/resources/camunda.json';
-import customTranslate from '../customTranslate/customTranslate';
-import Modeler from 'bpmn-js/lib/Modeler';
 import { BaseViewerOptions } from 'bpmn-js/lib/BaseViewer';
+import { CreateAppendAnythingModule } from 'bpmn-js-create-append-anything';
+import { CloudElementTemplatesPropertiesProviderModule } from 'bpmn-js-element-templates';
+import { BpmnPropertiesPanelModule, BpmnPropertiesProviderModule } from 'bpmn-js-properties-panel';
+import { templates } from '../.camunda/element-templates';
+import customTranslate from '../customTranslate/customTranslate';
+import BpmnViewer from 'bpmn-js/lib/Modeler';
+import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
+import AddExporterModule from '@bpmn-io/add-exporter';
+import BpmnColorPickerModule from 'bpmn-js-color-picker';
+import TemplateIconRendererModule from '@bpmn-io/element-templates-icons-renderer';
+import ResizeTask from 'bpmn-js-task-resize/lib';
 
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { FaCheck } from 'react-icons/fa6';
 
-import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { useDiagramViewController } from '../controller';
-import * as tv from '../DiagramViewTV';
 import { TabsNavigation } from '~/src/app/shared/components/TabsNavigation';
 import { Modal } from '~/src/app/shared/components/Modal';
 import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
 import { Button } from '~/src/app/shared/components/Button';
 import { Icon } from '~/src/app/shared/components/Icon';
-import EventDetail from '~/src/app/features/diagramView/views/EventDetail';
 import { Text } from '~/src/app/shared/components/Text';
 import { Title } from '~/src/app/shared/components/Title';
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 import { formateHour } from '~/src/app/shared/utils/dateUtils';
 import { TRootComponent } from '~/src/app/shared/types';
+import EventDetail from '~/src/app/features/diagramView/views/EventDetail';
+import * as tv from '../DiagramViewTV';
 
-import BpmnColorPickerModule from 'bpmn-js-color-picker';
-import TemplateIconRendererModule from '@bpmn-io/element-templates-icons-renderer';
-import ResizeTask from 'bpmn-js-task-resize/lib';
+import zeebeModdle from 'zeebe-bpmn-moddle/resources/zeebe.json';
 
-import { templates } from '../.camunda/element-templates';
+import { default as camundaModdleDescriptor } from 'camunda-bpmn-moddle/resources/camunda.json';
 
 export function BpmnView({ children }: TRootComponent) {
   const { draft } = useLocalBPMN();
   const canvaRef = useRef<HTMLDivElement>(null);
-  const [headerViewer, setHeaderViewer] = useState<Modeler>();
+  const [headerViewer, setHeaderViewer] = useState<BpmnViewer>();
   const { updatedXml, isDisabled, isLoading, lastUpdate, getupdatedXml, saveWithCTRLAndS } =
     useBPMN();
   const { idx, modal, links, buttons, changeModalState, updateIdIndex, getInitialXML, updateXml } =
-    useDiagramViewController(headerViewer as Modeler);
+    useDiagramViewController(headerViewer as BpmnViewer);
   const propertiesPanelRef = useRef<HTMLDivElement>(null);
 
   const loadTemplates = useCallback(() => templates.map((key) => key).flat(), []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const CustomTranslateModule = {
       translate: ['value', customTranslate]
     };
@@ -81,13 +72,11 @@ export function BpmnView({ children }: TRootComponent) {
         CreateAppendAnythingModule,
         BpmnPropertiesPanelModule,
         BpmnPropertiesProviderModule,
-        ZeebePropertiesProviderModule,
         CloudElementTemplatesPropertiesProviderModule,
         TemplateIconRendererModule,
-        ZeebeBehaviorModule,
         BpmnColorPickerModule,
         ResizeTask,
-        CustomTranslateModule
+        CustomTranslateModule // sempre deixe-o por último
       ],
       elementTemplates,
       taskResizingEnabled: true,

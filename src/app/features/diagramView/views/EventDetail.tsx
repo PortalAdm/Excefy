@@ -1,9 +1,5 @@
 import { forwardRef, memo, useState } from 'react';
-import {
-  EventDetailContentTv,
-  EventDetailRootTv,
-  ToggleDetailsTv
-} from '~/src/app/features/diagramView/DiagramViewTV';
+import * as tv from '~/src/app/features/diagramView/DiagramViewTV';
 import { Icon } from '~/src/app/shared/components/Icon';
 import { Text } from '~/src/app/shared/components/Text';
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -18,8 +14,8 @@ const EventDetail = forwardRef<HTMLDivElement, EventDetailProps>(
 
     return (
       <>
-        <div {...props} className={EventDetailRootTv({ isDetailsOpen })}>
-          <div className={EventDetailContentTv()}>
+        <div {...props} className={tv.EventDetailRootTv({ isDetailsOpen })}>
+          <div className={tv.EventDetailContentTv()}>
             <Text
               text="Detalhes do Evento"
               color="white"
@@ -27,12 +23,12 @@ const EventDetail = forwardRef<HTMLDivElement, EventDetailProps>(
               weigth="bold"
               className="truncate"
             />
-            <button onClick={toggleDetails} className={ToggleDetailsTv()}>
+            <button onClick={toggleDetails} className={tv.ToggleDetailsTv()}>
               <Text text="Detalhes" color="white" />
               <Icon icon={GiHamburgerMenu} color="white" size="medium" className="rotate-90" />
             </button>
           </div>
-          <div className="w-full h-[calc(100%-4rem)] overflow-y-scroll z-50">
+          <div className={tv.EventDetailContentWrapperTv()}>
             <div id="properties" ref={propertiesPanelRef} />
           </div>
         </div>

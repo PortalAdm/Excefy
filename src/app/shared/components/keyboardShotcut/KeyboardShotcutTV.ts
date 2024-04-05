@@ -11,7 +11,7 @@ export const keyboardShotcutContainerTv = tv({
 });
 
 export const KeyboardShotcutTriggerTv = tv({
-  base: 'w-10 h-10 bg-background ring-1 ring-outline absolute z-40 right-0 top-0 flex justify-center items-center z-40'
+  base: 'w-10 h-10 bg-background ring-1 ring-outline absolute z-40 right-2 top-2 flex justify-center items-center z-40'
 });
 
 export const KeyboardShotcutHeaderTv = tv({

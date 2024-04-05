@@ -202,5 +202,11 @@ export default {
   "Set color": "Mudar cor",
   "Append Connector": "Anexar Conector",
   "Append element": "Anexar Elemento",
-  "Create element": "Criar elemento"
+  "Create element": "Criar elemento",
+  "Template": "Modelo",
+  "Select": "Selecionar",
+  "Choose element template": "Escolha o modelo do elemento",
+  "Applied": "Aplicado",
+  "Unlink": "Desvincular",
+  "Description": "Descrição",
 };
