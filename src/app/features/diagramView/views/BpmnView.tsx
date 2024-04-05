@@ -3,7 +3,6 @@
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
 import 'bpmn-js-connectors-extension/dist/connectors-extension.css';
-import '../style.css';
 
 import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
 import { CreateAppendAnythingModule } from 'bpmn-js-create-append-anything';
@@ -49,10 +48,6 @@ import ResizeTask from 'bpmn-js-task-resize/lib';
 
 import { templates } from '../.camunda/element-templates';
 
-const url = new URL(window.location.href);
-
-const appendAnything = url.searchParams.has('aa');
-
 export function BpmnView({ children }: TRootComponent) {
   const { draft } = useLocalBPMN();
   const canvaRef = useRef<HTMLDivElement>(null);
@@ -66,7 +61,7 @@ export function BpmnView({ children }: TRootComponent) {
   const loadTemplates = useCallback(() => templates.map((key) => key).flat(), []);
 
   useLayoutEffect(() => {
-    const customTranslateModule = {
+    const CustomTranslateModule = {
       translate: ['value', customTranslate]
     };
 
@@ -81,8 +76,6 @@ export function BpmnView({ children }: TRootComponent) {
         bindTo: window
       },
       additionalModules: [
-        customTranslateModule,
-
         AddExporterModule,
         ConnectorsExtensionModule,
         CreateAppendAnythingModule,
@@ -93,7 +86,8 @@ export function BpmnView({ children }: TRootComponent) {
         TemplateIconRendererModule,
         ZeebeBehaviorModule,
         BpmnColorPickerModule,
-        ResizeTask
+        ResizeTask,
+        CustomTranslateModule
       ],
       elementTemplates,
       taskResizingEnabled: true,
@@ -101,9 +95,6 @@ export function BpmnView({ children }: TRootComponent) {
       exporter: {
         name: 'connectors-modeling-demo',
         version: '0.0.0'
-      },
-      connectorsExtension: {
-        appendAnything
       },
       moddleExtensions: {
         camunda: camundaModdleDescriptor,
@@ -128,7 +119,7 @@ export function BpmnView({ children }: TRootComponent) {
   }, []);
 
   return (
-    <>
+    <section className="overflow-hidden h-full">
       <div className={tv.BpmnHeaderRootTv()}>
         <TabsNavigation.root>
           <TabsNavigation.items links={links} />
@@ -182,6 +173,6 @@ export function BpmnView({ children }: TRootComponent) {
       ) : (
         <Icon icon={AiOutlineLoading3Quarters} className="animate-spin" />
       )}
-    </>
+    </section>
   );
 }

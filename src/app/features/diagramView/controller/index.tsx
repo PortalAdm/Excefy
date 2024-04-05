@@ -97,8 +97,8 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
         if (warnings.length) {
           throw new Error(warnings[0]);
         }
-      } catch (err: any) {
-        throw new Error('Erro na renderização', err);
+      } catch (err) {
+        if (err instanceof Error) throw new Error(`Erro na renderização: ${err.message}`);
       }
     }
   }, []);

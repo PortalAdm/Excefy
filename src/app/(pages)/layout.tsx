@@ -4,15 +4,12 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Providers } from '../providers';
 import { MainContainer } from '../features/MainContainer';
 import { Toast } from '../features/toast';
-import Head from 'next/head';
 import { Menu } from '~/src/app/(pages)/Menu';
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
-      <Head>
-        <title>Execfy</title>
-      </Head>
+      <title>Execfy</title>
       <body>
         <link
           rel="stylesheet"
@@ -25,7 +22,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <Toast.info />
             </Toast.root>
             <Menu />
-            <div className="flex flex-col w-full h-full">
+            <div className="flex flex-col w-screen h-screen">
               {children}
               <SpeedInsights />
             </div>

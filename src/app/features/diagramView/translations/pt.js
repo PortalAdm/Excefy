@@ -199,4 +199,8 @@ export default {
   "Process ID": "ID do processo",
   "Participant ID": "ID do participante",
   "Participant Name": "Nome do participante",
+  "Set color": "Mudar cor",
+  "Append Connector": "Anexar Conector",
+  "Append element": "Anexar Elemento",
+  "Create element": "Criar elemento"
 };

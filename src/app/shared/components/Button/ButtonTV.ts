@@ -1,10 +1,10 @@
 import { tv } from 'tailwind-variants';
-
+// classname=""
 export const buttonRootTv = tv({
   base: 'flex justify-center items-center rounded overflow-hidden relative',
   variants: {
     size: {
-      small: 'px-2 py-1 sm:py-2 sm:px-4 w-fit',
+      small: 'py-1 px-3 w-fit',
       medium: 'py-4 px-16 h-12 w-full max-w-sm sm:w-72 lg:w-96',
       huge: 'py-6 px-16 h-12 w-full'
     },
