@@ -35,5 +35,5 @@ export const bpmnViewerHeaderTv = tv({
 });
 
 export const bpmnCanvasTv = tv({
-  base: 'relative h-[calc(100%-6rem)] border-t-[1px] border-primary z-0'
+  base: 'relative h-[calc(100%_-_4rem)] border-t-[1px] border-primary z-0'
 });

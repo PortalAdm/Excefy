@@ -21,3 +21,7 @@ a {
   margin-bottom: 0.25rem !important;
   border: 0 !important;
 }
+
+.bjs-crumb {
+  opacity: 0;
+}
