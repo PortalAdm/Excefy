@@ -208,5 +208,5 @@ export default {
   "Choose element template": "Escolha o modelo do elemento",
   "Applied": "Aplicado",
   "Unlink": "Desvincular",
-  "Description": "Descrição",
+  "Description": "Descrição"
 };

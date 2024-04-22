@@ -1,5 +1,6 @@
 import '~global/styles/scrollbar.css';
 import '~global/styles/globals.css';
+
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Providers } from '../providers';
 import { MainContainer } from '../features/MainContainer';
@@ -15,6 +16,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           rel="stylesheet"
           href="https://unpkg.com/@bpmn-io/properties-panel/dist/assets/properties-panel.css"
         />
+
         <Providers>
           <MainContainer>
             <Toast.root>

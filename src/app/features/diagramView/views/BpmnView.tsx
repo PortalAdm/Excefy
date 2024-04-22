@@ -2,6 +2,7 @@
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
 import 'bpmn-js-connectors-extension/dist/connectors-extension.css';
+import 'bpmn-js-token-simulation/assets/css/bpmn-js-token-simulation.css';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -9,8 +10,7 @@ import { BaseViewerOptions } from 'bpmn-js/lib/BaseViewer';
 import { CreateAppendAnythingModule } from 'bpmn-js-create-append-anything';
 import { CloudElementTemplatesPropertiesProviderModule } from 'bpmn-js-element-templates';
 import { BpmnPropertiesPanelModule, BpmnPropertiesProviderModule } from 'bpmn-js-properties-panel';
-import { templates } from '../.camunda/element-templates';
-import customTranslate from '../customTranslate/customTranslate';
+import TokenSimulationModule from 'bpmn-js-token-simulation';
 import BpmnViewer from 'bpmn-js/lib/Modeler';
 import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
 import AddExporterModule from '@bpmn-io/add-exporter';
@@ -21,6 +21,8 @@ import ResizeTask from 'bpmn-js-task-resize/lib';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { FaCheck } from 'react-icons/fa6';
 
+import customTranslate from '../customTranslate/customTranslate';
+import { templates } from '../.camunda/element-templates';
 import { useDiagramViewController } from '../controller';
 import { TabsNavigation } from '~/src/app/shared/components/TabsNavigation';
 import { Modal } from '~/src/app/shared/components/Modal';
@@ -62,12 +64,15 @@ export function BpmnView({ children }: TRootComponent) {
       propertiesPanel: {
         parent: propertiesPanelRef?.current
       },
-      container: canvaRef?.current as HTMLDivElement,
+      simulatePanel: {
+        parent: canvaRef?.current
+      },
+      container: canvaRef.current as HTMLDivElement,
       keyboard: {
-        bindTo: window
+        bindTo: document
       },
       additionalModules: [
-        AddExporterModule,
+        TokenSimulationModule,
         ConnectorsExtensionModule,
         CreateAppendAnythingModule,
         BpmnPropertiesPanelModule,
@@ -76,18 +81,19 @@ export function BpmnView({ children }: TRootComponent) {
         TemplateIconRendererModule,
         BpmnColorPickerModule,
         ResizeTask,
+        AddExporterModule,
         CustomTranslateModule // sempre deixe-o por último
       ],
       elementTemplates,
       taskResizingEnabled: true,
       eventResizingEnabled: true,
       exporter: {
-        name: 'connectors-modeling-demo',
+        name: 'bpmn-js-token-simulation',
         version: '0.0.0'
       },
       moddleExtensions: {
-        camunda: camundaModdleDescriptor,
-        zeebe: zeebeModdle
+        zeebe: zeebeModdle,
+        camunda: camundaModdleDescriptor
       }
     };
 
@@ -108,7 +114,7 @@ export function BpmnView({ children }: TRootComponent) {
   }, []);
 
   return (
-    <section className="overflow-hidden h-full">
+    <section className="w-full h-full">
       <div className={tv.BpmnHeaderRootTv()}>
         <TabsNavigation.root>
           <TabsNavigation.items links={links} />
@@ -155,8 +161,18 @@ export function BpmnView({ children }: TRootComponent) {
       </div>
       {!draft && <Text text="Você deve ter criado eu estar editanto um diagrama para continuar" />}
       {draft && !isLoading ? (
-        <div className={tv.bpmnCanvasTv()} id="js-canvas" ref={canvaRef}>
+        <div className={tv.bpmnCanvasTv()} id="canvas" ref={canvaRef}>
           <EventDetail ref={propertiesPanelRef} />
+          <div className="properties-panel" id="properties-panel">
+            <div
+              className="properties-panel-resizer"
+              id="properties-panel-resizer"
+              title="Toggle properties panel"
+              draggable="true"
+            >
+              <div className="properties-panel-resize-handle"></div>
+            </div>
+          </div>
           {children}
         </div>
       ) : (
