@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --token-simulation-green-base-44: #185274 !important;
+}
+
 html,
 body {
   overflow-x: hidden;
@@ -20,8 +24,4 @@ a {
   margin-top: 0.25rem !important;
   margin-bottom: 0.25rem !important;
   border: 0 !important;
-}
-
-.bjs-crumb {
-  opacity: 0;
 }
