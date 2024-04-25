@@ -1,5 +1,6 @@
 import '~global/styles/scrollbar.css';
 import '~global/styles/globals.css';
+import '~global/styles/tokenSimulation.css';
 
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Providers } from '../providers';

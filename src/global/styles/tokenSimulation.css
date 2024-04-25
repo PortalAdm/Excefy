@@ -1,0 +1,16 @@
+.bjs-crumb {
+  opacity: 0;
+}
+
+.bts-toggle-mode {
+  border: 1px solid var(--token-simulation-green-base-44)
+}
+
+.bjs-container .simulation .bts-toggle-mode, .bts-animation-speed-button {
+  border-radius: 4px;
+  transition-duration: 300ms;
+}
+
+.bjs-container .simulation .bts-toggle-mode, .bts-toggle-mode:hover {
+  transition-duration: 300ms;
+}
