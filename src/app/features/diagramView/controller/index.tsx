@@ -8,7 +8,7 @@ import { DownloadModal } from '../views/DownloadModal';
 import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
 import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
-import { TabsNavigationItems, KeyValue } from '~/src/app/shared/types';
+import { TabsNavigationItems, KeyValue, TProcessState } from '~/src/app/shared/types';
 import { DiagramDownload } from '~/src/app/shared/types/DiagramDownload';
 import { useModal } from '~/src/app/shared/hooks/useModal';
 
@@ -19,6 +19,9 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
 
   const [idx, setIdx] = useState(0);
   const [value, setValue] = useState<DiagramDownload[]>([]);
+  const [processState, setProcessState] = useState<TProcessState>('design');
+
+  const changeProcessState = useCallback((state: TProcessState) => setProcessState(state), []);
 
   const updateIdIndex = useCallback((idx: number) => setIdx(idx), []);
 
@@ -114,6 +117,8 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
     []
   );
 
+  const isImplementation = processState === 'implementation';
+
   return {
     isDisabled,
     idx,
@@ -122,6 +127,9 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
     buttons,
     value,
     modalState,
+    processState,
+    isImplementation,
+    changeProcessState,
     updateIdIndex,
     getInitialXML,
     updateXml,
