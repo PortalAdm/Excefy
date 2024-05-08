@@ -8,6 +8,10 @@ export const BpmnHeaderContentTv = tv({
   base: 'w-full px-2 h-full flex flex-row justify-end overflow-y-hidden sm:overflow-auto flex-wrap gap-2 items-end pb-1'
 });
 
+export const BpmnContentFallbackTv = tv({
+  base: 'flex flex-col items-center justify-center gap-4'
+});
+
 export const EventDetailRootTv = tv({
   base: 'absolute duration-500 bg-white ring-1 ring-primary w-96 h-[calc(100%+5.8rem)] right-0 z-50 -top-[6rem]',
   variants: {

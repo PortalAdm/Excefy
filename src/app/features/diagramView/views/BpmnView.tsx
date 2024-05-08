@@ -4,24 +4,14 @@ import 'bpmn-font/dist/css/bpmn-embedded.css';
 import 'bpmn-js-connectors-extension/dist/connectors-extension.css';
 import 'bpmn-js-token-simulation/assets/css/bpmn-js-token-simulation.css';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { BaseViewerOptions } from 'bpmn-js/lib/BaseViewer';
-import { CreateAppendAnythingModule } from 'bpmn-js-create-append-anything';
-import { CloudElementTemplatesPropertiesProviderModule } from 'bpmn-js-element-templates';
-import { BpmnPropertiesPanelModule, BpmnPropertiesProviderModule } from 'bpmn-js-properties-panel';
-import TokenSimulationModule from 'bpmn-js-token-simulation';
 import BpmnViewer from 'bpmn-js/lib/Modeler';
-import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
-import AddExporterModule from '@bpmn-io/add-exporter';
-import BpmnColorPickerModule from 'bpmn-js-color-picker';
-import TemplateIconRendererModule from '@bpmn-io/element-templates-icons-renderer';
-import ResizeTask from 'bpmn-js-task-resize/lib';
 
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { FaCheck } from 'react-icons/fa6';
 
-import customTranslate from '../customTranslate/customTranslate';
 import { templates } from '../.camunda/element-templates';
 import { useDiagramViewController } from '../controller';
 import { TabsNavigation } from '~/src/app/shared/components/TabsNavigation';
@@ -34,31 +24,50 @@ import { Title } from '~/src/app/shared/components/Title';
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 import { formateHour } from '~/src/app/shared/utils/dateUtils';
 import { TRootComponent } from '~/src/app/shared/types';
-import EventDetail from '~/src/app/features/diagramView/views/EventDetail';
+import { CustomTranslateModule, DesignPlugins, ImplementationPlugins } from '../resources/plugins';
+import EventDetail from '~/src/app/features/diagramView/views/components/EventDetail';
 import * as tv from '../DiagramViewTV';
 
 import zeebeModdle from 'zeebe-bpmn-moddle/resources/zeebe.json';
 
 import { default as camundaModdleDescriptor } from 'camunda-bpmn-moddle/resources/camunda.json';
+import { ProcessStateActions } from './components/ProcessStateActions';
+import Canva from './components/Canva';
 
 export function BpmnView({ children }: TRootComponent) {
   const { draft } = useLocalBPMN();
-  const canvaRef = useRef<HTMLDivElement>(null);
-  const [headerViewer, setHeaderViewer] = useState<BpmnViewer>();
   const { updatedXml, isDisabled, isLoading, lastUpdate, getupdatedXml, saveWithCTRLAndS } =
     useBPMN();
-  const { idx, modal, links, buttons, changeModalState, updateIdIndex, getInitialXML, updateXml } =
-    useDiagramViewController(headerViewer as BpmnViewer);
+  const [headerViewer, setHeaderViewer] = useState<BpmnViewer>();
+  const {
+    idx,
+    modal,
+    links,
+    buttons,
+    processState,
+    isImplementation,
+    changeProcessState,
+    changeModalState,
+    updateIdIndex,
+    getInitialXML,
+    updateXml
+  } = useDiagramViewController(headerViewer as BpmnViewer);
+  const canvaRef = useRef<HTMLDivElement>(null);
   const propertiesPanelRef = useRef<HTMLDivElement>(null);
 
-  const loadTemplates = useCallback(() => templates.map((key) => key).flat(), []);
-
   useEffect(() => {
-    const CustomTranslateModule = {
-      translate: ['value', customTranslate]
-    };
+    const loadTemplates = templates.map((key) => key).flat();
+    const elementTemplates = loadTemplates;
 
-    const elementTemplates = loadTemplates();
+    const plugins = isImplementation
+      ? [...DesignPlugins, ...ImplementationPlugins]
+      : [...DesignPlugins];
+
+    const additionalModules = [
+      ...plugins,
+
+      CustomTranslateModule // sempre deixe-o por último
+    ];
 
     const options: BaseViewerOptions = {
       propertiesPanel: {
@@ -71,19 +80,7 @@ export function BpmnView({ children }: TRootComponent) {
       keyboard: {
         bindTo: document
       },
-      additionalModules: [
-        TokenSimulationModule,
-        ConnectorsExtensionModule,
-        CreateAppendAnythingModule,
-        BpmnPropertiesPanelModule,
-        BpmnPropertiesProviderModule,
-        CloudElementTemplatesPropertiesProviderModule,
-        TemplateIconRendererModule,
-        BpmnColorPickerModule,
-        ResizeTask,
-        AddExporterModule,
-        CustomTranslateModule // sempre deixe-o por último
-      ],
+      additionalModules,
       elementTemplates,
       taskResizingEnabled: true,
       eventResizingEnabled: true,
@@ -92,8 +89,8 @@ export function BpmnView({ children }: TRootComponent) {
         version: '0.0.0'
       },
       moddleExtensions: {
-        zeebe: zeebeModdle,
-        camunda: camundaModdleDescriptor
+        camunda: camundaModdleDescriptor,
+        zeebe: zeebeModdle
       }
     };
 
@@ -105,13 +102,13 @@ export function BpmnView({ children }: TRootComponent) {
 
     updateXml(viewer, getupdatedXml);
 
-    if (viewer) {
-      saveWithCTRLAndS(viewer);
-    }
+    saveWithCTRLAndS(viewer);
 
     getInitialXML(viewer, updatedXml as string);
+
+    return () => viewer.destroy();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isImplementation, isLoading]);
 
   return (
     <section className="w-full h-full">
@@ -119,6 +116,7 @@ export function BpmnView({ children }: TRootComponent) {
         <TabsNavigation.root>
           <TabsNavigation.items links={links} />
         </TabsNavigation.root>
+        <ProcessStateActions changeProcessState={changeProcessState} processState={processState} />
         <div className={tv.bpmnViewerHeaderTv()}>
           <Title title={draft?.commandName} size="md" className="truncate" />
           {lastUpdate && (
@@ -159,24 +157,16 @@ export function BpmnView({ children }: TRootComponent) {
         </div>
         {modal[idx]}
       </div>
-      {!draft && <Text text="Você deve ter criado eu estar editanto um diagrama para continuar" />}
       {draft && !isLoading ? (
-        <div className={tv.bpmnCanvasTv()} id="canvas" ref={canvaRef}>
+        <Canva className={tv.bpmnCanvasTv()} ref={canvaRef}>
           <EventDetail ref={propertiesPanelRef} />
-          <div className="properties-panel" id="properties-panel">
-            <div
-              className="properties-panel-resizer"
-              id="properties-panel-resizer"
-              title="Toggle properties panel"
-              draggable="true"
-            >
-              <div className="properties-panel-resize-handle"></div>
-            </div>
-          </div>
           {children}
-        </div>
+        </Canva>
       ) : (
-        <Icon icon={AiOutlineLoading3Quarters} className="animate-spin" />
+        <div className={tv.BpmnContentFallbackTv()}>
+          <Text text="Você deve ter criado eu estar editanto um diagrama para continuar" />
+          <Icon icon={AiOutlineLoading3Quarters} className="animate-spin" />
+        </div>
       )}
     </section>
   );
