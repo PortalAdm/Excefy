@@ -108,9 +108,7 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
 
   const updateXml = useCallback(
     (viewer: BpmnViewer, getupdatedXml: (viewer: BpmnViewer) => void) => {
-      viewer.on('element.changed', async (e) => {
-        e.preventDefault();
-
+      viewer.on('element.changed', async () => {
         getupdatedXml(viewer);
       });
     },
