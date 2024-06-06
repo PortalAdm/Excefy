@@ -8,3 +8,4 @@ export * from './TRootComponent';
 export * from './ITabsNavigationItems';
 export * from './IKeyValue';
 export * from './TProcessState';
+export * from './TMessage';

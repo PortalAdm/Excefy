@@ -1,5 +1,7 @@
 import { DiagramDownload } from '~types/DiagramDownload';
 import { TKeyboardShotcutInfo } from '~types/TKeyboardShotcutInfo';
+import { TProcessState } from '../../shared/types';
+import { DesignPlugins, ImplementationPlugins, PluginsUsedInAll } from './resources/plugins';
 
 interface Labels {
   label: string;
@@ -92,3 +94,14 @@ export const infos: TKeyboardShotcutInfo[] = [
     shotcut: 'S'
   }
 ];
+
+export const getPluginsByMethod = (method: TProcessState) => {
+  switch (method) {
+    case 'design':
+      return [...DesignPlugins, ...PluginsUsedInAll];
+    case 'implementation':
+      return [...PluginsUsedInAll, ...ImplementationPlugins];
+    default:
+      return [PluginsUsedInAll];
+  }
+};

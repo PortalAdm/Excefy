@@ -11,7 +11,8 @@ import ResizeTask from 'bpmn-js-task-resize/lib';
 
 import customTranslate from '../customTranslate/customTranslate';
 
-export const DesignPlugins = [
+// usado para adicionar plugins usados em todos os modos (geralmente provedores)
+export const PluginsUsedInAll = [
   CreateAppendAnythingModule,
   BpmnPropertiesPanelModule,
   BpmnPropertiesProviderModule,
@@ -21,8 +22,11 @@ export const DesignPlugins = [
   AddExporterModule
 ];
 
+// usado para adicionar plugins específicos do modo de design
+export const DesignPlugins = [TokenSimulationModule];
+
+// usado para adicionar plugins específicos do modo de implementação
 export const ImplementationPlugins = [
-  TokenSimulationModule,
   ConnectorsExtensionModule,
   CloudElementTemplatesPropertiesProviderModule
 ];
