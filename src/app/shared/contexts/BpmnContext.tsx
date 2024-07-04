@@ -4,10 +4,25 @@ import { FormEvent, ReactNode, createContext, useCallback, useEffect, useState }
 import download from 'downloadjs';
 import BpmnViewer from 'bpmn-js/lib/Modeler';
 import { useToast } from '../hooks/useToast';
-import { diagramXML } from '~features/diagramView/DiagramViewUtils';
 import { updateProcess } from '~/src/app/features/diagramView/services';
 import { useUserInfo } from '~/src/app/shared/hooks/useUserInfo';
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
+
+export const diagramXML = `
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0evpjna" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js-token-simulation" exporterVersion="0.0.0">
+  <bpmn:process id="Process_0bicilt" isExecutable="true" camunda:historyTimeToLive="P180D">
+    <bpmn:startEvent id="Event_05yoi5y" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0bicilt">
+      <bpmndi:BPMNShape id="Event_05yoi5y_di" bpmnElement="Event_05yoi5y">
+        <dc:Bounds x="152" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
+`;
 
 interface BpmnContext {
   updatedXml: string | File;
