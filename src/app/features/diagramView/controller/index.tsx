@@ -115,8 +115,6 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
     []
   );
 
-  const isImplementation = processState === 'implementation';
-
   return {
     isDisabled,
     idx,
@@ -126,7 +124,6 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
     value,
     modalState,
     processState,
-    isImplementation,
     changeProcessState,
     updateIdIndex,
     getInitialXML,

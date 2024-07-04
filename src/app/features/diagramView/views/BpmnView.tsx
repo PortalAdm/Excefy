@@ -24,20 +24,20 @@ import { Title } from '~/src/app/shared/components/Title';
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 import { formateHour } from '~/src/app/shared/utils/dateUtils';
 import { TRootComponent } from '~/src/app/shared/types';
-import { CustomTranslateModule, DesignPlugins, ImplementationPlugins } from '../resources/plugins';
+import { CustomTranslateModule } from '../resources/plugins';
 import EventDetail from '~/src/app/features/diagramView/views/components/EventDetail';
 import * as tv from '../DiagramViewTV';
 
-import zeebeModdle from 'zeebe-bpmn-moddle/resources/zeebe.json';
+// import { Validator } from '@bpmn-io/json-schema-validator'; // use para validar o JSON do TEMPLATE
 
 import { default as camundaModdleDescriptor } from 'camunda-bpmn-moddle/resources/camunda.json';
 import { ProcessStateActions } from './components/ProcessStateActions';
 import Canva from './components/Canva';
+import { getPluginsByMethod } from '../DiagramViewUtils';
 
 export function BpmnView({ children }: TRootComponent) {
   const { draft } = useLocalBPMN();
-  const { updatedXml, isDisabled, isLoading, lastUpdate, getupdatedXml, saveWithCTRLAndS } =
-    useBPMN();
+  const { updatedXml, isDisabled, isLoading, lastUpdate, getupdatedXml } = useBPMN();
   const [headerViewer, setHeaderViewer] = useState<BpmnViewer>();
   const {
     idx,
@@ -45,7 +45,6 @@ export function BpmnView({ children }: TRootComponent) {
     links,
     buttons,
     processState,
-    isImplementation,
     changeProcessState,
     changeModalState,
     updateIdIndex,
@@ -59,13 +58,10 @@ export function BpmnView({ children }: TRootComponent) {
     const loadTemplates = templates.map((key) => key).flat();
     const elementTemplates = loadTemplates;
 
-    const plugins = isImplementation
-      ? [...DesignPlugins, ...ImplementationPlugins]
-      : [...DesignPlugins];
+    const plugins = getPluginsByMethod(processState);
 
     const additionalModules = [
       ...plugins,
-
       CustomTranslateModule // sempre deixe-o por último
     ];
 
@@ -89,8 +85,7 @@ export function BpmnView({ children }: TRootComponent) {
         version: '0.0.0'
       },
       moddleExtensions: {
-        camunda: camundaModdleDescriptor,
-        zeebe: zeebeModdle
+        camunda: camundaModdleDescriptor
       }
     };
 
@@ -102,13 +97,11 @@ export function BpmnView({ children }: TRootComponent) {
 
     updateXml(viewer, getupdatedXml);
 
-    saveWithCTRLAndS(viewer);
-
     getInitialXML(viewer, updatedXml as string);
 
     return () => viewer.destroy();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isImplementation, isLoading]);
+  }, [processState, isLoading]);
 
   return (
     <section className="w-full h-full">

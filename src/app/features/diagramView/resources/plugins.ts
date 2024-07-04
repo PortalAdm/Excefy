@@ -1,6 +1,17 @@
 import { CreateAppendAnythingModule } from 'bpmn-js-create-append-anything';
+import { CamundaPlatformPropertiesProviderModule } from 'bpmn-js-properties-panel';
+// import {
+//   // CloudElementTemplatesPropertiesProviderModule,
+//   ElementTemplatesPropertiesProviderModule,
+//   CamundaPlatformPropertiesProviderModule
+// } from 'bpmn-js-element-templates';
+
 import { BpmnPropertiesPanelModule, BpmnPropertiesProviderModule } from 'bpmn-js-properties-panel';
-import { CloudElementTemplatesPropertiesProviderModule } from 'bpmn-js-element-templates';
+
+import {
+  ElementTemplatesPropertiesProviderModule // Camunda 7 Element Templates
+  // CloudElementTemplatesPropertiesProviderModule // Camunda 8 Element Templates
+} from 'bpmn-js-element-templates';
 
 import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
 import TokenSimulationModule from 'bpmn-js-token-simulation';
@@ -11,20 +22,26 @@ import ResizeTask from 'bpmn-js-task-resize/lib';
 
 import customTranslate from '../customTranslate/customTranslate';
 
-export const DesignPlugins = [
+// usado para adicionar plugins usados em todos os modos (geralmente provedores)
+export const PluginsUsedInAll = [
   CreateAppendAnythingModule,
   BpmnPropertiesPanelModule,
   BpmnPropertiesProviderModule,
   TemplateIconRendererModule,
   BpmnColorPickerModule,
   ResizeTask,
+  CamundaPlatformPropertiesProviderModule,
   AddExporterModule
 ];
 
+// usado para adicionar plugins específicos do modo de design
+export const DesignPlugins = [TokenSimulationModule];
+
+// usado para adicionar plugins específicos do modo de implementação
 export const ImplementationPlugins = [
-  TokenSimulationModule,
   ConnectorsExtensionModule,
-  CloudElementTemplatesPropertiesProviderModule
+  // CloudElementTemplatesPropertiesProviderModule
+  ElementTemplatesPropertiesProviderModule
 ];
 
 export const CustomTranslateModule = {

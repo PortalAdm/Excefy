@@ -4,17 +4,31 @@ import { FormEvent, ReactNode, createContext, useCallback, useEffect, useState }
 import download from 'downloadjs';
 import BpmnViewer from 'bpmn-js/lib/Modeler';
 import { useToast } from '../hooks/useToast';
-import { diagramXML } from '~features/diagramView/DiagramViewUtils';
 import { updateProcess } from '~/src/app/features/diagramView/services';
 import { useUserInfo } from '~/src/app/shared/hooks/useUserInfo';
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
+
+const diagramXML = `
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0evpjna" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js-token-simulation" exporterVersion="0.0.0">
+  <bpmn:process id="Process_0bicilt" isExecutable="true" camunda:historyTimeToLive="P180D">
+    <bpmn:startEvent id="Event_05yoi5y" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0bicilt">
+      <bpmndi:BPMNShape id="Event_05yoi5y_di" bpmnElement="Event_05yoi5y">
+        <dc:Bounds x="152" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
+`;
 
 interface BpmnContext {
   updatedXml: string | File;
   isDisabled: boolean;
   isLoading: boolean;
   lastUpdate: string;
-  saveWithCTRLAndS: (viewer: BpmnViewer) => void;
   getupdatedXml: (viewer: BpmnViewer) => void;
   downloadSVGiagram: (viewer: BpmnViewer) => void;
   downloadBPMNDiagram: (viewer: BpmnViewer) => void;
@@ -83,7 +97,7 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
 
   const downloadSVGiagram = useCallback(
     async (viewer: BpmnViewer) => {
-      const { svg } = await viewer.saveSVG();
+      const { svg } = (await viewer.saveSVG()) || {};
 
       if (svg) {
         setToast('SVG gerado com sucesso!', 'Seu download está pronto', 'success');
@@ -97,7 +111,7 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
 
   const downloadBPMNDiagram = useCallback(
     async (viewer: BpmnViewer) => {
-      const { xml, error } = await viewer.saveXML({ format: true });
+      const { xml, error } = await viewer.saveXML({ format: true, preamble: true });
 
       if (error) {
         return setToast('Seu BPMN não pode ser gerado!', error.message, 'error');
@@ -105,23 +119,10 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
 
       if (xml) {
         setToast('BPMN gerado com sucesso!', 'Seu download está pronto', 'success');
-        return download(xml, BPMNFileName, 'application/xml');
+        return download(draft?.xml, BPMNFileName, 'application/xml');
       }
     },
-    [setToast]
-  );
-
-  const saveWithCTRLAndS = useCallback(
-    (viewer: BpmnViewer) => {
-      document.body.addEventListener('keydown', (e) => {
-        if (e.code === 'KeyS' && (e.metaKey || e.ctrlKey)) {
-          e.preventDefault();
-
-          downloadBPMNDiagram(viewer);
-        }
-      });
-    },
-    [downloadBPMNDiagram]
+    [draft?.xml, setToast]
   );
 
   const handleImportFile = async (e: FormEvent<HTMLInputElement>) => {
@@ -167,7 +168,6 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
         isLoading,
         isDisabled,
         lastUpdate,
-        saveWithCTRLAndS,
         getupdatedXml,
         downloadSVGiagram,
         downloadBPMNDiagram,
