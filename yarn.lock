@@ -485,6 +485,15 @@
     "@codemirror/language" "^6.8.0"
     lezer-feel "^1.2.3"
 
+"@bpmn-io/json-schema-validator@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@bpmn-io/json-schema-validator/-/json-schema-validator-0.2.1.tgz#a54c6069f1e58fdfa5c33b5309346322ce2eacdf"
+  integrity sha512-Ib9+c3achzfdUIhvxlhhpM1MpmxqGaYge3gAg+CLD/3SwQm2duvIJk3Cj4i4aXSBzCxNLKsXVP2W5RTeOg7tuQ==
+  dependencies:
+    ajv "^6.12.6"
+    ajv-errors "^1.0.1"
+    min-dash "^3.7.0"
+
 "@bpmn-io/moddle-utils@^0.2.1":
   version "0.2.1"
   resolved "https://registry.npmjs.org/@bpmn-io/moddle-utils/-/moddle-utils-0.2.1.tgz"
@@ -2300,12 +2309,17 @@ agent-base@6:
   dependencies:
     debug "4"
 
+ajv-errors@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ajv-errors/-/ajv-errors-1.0.1.tgz#f35986aceb91afadec4102fbd85014950cefa64d"
+  integrity sha512-DCRfO/4nQ+89p/RK43i8Ezd41EqdGIU4ld7nGF8OQ14oc/we5rEntLCUa7+jrn3nn83BosfwZA0wb4pon2o8iQ==
+
 ajv-keywords@^3.5.2:
   version "3.5.2"
   resolved "https://registry.npmjs.org/ajv-keywords/-/ajv-keywords-3.5.2.tgz"
   integrity sha512-5p6WTN0DdTGVQk6VjcEju19IgaHudalcfabD7yhDGeA6bcQnmL+CpveLJq/3hvfwd1aof6L386Ougkx6RfyMIQ==
 
-ajv@^6.12.4, ajv@^6.12.5:
+ajv@^6.12.4, ajv@^6.12.5, ajv@^6.12.6:
   version "6.12.6"
   resolved "https://registry.npmjs.org/ajv/-/ajv-6.12.6.tgz"
   integrity sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==
@@ -5784,7 +5798,7 @@ mimic-fn@^4.0.0:
   resolved "https://registry.npmjs.org/mimic-fn/-/mimic-fn-4.0.0.tgz"
   integrity sha512-vqiC06CuhBTUdZH+RYl8sFrL096vA45Ok5ISO6sE/Mr1jRbGH4Csnhi8f3wKVl7x8mO4Au7Ir9D3Oyv1VYMFJw==
 
-min-dash@^3.0.0:
+min-dash@^3.0.0, min-dash@^3.7.0:
   version "3.8.1"
   resolved "https://registry.npmjs.org/min-dash/-/min-dash-3.8.1.tgz"
   integrity sha512-evumdlmIlg9mbRVPbC4F5FuRhNmcMS5pvuBUbqb1G9v09Ro0ImPEgz5n3khir83lFok1inKqVDjnKEg3GpDxQg==

@@ -3,12 +3,11 @@ import ActionProvider from './ActionProvider';
 import MessageParser from './MessageParser';
 import DogPicture from './DogPicture';
 import { JSX } from 'react';
-import IConfig from 'react-chatbot-kit/build/src/interfaces/IConfig';
 import { Text } from '~/src/app/shared/components/Text';
 
 const botName = 'Execfy Chatbot';
 
-const config: IConfig = {
+const config = {
   botName,
   initialMessages: [createChatBotMessage('Olá, como posso ajudar?', {})],
   actionProvider: ActionProvider,

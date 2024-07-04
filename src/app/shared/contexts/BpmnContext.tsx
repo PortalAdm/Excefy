@@ -14,7 +14,6 @@ interface BpmnContext {
   isDisabled: boolean;
   isLoading: boolean;
   lastUpdate: string;
-  saveWithCTRLAndS: (viewer: BpmnViewer) => void;
   getupdatedXml: (viewer: BpmnViewer) => void;
   downloadSVGiagram: (viewer: BpmnViewer) => void;
   downloadBPMNDiagram: (viewer: BpmnViewer) => void;
@@ -83,7 +82,7 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
 
   const downloadSVGiagram = useCallback(
     async (viewer: BpmnViewer) => {
-      const { svg } = await viewer.saveSVG();
+      const { svg } = (await viewer.saveSVG()) || {};
 
       if (svg) {
         setToast('SVG gerado com sucesso!', 'Seu download está pronto', 'success');
@@ -97,7 +96,7 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
 
   const downloadBPMNDiagram = useCallback(
     async (viewer: BpmnViewer) => {
-      const { xml, error } = await viewer.saveXML({ format: true });
+      const { xml, error } = await viewer.saveXML({ format: true, preamble: true });
 
       if (error) {
         return setToast('Seu BPMN não pode ser gerado!', error.message, 'error');
@@ -109,19 +108,6 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
       }
     },
     [setToast]
-  );
-
-  const saveWithCTRLAndS = useCallback(
-    (viewer: BpmnViewer) => {
-      document.body.addEventListener('keydown', (e) => {
-        if (e.code === 'KeyS' && (e.metaKey || e.ctrlKey)) {
-          e.preventDefault();
-
-          downloadBPMNDiagram(viewer);
-        }
-      });
-    },
-    [downloadBPMNDiagram]
   );
 
   const handleImportFile = async (e: FormEvent<HTMLInputElement>) => {
@@ -167,7 +153,6 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
         isLoading,
         isDisabled,
         lastUpdate,
-        saveWithCTRLAndS,
         getupdatedXml,
         downloadSVGiagram,
         downloadBPMNDiagram,
