@@ -1,5 +1,5 @@
 import { tv } from 'tailwind-variants';
-// classname=""
+
 export const buttonRootTv = tv({
   base: 'flex justify-center items-center rounded overflow-hidden relative',
   variants: {
@@ -17,7 +17,14 @@ export const buttonRootTv = tv({
     },
     variant: {
       bordered:
-        'bg-transparent ring-1 ring-primary hover:bg-primary/25 disabled:pointer-events-none disabled:opacity-30'
+        'bg-transparent ring-1 ring-primary hover:bg-primary/25 disabled:pointer-events-none disabled:opacity-30',
+      text: `relative disabled:bg-transparent bg-transparent disabled:border-b-[1px] rounded-none
+      disabled:border-b-primary disabled:pointer-events-none border-0
+      disabled:before:content-[''] disabled:before:absolute disabled:before:bottom-0
+      disabled:before:left-0 disabled:before:right-0 disabled:before:bg-primary disabled:before:h-[2px]
+      disabled:before:w-full disabled:before:transition-all disabled:before:duration-300
+      disabled:before:ease-in-out disabled:before:hover:w-0`,
+      onlyIcon: 'bg-transparent ring-0'
     }
   },
   defaultVariants: {

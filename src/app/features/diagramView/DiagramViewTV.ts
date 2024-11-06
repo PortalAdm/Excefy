@@ -1,11 +1,11 @@
 import { tv } from 'tailwind-variants';
 
 export const BpmnHeaderRootTv = tv({
-  base: 'pl-1 sm:px-9 h-20 sm:h-24 flex justify-between items-start py-1 relative'
+  base: 'pl-1 sm:px-9 py-1'
 });
 
 export const BpmnHeaderContentTv = tv({
-  base: 'w-full px-2 h-full flex flex-row justify-end overflow-y-hidden sm:overflow-auto flex-wrap gap-2 items-end pb-1'
+  base: 'w-full px-2 h-full flex w-fit flex-row justify-end overflow-y-hidden sm:overflow-auto flex-wrap gap-2 items-end pb-1'
 });
 
 export const BpmnContentFallbackTv = tv({
@@ -35,7 +35,7 @@ export const EventDetailContentWrapperTv = tv({
 });
 
 export const bpmnViewerHeaderTv = tv({
-  base: 'flex flex-col gap-2 absolute bottom-0 w-full max-w-[280px]'
+  base: 'flex gap-2 w-full'
 });
 
 export const bpmnCanvasTv = tv({

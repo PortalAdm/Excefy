@@ -1,6 +1,6 @@
 import { DiagramDownload } from '~types/DiagramDownload';
 import { TKeyboardShotcutInfo } from '~types/TKeyboardShotcutInfo';
-import { TProcessState } from '../../shared/types';
+import { TProcessInstance, TProcessState } from '../../shared/types';
 import { DesignPlugins, ImplementationPlugins, PluginsUsedInAll } from './resources/plugins';
 
 interface Labels {
@@ -105,3 +105,17 @@ export const getPluginsByMethod = (method: TProcessState) => {
       return [PluginsUsedInAll];
   }
 };
+
+export const getProcessKeyFromXml = (bpmnXml: string) => {
+  const parser = new DOMParser();
+  const xmlDoc = parser.parseFromString(bpmnXml, 'application/xml');
+  const processElement = xmlDoc.getElementsByTagName('bpmn:process')[0];
+
+  if (processElement && processElement.hasAttribute('id')) {
+    return processElement.getAttribute('id');
+  }
+
+  return null;
+};
+
+export const parseProcessInstance = (content: string): TProcessInstance => JSON.parse(content);

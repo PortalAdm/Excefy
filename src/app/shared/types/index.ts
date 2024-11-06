@@ -1,4 +1,5 @@
 export * from './responses/TProcessInsert';
+export * from './responses/TRunBpmnIntoCamundaResponse';
 
 export * from './requests/TUpdateProcessConfigurationRequest';
 

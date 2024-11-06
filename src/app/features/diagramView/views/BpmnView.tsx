@@ -14,7 +14,6 @@ import { FaCheck } from 'react-icons/fa6';
 
 import { templates } from '../.camunda/element-templates';
 import { useDiagramViewController } from '../controller';
-import { TabsNavigation } from '~/src/app/shared/components/TabsNavigation';
 import { Modal } from '~/src/app/shared/components/Modal';
 import { useBPMN } from '~/src/app/shared/hooks/useBPMN';
 import { Button } from '~/src/app/shared/components/Button';
@@ -34,6 +33,8 @@ import { default as camundaModdleDescriptor } from 'camunda-bpmn-moddle/resource
 import { ProcessStateActions } from './components/ProcessStateActions';
 import Canva from './components/Canva';
 import { getPluginsByMethod } from '../DiagramViewUtils';
+import { HeaderActions } from './components/HeaderActions';
+import { Tooltip } from '~/src/app/shared/components/Tooltip';
 
 export function BpmnView({ children }: TRootComponent) {
   const { draft } = useLocalBPMN();
@@ -42,9 +43,12 @@ export function BpmnView({ children }: TRootComponent) {
   const {
     idx,
     modal,
-    links,
     buttons,
     processState,
+    isRunLoading,
+    isImplantLoading,
+    implantAction,
+    runAction,
     changeProcessState,
     changeModalState,
     updateIdIndex,
@@ -106,48 +110,61 @@ export function BpmnView({ children }: TRootComponent) {
   return (
     <section className="w-full h-full">
       <div className={tv.BpmnHeaderRootTv()}>
-        <TabsNavigation.root>
-          <TabsNavigation.items links={links} />
-        </TabsNavigation.root>
-        <ProcessStateActions changeProcessState={changeProcessState} processState={processState} />
-        <div className={tv.bpmnViewerHeaderTv()}>
-          <Title title={draft?.commandName} size="md" className="truncate" />
-          {lastUpdate && (
-            <div className="flex gap-2 items-center">
-              <Text
-                text={`Salvo automaticamente ${formateHour(lastUpdate)}`}
-                as="span"
-                color="placeholder"
-                size="sm"
-              />
-              <Icon icon={FaCheck} color="outline" size="small" />
+        <div>
+          <div className="flex flex-shrink-0 items-center justify-between pb-4">
+            <ProcessStateActions
+              changeProcessState={changeProcessState}
+              processState={processState}
+            />
+            <HeaderActions
+              implantDisabled={isImplantLoading}
+              runDisabled={isRunLoading}
+              implantAction={implantAction}
+              runAction={runAction}
+            />
+            <div className={tv.BpmnHeaderContentTv()}>
+              {buttons.map((button, i) => (
+                <Modal.trigger changeModalState={changeModalState} key={i}>
+                  <Tooltip text={button.text}>
+                    <Button.root
+                      disabled={i !== 0 && isDisabled}
+                      size="small"
+                      color="transparent"
+                      variant="onlyIcon"
+                      onClick={() => updateIdIndex(i)}
+                    >
+                      {i === 0 && (
+                        <input
+                          type="file"
+                          className="absolute opacity-0 cursor-pointer"
+                          accept=".bpmn"
+                          onChange={(e) => button.onChange?.(e)}
+                        />
+                      )}
+                      <Button.icon icon={button.icon} />
+                    </Button.root>
+                  </Tooltip>
+                </Modal.trigger>
+              ))}
             </div>
-          )}
+          </div>
+
+          <div className={tv.bpmnViewerHeaderTv()}>
+            <Title title={draft?.commandName} size="md" className="truncate" />
+            {lastUpdate && (
+              <div className="flex gap-2 items-center">
+                <Text
+                  text={`Salvo automaticamente ${formateHour(lastUpdate)}`}
+                  as="span"
+                  color="placeholder"
+                  size="sm"
+                />
+                <Icon icon={FaCheck} color="outline" size="small" />
+              </div>
+            )}
+          </div>
         </div>
-        <div className={tv.BpmnHeaderContentTv()}>
-          {buttons.map((button, i) => (
-            <Modal.trigger changeModalState={changeModalState} key={i}>
-              <Button.root
-                disabled={i !== 0 && isDisabled}
-                size="small"
-                color="transparent"
-                variant="bordered"
-                onClick={() => updateIdIndex(i)}
-              >
-                {i === 0 && (
-                  <input
-                    type="file"
-                    className="absolute opacity-0"
-                    accept=".bpmn"
-                    onChange={(e) => button.onChange?.(e)}
-                  />
-                )}
-                <Button.icon icon={button.icon} />
-                <Button.label color="primary" text={button.text} />
-              </Button.root>
-            </Modal.trigger>
-          ))}
-        </div>
+
         {modal[idx]}
       </div>
       {draft && !isLoading ? (
