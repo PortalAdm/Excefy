@@ -8,8 +8,10 @@ export function MainContainer({ children }: TRootComponent) {
   const { isClientSide, isDarkMode, flexDirection } = useMainContainerController();
 
   return (
-    <main className={mainContainerTv({ 'flex-direction': flexDirection, theme: isDarkMode })}>
-      {isClientSide && children}
-    </main>
+    isClientSide && (
+      <main className={mainContainerTv({ 'flex-direction': flexDirection, theme: isDarkMode })}>
+        {children}
+      </main>
+    )
   );
 }

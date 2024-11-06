@@ -5,19 +5,26 @@ import download from 'downloadjs';
 import BpmnViewer from 'bpmn-js/lib/Modeler';
 import { useToast } from '../hooks/useToast';
 import { updateProcess } from '~/src/app/features/diagramView/services';
-import { useUserInfo } from '~/src/app/shared/hooks/useUserInfo';
+import { AuthResponse } from '../types/responses/AuthResponse';
+import { TBPMNDraft } from '../types';
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 
 const diagramXML = `
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0evpjna" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js-token-simulation" exporterVersion="0.0.0">
-  <bpmn:process id="Process_0bicilt" isExecutable="true" camunda:historyTimeToLive="P180D">
-    <bpmn:startEvent id="Event_05yoi5y" />
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_0evpjna" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="15.1.3">
+  <bpmn:collaboration id="Collaboration_0325o5f">
+    <bpmn:participant id="Participant_1i8iha1" processRef="Process_1t7yaf6" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1t7yaf6">
+    <bpmn:startEvent id="Event_06dyhzh" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0bicilt">
-      <bpmndi:BPMNShape id="Event_05yoi5y_di" bpmnElement="Event_05yoi5y">
-        <dc:Bounds x="152" y="192" width="36" height="36" />
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0325o5f">
+      <bpmndi:BPMNShape id="Participant_1i8iha1_di" bpmnElement="Participant_1i8iha1" isHorizontal="true">
+        <dc:Bounds x="150" y="70" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06dyhzh_di" bpmnElement="Event_06dyhzh">
+        <dc:Bounds x="212" y="172" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
@@ -29,9 +36,13 @@ interface BpmnContext {
   isDisabled: boolean;
   isLoading: boolean;
   lastUpdate: string;
-  getupdatedXml: (viewer: BpmnViewer) => void;
+  getupdatedXml: (
+    viewer: BpmnViewer,
+    user: AuthResponse,
+    updateLocalXml: (xml: string) => void
+  ) => void;
   downloadSVGiagram: (viewer: BpmnViewer) => void;
-  downloadBPMNDiagram: (viewer: BpmnViewer) => void;
+  downloadBPMNDiagram: (viewer: BpmnViewer, draft: TBPMNDraft) => void;
   handleImportFile: (e: FormEvent<HTMLInputElement>) => void;
 }
 
@@ -39,14 +50,13 @@ interface BpmnContextProviderProps {
   children: ReactNode;
 }
 
-const BPMNFileName = 'diagram.bpmn';
-const SVGFileName = 'diagram.svg';
+export const BPMNFileName = 'diagram.bpmn';
+export const SVGFileName = 'diagram.svg';
 
 export const BpmnContext = createContext({} as BpmnContext);
 
 export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
-  const { draft, updateLocalXml } = useLocalBPMN();
-  const { user } = useUserInfo();
+  const { draft } = useLocalBPMN();
 
   const { changeToastActive } = useToast();
   const [updatedXml, setUpdatedXml] = useState<string | File>(draft?.xml || diagramXML);
@@ -70,21 +80,14 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
   }, [updatedXml]);
 
   const getupdatedXml = useCallback(
-    async (viewer: BpmnViewer) => {
+    async (viewer: BpmnViewer, user: AuthResponse, updateLocalXml: (xml: string) => void) => {
       const { xml } = await viewer.saveXML({ format: true });
       setIsDisabled(false);
 
       if (xml) {
         const errorHandler = () =>
           setToast('Ocorreu um erro!', 'Suas alterações não serão salvas', 'error');
-        const updateRes = await updateProcess(
-          xml,
-          user?.userId,
-          user?.clientId,
-          draft?.commandId,
-          errorHandler
-        );
-
+        const updateRes = await updateProcess(xml, user?.userId, user?.clientId, 0, errorHandler);
         if (updateRes) {
           updateLocalXml(xml);
           setLastUpdate(updateRes);
@@ -92,7 +95,7 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
         }
       }
     },
-    [draft?.commandId, setToast, updateLocalXml, user?.clientId, user?.userId]
+    [setToast]
   );
 
   const downloadSVGiagram = useCallback(
@@ -110,7 +113,7 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
   );
 
   const downloadBPMNDiagram = useCallback(
-    async (viewer: BpmnViewer) => {
+    async (viewer: BpmnViewer, draft: TBPMNDraft) => {
       const { xml, error } = await viewer.saveXML({ format: true, preamble: true });
 
       if (error) {
@@ -122,7 +125,7 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
         return download(draft?.xml, BPMNFileName, 'application/xml');
       }
     },
-    [draft?.xml, setToast]
+    [setToast]
   );
 
   const handleImportFile = async (e: FormEvent<HTMLInputElement>) => {
@@ -157,7 +160,7 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
         reader.readAsText(file);
       }
     } catch (e: any) {
-      throw new Error('Erro ao importar arquivo', e);
+      if (e instanceof Error) throw new Error('Erro ao importar arquivo', e);
     }
   };
 

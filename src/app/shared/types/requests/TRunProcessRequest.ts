@@ -1,7 +1,7 @@
 import { TCommandParameters } from '../TCommandParameters';
 
-export type TUpdateProcessRequest = {
-  recipient: string;
+export type TRunProcessRequest = {
   commandName: string;
+  recipient: string;
   commandParameters: TCommandParameters[];
 };

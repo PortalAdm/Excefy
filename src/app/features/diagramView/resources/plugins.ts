@@ -40,7 +40,6 @@ export const DesignPlugins = [TokenSimulationModule];
 // usado para adicionar plugins específicos do modo de implementação
 export const ImplementationPlugins = [
   ConnectorsExtensionModule,
-  // CloudElementTemplatesPropertiesProviderModule
   ElementTemplatesPropertiesProviderModule
 ];
 

@@ -8,7 +8,8 @@ import propertiesOrder from './properties-order.json';
 import sendgridConnector from './sendgrid-connector.json';
 import slackConnector from './slack-connector.json';
 import versioned from './versioned.json';
-import restConnector from './restConnector.json';
+import restConnector from './rest-connector.json';
+import currencyConnector from './currency-connector.json';
 
 export const templates = [
   // dueDate,
@@ -18,7 +19,8 @@ export const templates = [
   // headerInput,
   // httpJsonConnector,
   // propertiesOrder,
-  restConnector
+  currencyConnector,
+  restConnector,
   // sendgridConnector
   // slackConnector,
   // versioned

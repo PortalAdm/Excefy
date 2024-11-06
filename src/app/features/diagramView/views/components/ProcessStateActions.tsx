@@ -15,21 +15,24 @@ export function ProcessStateActions({
       <Button.root
         size="small"
         disabled={processState === 'design'}
-        variant="bordered"
+        variant="text"
         onClick={() => changeProcessState('design')}
       >
         <Button.contentWrapper>
-          <Button.label text="Design" />
+          <Button.label text="Design" color={processState === 'design' ? 'primary' : 'black'} />
         </Button.contentWrapper>
       </Button.root>
       <Button.root
         size="small"
         disabled={processState === 'implementation'}
-        variant="bordered"
+        variant="text"
         onClick={() => changeProcessState('implementation')}
       >
         <Button.contentWrapper>
-          <Button.label text="implementação" />
+          <Button.label
+            text="implementação"
+            color={processState === 'implementation' ? 'primary' : 'black'}
+          />
         </Button.contentWrapper>
       </Button.root>
     </div>
