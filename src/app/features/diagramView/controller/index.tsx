@@ -186,6 +186,7 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
     processState,
     isRunLoading,
     isImplantLoading,
+    user,
     implantAction,
     runAction,
     changeProcessState,

@@ -1,24 +1,21 @@
 import { CreateAppendAnythingModule } from 'bpmn-js-create-append-anything';
-import { CamundaPlatformPropertiesProviderModule } from 'bpmn-js-properties-panel';
-// import {
-//   // CloudElementTemplatesPropertiesProviderModule,
-//   ElementTemplatesPropertiesProviderModule,
-//   CamundaPlatformPropertiesProviderModule
-// } from 'bpmn-js-element-templates';
 
-import { BpmnPropertiesPanelModule, BpmnPropertiesProviderModule } from 'bpmn-js-properties-panel';
+import {
+  BpmnPropertiesPanelModule,
+  BpmnPropertiesProviderModule,
+  CamundaPlatformPropertiesProviderModule
+} from 'bpmn-js-properties-panel';
 
 import {
   ElementTemplatesPropertiesProviderModule // Camunda 7 Element Templates
-  // CloudElementTemplatesPropertiesProviderModule // Camunda 8 Element Templates
 } from 'bpmn-js-element-templates';
 
-import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
 import TokenSimulationModule from 'bpmn-js-token-simulation';
 import AddExporterModule from '@bpmn-io/add-exporter';
 import BpmnColorPickerModule from 'bpmn-js-color-picker';
 import TemplateIconRendererModule from '@bpmn-io/element-templates-icons-renderer';
 import ResizeTask from 'bpmn-js-task-resize/lib';
+import ElementTemplateChooserModule from '@bpmn-io/element-template-chooser';
 
 import customTranslate from '../customTranslate/customTranslate';
 
@@ -39,8 +36,8 @@ export const DesignPlugins = [TokenSimulationModule];
 
 // usado para adicionar plugins específicos do modo de implementação
 export const ImplementationPlugins = [
-  ConnectorsExtensionModule,
-  ElementTemplatesPropertiesProviderModule
+  ElementTemplatesPropertiesProviderModule,
+  ElementTemplateChooserModule
 ];
 
 export const CustomTranslateModule = {
