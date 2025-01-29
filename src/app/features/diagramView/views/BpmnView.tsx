@@ -1,8 +1,8 @@
 'use client';
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-font/dist/css/bpmn-embedded.css';
-import 'bpmn-js-connectors-extension/dist/connectors-extension.css';
 import 'bpmn-js-token-simulation/assets/css/bpmn-js-token-simulation.css';
+import '@bpmn-io/element-template-chooser/dist/element-template-chooser.css';
 
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -35,6 +35,7 @@ import Canva from './components/Canva';
 import { getPluginsByMethod } from '../DiagramViewUtils';
 import { HeaderActions } from './components/HeaderActions';
 import { Tooltip } from '~/src/app/shared/components/Tooltip';
+import { updateXMLForAction } from '../resources/googleDriverValidation';
 
 export function BpmnView({ children }: TRootComponent) {
   const { draft } = useLocalBPMN();
@@ -55,6 +56,7 @@ export function BpmnView({ children }: TRootComponent) {
     getInitialXML,
     updateXml
   } = useDiagramViewController(headerViewer as BpmnViewer);
+
   const canvaRef = useRef<HTMLDivElement>(null);
   const propertiesPanelRef = useRef<HTMLDivElement>(null);
 
@@ -77,9 +79,6 @@ export function BpmnView({ children }: TRootComponent) {
         parent: canvaRef?.current
       },
       container: canvaRef.current as HTMLDivElement,
-      keyboard: {
-        bindTo: document
-      },
       additionalModules,
       elementTemplates,
       taskResizingEnabled: true,
@@ -106,6 +105,39 @@ export function BpmnView({ children }: TRootComponent) {
     return () => viewer.destroy();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [processState, isLoading]);
+
+  useEffect(() => {
+    const propertiesPanel = propertiesPanelRef.current;
+
+    if (!propertiesPanel || !updatedXml || processState !== 'implementation') return;
+
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+          const customInputs = propertiesPanel.querySelectorAll<HTMLElement>(
+            '[data-entry-id^="custom-entry-google-drive-connector"]'
+          );
+
+          if (customInputs.length > 0) {
+            customInputs.forEach((customInput) => {
+              const selectElement = customInput.querySelector<HTMLSelectElement>('select');
+
+              if (selectElement) {
+                const selectedValue = selectElement.value;
+
+                selectedValue !== '' &&
+                  updateXMLForAction(customInputs, selectedValue, String(updatedXml));
+              }
+            });
+          }
+        }
+      }
+    });
+
+    observer.observe(propertiesPanel, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
+  }, [updatedXml, processState, headerViewer, updateXml, getupdatedXml]);
 
   return (
     <section className="w-full h-full">
