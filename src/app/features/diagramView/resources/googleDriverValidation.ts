@@ -1,6 +1,6 @@
 export const getActionFromXML = (xmlDoc: Document) => {
   const inputParameters = xmlDoc.getElementsByTagName('camunda:inputParameter');
-  return String(inputParameters[5]?.textContent);
+  return String(inputParameters[0]?.textContent);
 };
 
 const getVisibleEntriesForAction = (action: string): string[] => {
@@ -8,22 +8,21 @@ const getVisibleEntriesForAction = (action: string): string[] => {
     get_file_list: [
       'custom-entry-google-drive-connector-0', // Ação
       'custom-entry-google-drive-connector-1', // Conexão
-      'custom-entry-google-drive-connector-2', // Nome da Pasta
-      'custom-entry-google-drive-connector-6' // Lista de arquivos (response)
+      'custom-entry-google-drive-connector-2', // Pasta
+      'custom-entry-google-drive-connector-5' // Lista de arquivos (response)
     ],
     download_file: [
       'custom-entry-google-drive-connector-0', // Ação
       'custom-entry-google-drive-connector-1', // Conexão
-      'custom-entry-google-drive-connector-3', // Id do Arquivo (sem ser response)
-      'custom-entry-google-drive-connector-7' // Conteúdo (response)
+      'custom-entry-google-drive-connector-2', // Pasta
+      'custom-entry-google-drive-connector-3', // Arquivo atual (hidden)
+      'custom-entry-google-drive-connector-6' // Arquivo baixado (response)
     ],
     upload_file: [
       'custom-entry-google-drive-connector-0', // Ação
       'custom-entry-google-drive-connector-1', // Conexão
-      'custom-entry-google-drive-connector-2', // Nome da Pasta
-      'custom-entry-google-drive-connector-4', // Nome do Arquivo
-      'custom-entry-google-drive-connector-5', // Conteúdo do Arquivo
-      'custom-entry-google-drive-connector-8' // Id do Arquivo (response)
+      'custom-entry-google-drive-connector-2', // Pasta
+      'custom-entry-google-drive-connector-4' // Arquivo processado (hidden)
     ]
   };
 
@@ -41,7 +40,7 @@ const updateInputElementVisibility = (
   }
 
   const visibleEntries = getVisibleEntriesForAction(action);
-  return (inputElement.style.display = visibleEntries.includes(entryId) ? 'block' : 'none');
+  inputElement.style.display = visibleEntries.includes(entryId) ? 'block' : 'none';
 };
 
 export const updateXMLForAction = (

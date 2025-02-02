@@ -10,6 +10,7 @@
     {
       "label": "Ação",
       "type": "Dropdown",
+      "value": "get_file_list",
       "choices": [
         { "name": "Listar arquivos", "value": "get_file_list" },
         { "name": "Download arquivo", "value": "download_file" },
@@ -17,58 +18,49 @@
       ],
       "binding": {
         "type": "camunda:inputParameter",
-        "name": "googleDriveAction"
-      },
-      "constraints": {
-        "notEmpty":true,
-        "pattern":{
-            "message":"Selecione um metodo"
-        }
+        "name": "action"
       }
     },
     {
       "label": "Conexão",
       "type": "String",
+      "value": "SomaPlaceNF",
       "binding": {
         "type": "camunda:inputParameter",
         "name": "connection"
       }
     },
     {
-      "label": "Nome da Pasta",
+      "label": "Pasta",
       "type": "String",
+      "value": "SomaPlace",
       "binding": {
         "type": "camunda:inputParameter",
-        "name": "folderName"
+        "name": "folder"
       }
     },
     {
-      "label": "Id do Arquivo",
-      "type": "String",
+      "label": "Arquivo atual",
+      "type": "Hidden",
+      "value": "currentFile",
       "binding": {
         "type": "camunda:inputParameter",
-        "name": "fileId"
+        "name": "currentFile"
       }
     },
     {
-      "label": "Nome do Arquivo",
-      "type": "String",
+      "label": "Arquivo processado",
+      "type": "Hidden",
+      "value": "processedFile",
       "binding": {
         "type": "camunda:inputParameter",
-        "name": "fileName"
-      }
-    },
-    {
-      "label": "Conteúdo do Arquivo",
-      "type": "Text",
-      "binding": {
-        "type": "camunda:inputParameter",
-        "name": "fileContent"
+        "name": "processedFile"
       }
     },
     {
       "label": "Lista de arquivos",
       "type": "String",
+      "value": "",
       "editable": false,
       "binding": {
         "type": "camunda:outputParameter",
@@ -76,21 +68,13 @@
       }
     },
     {
-      "label": "Conteúdo",
+      "label": "Arquivo baixado",
       "type": "String",
+      "value": "downloadedFile",
       "editable": false,
       "binding": {
         "type": "camunda:outputParameter",
-        "source": "response"
-      }
-    },
-    {
-      "label": "Id do Arquivo",
-      "type": "String",
-      "editable": false,
-      "binding": {
-        "type": "camunda:outputParameter",
-        "source": "response"
+        "source": "downloadedFile"
       }
     }
   ]
