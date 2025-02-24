@@ -42,7 +42,7 @@
     {
       "label": "Arquivo atual",
       "type": "Hidden",
-      "value": "currentFile",
+      "value": "${currentFile}",
       "binding": {
         "type": "camunda:inputParameter",
         "name": "currentFile"
@@ -51,7 +51,7 @@
     {
       "label": "Arquivo processado",
       "type": "Hidden",
-      "value": "processedFile",
+      "value": "${processedFile}",
       "binding": {
         "type": "camunda:inputParameter",
         "name": "processedFile"
@@ -60,11 +60,11 @@
     {
       "label": "Lista de arquivos",
       "type": "String",
-      "value": "",
+      "value": "response",
       "editable": false,
       "binding": {
         "type": "camunda:outputParameter",
-        "source": "response"
+        "source": "${response}"
       }
     },
     {
@@ -74,7 +74,7 @@
       "editable": false,
       "binding": {
         "type": "camunda:outputParameter",
-        "source": "downloadedFile"
+        "source": "${downloadedFile}"
       }
     }
   ]

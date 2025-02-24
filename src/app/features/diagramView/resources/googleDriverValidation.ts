@@ -50,9 +50,34 @@ export const updateXMLForAction = (
 ) => {
   const parser = new DOMParser();
   const xmlDoc = parser.parseFromString(xml, 'application/xml');
+
+  const inputParameters = Array.from(xmlDoc.getElementsByTagName('camunda:inputParameter'));
+  const outputParameters = Array.from(xmlDoc.getElementsByTagName('camunda:outputParameter'));
+
+  const allowedParams: Record<string, string[]> = {
+    get_file_list: ['action', 'connection', 'folder', 'response'],
+    download_file: ['action', 'connection', 'folder', 'currentFile', 'downloadedFile'],
+    upload_file: ['action', 'connection', 'folder', 'processedFile']
+  };
+
+  const allowedKeys = allowedParams[action] || [];
+
+  const removeUnallowedParams = (params: Element[]) => {
+    params.forEach((param) => {
+      const nameAttr = param.getAttribute('name')?.trim() || '';
+      if (!allowedKeys.includes(nameAttr)) {
+        param.parentNode?.removeChild(param);
+      }
+    });
+  };
+
+  removeUnallowedParams(inputParameters);
+  removeUnallowedParams(outputParameters);
+
   customInputs?.forEach((inputElement) => {
     if (inputElement instanceof HTMLElement) {
       const entryId = inputElement.getAttribute('data-entry-id');
+
       updateInputElementVisibility(inputElement, entryId, action);
     }
   });

@@ -38,7 +38,7 @@ import { Tooltip } from '~/src/app/shared/components/Tooltip';
 import { updateXMLForAction } from '../resources/googleDriverValidation';
 
 export function BpmnView({ children }: TRootComponent) {
-  const { draft } = useLocalBPMN();
+  const { draft, updateLocalDraft } = useLocalBPMN();
   const { updatedXml, isDisabled, isLoading, lastUpdate, getupdatedXml } = useBPMN();
   const [headerViewer, setHeaderViewer] = useState<BpmnViewer>();
   const {
@@ -100,7 +100,7 @@ export function BpmnView({ children }: TRootComponent) {
 
     updateXml(viewer, getupdatedXml);
 
-    getInitialXML(viewer, updatedXml as string);
+    getInitialXML(viewer, draft?.xml || String(updatedXml));
 
     return () => viewer.destroy();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -109,7 +109,7 @@ export function BpmnView({ children }: TRootComponent) {
   useEffect(() => {
     const propertiesPanel = propertiesPanelRef.current;
 
-    if (!propertiesPanel || !updatedXml || processState !== 'implementation') return;
+    if (!propertiesPanel || processState !== 'implementation') return;
 
     const observer = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
@@ -125,8 +125,14 @@ export function BpmnView({ children }: TRootComponent) {
               if (selectElement) {
                 const selectedValue = selectElement.value;
 
-                selectedValue !== '' &&
-                  updateXMLForAction(customInputs, selectedValue, String(updatedXml));
+                if (selectedValue !== '') {
+                  const newXml = updateXMLForAction(customInputs, selectedValue, draft?.xml);
+
+                  updateLocalDraft({
+                    ...draft,
+                    xml: newXml
+                  });
+                }
               }
             });
           }
@@ -137,7 +143,7 @@ export function BpmnView({ children }: TRootComponent) {
     observer.observe(propertiesPanel, { childList: true, subtree: true });
 
     return () => observer.disconnect();
-  }, [updatedXml, processState, headerViewer, updateXml, getupdatedXml]);
+  }, [draft, processState, updateLocalDraft]);
 
   return (
     <section className="w-full h-full">

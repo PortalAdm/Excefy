@@ -87,7 +87,14 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
       if (xml) {
         const errorHandler = () =>
           setToast('Ocorreu um erro!', 'Suas alterações não serão salvas', 'error');
-        const updateRes = await updateProcess(xml, user?.userId, user?.clientId, 0, errorHandler);
+
+        const updateRes = await updateProcess(
+          xml,
+          user?.userId,
+          user?.clientId,
+          draft?.commandId,
+          errorHandler
+        );
         if (updateRes) {
           updateLocalXml(xml);
           setLastUpdate(updateRes);
