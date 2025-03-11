@@ -55,9 +55,16 @@ export const updateXMLForAction = (
   const outputParameters = Array.from(xmlDoc.getElementsByTagName('camunda:outputParameter'));
 
   const allowedParams: Record<string, string[]> = {
-    get_file_list: ['action', 'connection', 'folder', 'response'],
-    download_file: ['action', 'connection', 'folder', 'currentFile', 'downloadedFile'],
-    upload_file: ['action', 'connection', 'folder', 'processedFile']
+    get_file_list: ['action', 'connection', 'folder', 'response', 'connectorId'],
+    download_file: [
+      'action',
+      'connection',
+      'folder',
+      'currentFile',
+      'downloadedFile',
+      'connectorId'
+    ],
+    upload_file: ['action', 'connection', 'folder', 'processedFile', 'connectorId']
   };
 
   const allowedKeys = allowedParams[action] || [];
