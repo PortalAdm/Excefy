@@ -131,11 +131,11 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
   const implant = useCallback(async () => {
     const bpmnXml = await viewer.saveXML();
 
-    if (!bpmnXml?.xml) return;
+    if (!bpmnXml?.bpmn) return;
 
     const deploymentName = `${draft?.commandName}-${new Date().toISOString()}`;
 
-    const res = await implantBpmnIntoCamunda(bpmnXml.xml, deploymentName);
+    const res = await implantBpmnIntoCamunda(bpmnXml.bpmn, deploymentName);
 
     const isSuccess = res === 'File(s) uploaded successfully.';
     showToast(
@@ -148,9 +148,9 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
   const run = useCallback(async () => {
     const bpmnXml = await viewer.saveXML();
 
-    if (!bpmnXml?.xml || !user) return;
+    if (!bpmnXml?.bpmn || !user) return;
 
-    const processKey = getProcessKeyFromXml(bpmnXml.xml);
+    const processKey = getProcessKeyFromXml(bpmnXml.bpmn);
     if (!processKey) return;
 
     const res = await runBpmnIntoCamunda(user.clientId, processKey);
