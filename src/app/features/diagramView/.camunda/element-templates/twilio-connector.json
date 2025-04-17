@@ -1,0 +1,91 @@
+{
+    "$schema": "https://unpkg.com/@camunda/element-templates-json-schema/resources/schema.json",
+    "name": "Twilio Connector",
+    "id": "twilio-connector",
+    "appliesTo": ["bpmn:ServiceTask"],
+    "icon": {
+      "contents": "data:image/jpeg;base64,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"
+    },
+    "scopes": [
+      {
+        "type": "camunda:Connector",
+        "properties": [
+          {
+            "label": "ConnectorId",
+            "type": "Hidden",
+            "value": "TwilioConnector",
+            "binding": {
+                "type": "property",
+              "name": "connectorId",
+              "source": "TwilioConnector"
+            }
+          },
+          {
+            "label": "Ação",
+            "type": "Dropdown",
+            "value": "action",
+            "choices": [
+              { "name": "Enviar no SMS", "value": "send_sms" },
+              { "name": "Enviar no Whatsapp", "value": "send_whatsapp" }
+            ],
+            "binding": {
+              "type": "camunda:inputParameter",
+              "name": "action"
+            },
+            "constraints": {
+                "notEmpty": true,
+                "pattern": {
+                    "message": "Selecione um método"
+                }
+            }
+          },
+          {
+            "label": "Account Sid",
+            "type": "String",
+            "value": "",
+            "binding": {
+              "type": "camunda:inputParameter",
+              "name": "accountSid"
+            }
+          },
+          {
+            "label": "Auth Token",
+            "type": "String",
+            "value": "",
+            "binding": {
+              "type": "camunda:inputParameter",
+              "name": "authToken"
+            }
+          },
+          {
+            "label": "From Number",
+            "type": "String",
+            "value": "",
+            "binding": {
+              "type": "camunda:inputParameter",
+              "name": "fromNumber"
+            }
+          },
+          {
+            "label": "To Number",
+            "type": "String",
+            "value": "",
+            "binding": {
+              "type": "camunda:inputParameter",
+              "name": "toNumber"
+            }
+          },
+          {
+            "label": "Message",
+            "type": "String",
+            "value": "",
+            "binding": {
+              "type": "camunda:inputParameter",
+              "name": "message"
+            }
+          }
+        ]
+      }
+    ],
+    "properties": []
+  }
