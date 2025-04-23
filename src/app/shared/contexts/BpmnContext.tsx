@@ -102,19 +102,25 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
         }
       }
     },
-    [setToast]
+    [draft?.commandId, setToast]
   );
 
   const downloadSVGiagram = useCallback(
     async (viewer: BpmnViewer) => {
-      const { svg } = (await viewer.saveSVG()) || {};
+      if (viewer) {
+        const { svg } = (await viewer.saveSVG()) || {};
 
-      if (svg) {
-        setToast('SVG gerado com sucesso!', 'Seu download está pronto', 'success');
-        return download(svg, SVGFileName, 'application/xml');
+        if (svg) {
+          setToast('SVG gerado com sucesso!', 'Seu download está pronto', 'success');
+          return download(svg, SVGFileName, 'application/xml');
+        }
+
+        return setToast(
+          'Seu SVG não pôde ser gerado!',
+          'Ocorreu uma falha no seu download',
+          'error'
+        );
       }
-
-      return setToast('Seu SVG não pôde ser gerado!', 'Ocorreu uma falha no seu download', 'error');
     },
     [setToast]
   );
