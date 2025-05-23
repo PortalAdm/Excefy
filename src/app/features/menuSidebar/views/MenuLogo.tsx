@@ -10,7 +10,7 @@ interface MenuLogoProps {
 
 export function MenuLogo({ src, onClick }: MenuLogoProps) {
   return (
-    <Link href={APP_ROUTES.private.dashboard.name} onClick={onClick}>
+    <Link href={APP_ROUTES.private.projects.name} onClick={onClick}>
       <Image
         className="hover:brightness-110"
         alt="Logo empresarial"

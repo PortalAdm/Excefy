@@ -9,8 +9,13 @@ export const APP_ROUTES = {
       label: 'Agentes',
       subtitle: ''
     },
+    projects: {
+      name: '/projects',
+      label: 'Projetos',
+      subtitle: ''
+    },
     dashboard: {
-      name: '/dashboard',
+      name: '/projects/%/dashboard',
       label: 'Processos',
       subtitle: ''
     },

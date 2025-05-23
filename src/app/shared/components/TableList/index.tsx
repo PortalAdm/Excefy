@@ -5,7 +5,7 @@ import { TableListHeader } from './views/TableListHeader';
 import { TableListRoot } from './views/TableListRoot';
 import { TableListTh } from './views/TableListTh';
 import { TablePagination } from './views/TablePagination';
-import { DeleteProcessModal } from '~/src/app/shared/components/TableList/views/modal/DeleteProcessModal';
+import { DeleteModal } from '~/src/app/shared/components/TableList/views/modal/DeleteModal';
 
 export const TableList = {
   root: TableListRoot,
@@ -16,6 +16,6 @@ export const TableList = {
   pagination: TablePagination,
   Skeleton: TableSkeleton,
   modals: {
-    delete: DeleteProcessModal
+    delete: DeleteModal
   }
 };

@@ -1,8 +1,8 @@
-import { ElementType } from 'react';
+import { ComponentProps, ElementType } from 'react';
 import { Button } from '~shared/components/Button';
 
 interface ModalActionProps {
-  onClick: () => void;
+  onClick?: () => void;
   icon?: ElementType;
   actionLabel: string;
   color: 'primary' | 'white';
@@ -10,6 +10,7 @@ interface ModalActionProps {
   size?: 'small' | 'medium' | 'huge';
   actionBackground?: 'primary' | 'transparent';
   variant?: 'bordered';
+  type?: ComponentProps<'button'>['type'];
 }
 
 export function ModalAction({
@@ -20,10 +21,12 @@ export function ModalAction({
   actionBackground,
   variant,
   disabled,
+  type,
   onClick
 }: ModalActionProps) {
   return (
     <Button.root
+      type={type}
       disabled={disabled}
       onClick={onClick}
       color={actionBackground}

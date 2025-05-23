@@ -1,14 +1,14 @@
 import { LiaRobotSolid } from 'react-icons/lia';
-import { PiGitBranchDuotone } from 'react-icons/pi';
+import { PiPackage } from 'react-icons/pi';
 import { AiOutlineSchedule } from 'react-icons/ai';
 import { MenuItemsType } from '~shared/types';
 import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
 
 export const menuItems: MenuItemsType[] = [
   {
-    icon: PiGitBranchDuotone,
-    name: 'Processos',
-    navigateTo: APP_ROUTES.private.dashboard.name
+    icon: PiPackage,
+    name: 'Projetos',
+    navigateTo: APP_ROUTES.private.projects.name
   },
   {
     icon: LiaRobotSolid,

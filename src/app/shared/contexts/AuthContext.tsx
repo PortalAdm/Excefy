@@ -39,7 +39,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   useTimeout(situation, updateSituation, time);
 
   const changeHasToken = () => setHasToken((hasToken) => !hasToken);
-  const dashboard = APP_ROUTES.private.dashboard.name;
+  const dashboard = APP_ROUTES.private.projects.name;
 
   const authPush = () => {
     if (hasToken && pathName !== dashboard) {

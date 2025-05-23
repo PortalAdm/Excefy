@@ -49,7 +49,7 @@ export const useAuthController = () => {
 
     if (res) {
       await sysAuth(setIsLoading, createSession);
-      push(APP_ROUTES.private.dashboard.name);
+      push(APP_ROUTES.private.projects.name);
     }
   };
 

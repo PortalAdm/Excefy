@@ -4,9 +4,9 @@ import { TRootComponent } from '~/src/app/shared/types';
 
 type TInputRootProps = HTMLAttributes<HTMLDivElement> & TRootComponent;
 
-export function InputRoot({ children, ...props }: TInputRootProps) {
+export function InputRoot({ className, children, ...props }: TInputRootProps) {
   return (
-    <div {...props} className={inputRootTv()}>
+    <div {...props} className={`${inputRootTv()} ${className}`}>
       {children}
     </div>
   );

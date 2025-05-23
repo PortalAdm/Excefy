@@ -22,7 +22,7 @@ export default async function middlwware(nextRequest: NextRequest) {
   }
 
   if (nextRequest.nextUrl.pathname === APP_ROUTES.public.home) {
-    const dashboardUrl = new URL(APP_ROUTES.private.dashboard.name, nextRequest.url);
+    const dashboardUrl = new URL(APP_ROUTES.private.projects.name, nextRequest.url);
     return NextResponse.redirect(dashboardUrl);
   }
 }

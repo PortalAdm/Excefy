@@ -1,28 +1,28 @@
 'use client';
 
 import { IoSearchOutline } from 'react-icons/io5';
-import { dashboardContentWrapperTv } from '~/src/app/features/dashboard/DashboardTV';
-import { useDashboardController } from '~/src/app/features/dashboard/controller';
-import { useTableListController } from '~/src/app/features/dashboard/controller/TableListController';
-import { listHeaders } from '~/src/app/features/dashboard/dashboardUtils';
 import { Icon } from '~/src/app/shared/components/Icon';
 import { Search } from '~/src/app/shared/components/Search';
 import { TableList } from '~/src/app/shared/components/TableList';
+import { projectContentWrapperTv } from '../ProjectTV';
+import { useProjectController } from '../controller';
+import { useTableListController } from '../controller/TableListController';
+import { listHeaders } from '../projectUtils';
 
-export function DashboardContent() {
+export function ProjectContent() {
   const {
     value,
     tableData,
     currentPage,
     totalPages,
-    ProcessContent,
+    ProjectContent,
     isLoading,
     setValue,
     handlePreviousPage,
     handleNextPage,
     setCurrentPage,
     onSearch
-  } = useDashboardController();
+  } = useProjectController();
 
   const {
     actions,
@@ -30,17 +30,17 @@ export function DashboardContent() {
     isDeleteModalOpen,
     createdAt,
     lastEdited,
-    removeProcess,
+    removeProject,
     changeModalState
   } = useTableListController();
 
   return (
-    <div className={dashboardContentWrapperTv()}>
+    <div className={projectContentWrapperTv()}>
       <Search.root>
         <Icon className="pointer-events-none" icon={IoSearchOutline} color="outline" input="left" />
         <Search.input
           value={value}
-          placeholder="Pesquise pelo nome do processo"
+          placeholder="Pesquise pelo nome do projeto"
           onChange={(e) => {
             setValue(e.target.value);
             onSearch(e.target.value);
@@ -52,11 +52,11 @@ export function DashboardContent() {
         <TableList.root>
           {choisedListItem && (
             <TableList.modals.delete
-              type="dashboard"
+              type="project"
               modalState={isDeleteModalOpen}
               listItem={choisedListItem}
               changeModalState={changeModalState}
-              deleteProcess={removeProcess}
+              deleteProcess={removeProject}
             />
           )}
           <TableList.header>
@@ -66,7 +66,7 @@ export function DashboardContent() {
             {isLoading && <TableList.Skeleton />}
             {!isLoading && (
               <TableList.content
-                type="dashboard"
+                type="projects"
                 actions={actions}
                 createdAt={createdAt}
                 lastEdited={lastEdited}
@@ -80,7 +80,7 @@ export function DashboardContent() {
           currentPage={currentPage}
           nextDisable={currentPage === totalPages}
           prevDisable={currentPage === 1}
-          data={ProcessContent}
+          data={ProjectContent}
           handlePreviousPage={handlePreviousPage}
           handleNextPage={handleNextPage}
         />

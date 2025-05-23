@@ -8,5 +8,5 @@ export const action: HeaderActionProps = {
   color: 'white',
   icon: IoArrowBack,
   size: 'small',
-  path: APP_ROUTES.private.dashboard.name
+  path: APP_ROUTES.private.projects.name
 };
