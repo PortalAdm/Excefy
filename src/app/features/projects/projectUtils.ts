@@ -1,1 +1,1 @@
-export const listHeaders = ['Nome', 'Descrição', 'Criação'];
+export const listHeaders = ['Nome', 'Descrição'];

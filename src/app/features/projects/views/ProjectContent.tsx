@@ -12,10 +12,10 @@ import { listHeaders } from '../projectUtils';
 export function ProjectContent() {
   const {
     value,
-    tableData,
     currentPage,
     totalPages,
-    ProjectContent,
+    tableData,
+    userProjects,
     isLoading,
     setValue,
     handlePreviousPage,
@@ -56,7 +56,7 @@ export function ProjectContent() {
               modalState={isDeleteModalOpen}
               listItem={choisedListItem}
               changeModalState={changeModalState}
-              deleteProcess={removeProject}
+              deleteItem={removeProject}
             />
           )}
           <TableList.header>
@@ -80,7 +80,7 @@ export function ProjectContent() {
           currentPage={currentPage}
           nextDisable={currentPage === totalPages}
           prevDisable={currentPage === 1}
-          data={ProjectContent}
+          data={userProjects || []}
           handlePreviousPage={handlePreviousPage}
           handleNextPage={handleNextPage}
         />

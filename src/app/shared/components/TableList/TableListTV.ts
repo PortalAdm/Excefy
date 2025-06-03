@@ -17,7 +17,7 @@ export const tableListContentNameTv = tv({
 });
 
 export const tableListContentDescriptionTv = tv({
-  base: 'w-40 p-2 text-sm h-16'
+  base: 'w-40 p-2 text-sm h-16 whitespace-nowrap'
 });
 export const tableDateTv = tv({
   base: 'w-40 p-2 text-sm h-16'

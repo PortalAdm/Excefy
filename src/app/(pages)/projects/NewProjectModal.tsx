@@ -53,6 +53,8 @@ export function NewProjectModal({ modalState, changeModalState }: NewProjectModa
       const user: AuthResponse = stringifyUser && JSON.parse(stringifyUser);
 
       const projectId = await createNewProject(user.clientId, user.userId, name, description);
+      showToast('success', `Projeto ${name} criado com êxito, redirecionado...`, '');
+      changeModalState();
 
       router.push(`/projects/${projectId as any}`);
     } catch (error) {

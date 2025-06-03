@@ -1,63 +1,23 @@
 import { api } from '~/src/app/shared/services/axios/api';
-import {
-  TBPMNDraft,
-  TProcessInsertContent,
-  TProcessInsertContentResponse
-} from '~/src/app/shared/types';
-import { Message } from '~/src/app/shared/types/Process';
+import { APIResponse } from '~/src/app/shared/types/APIResponse';
+import { Project } from '~/src/app/shared/types/Project';
 import { baseEndpoint } from '~/src/app/shared/utils/constants/baseEndpoint';
 import { recipient } from '~/src/app/shared/utils/constants/recipient';
+import { parseResponse } from '~/src/app/shared/utils/parseResponse';
 
 export const getAllProjects = async (clientId: string) => {
-  // const { data } = await api.post<Message[]>(baseEndpoint, {
-  //   recipient,
-  //   commandName: 'ProjectSelect',
-  //   commandParameters: [
-  //     {
-  //       name: 'clientId',
-  //       value: clientId
-  //     }
-  //   ]
-  // });
+  const { data } = await api.post<APIResponse>(baseEndpoint, {
+    recipient,
+    commandName: 'ProjectList',
+    commandParameters: [
+      {
+        name: 'clientId',
+        value: clientId
+      }
+    ]
+  });
 
-  // return data?.[0].content;
-
-  const data = [
-    {
-      content: JSON.stringify([
-        {
-          commandId: 1,
-          commandName: 'Projeto 1',
-          commandDescription: 'Descrição simples',
-          createdAt: new Date(),
-          lastEdited: new Date()
-        },
-        {
-          commandId: 2,
-          commandName: 'Projeto 2',
-          commandDescription: 'Descrição simples 2',
-          createdAt: new Date(),
-          lastEdited: new Date()
-        },
-        {
-          commandId: 3,
-          commandName: 'Projeto 3',
-          commandDescription: '',
-          createdAt: new Date(),
-          lastEdited: new Date()
-        },
-        {
-          commandId: 4,
-          commandName: 'Projeto 4',
-          commandDescription: '',
-          createdAt: new Date(),
-          lastEdited: new Date()
-        }
-      ])
-    }
-  ];
-
-  return data[0].content;
+  return parseResponse(data) as Project[];
 };
 
 export const createNewProject = async (
@@ -76,7 +36,7 @@ export const createNewProject = async (
           value: clientId
         },
         {
-          name: 'userId',
+          name: 'createUserId',
           value: userId
         },
         {
@@ -86,33 +46,14 @@ export const createNewProject = async (
         {
           name: 'projectDescription',
           value: projectDescription || ''
-        },
-        {
-          name: 'matchPattern',
-          value: ''
-        },
-        {
-          name: 'executionPriority',
-          value: '1'
         }
       ]
     };
 
-    const { data } = await api.post<TProcessInsertContentResponse[]>(baseEndpoint, projectConfig);
+    const { data } = await api.post<APIResponse>(baseEndpoint, projectConfig);
+    const [{ projectId }] = parseResponse(data) as { projectId: number }[];
 
-    if (data) {
-      const parsedContent: TProcessInsertContent[] = JSON.parse(data?.[0].content);
-
-      const draft: TBPMNDraft = {
-        id: data?.[0].id,
-        commandId: parsedContent[0].commandId,
-        commandName: parsedContent[0].commandName,
-        xml: '',
-        isEdditing: false
-      };
-
-      return draft;
-    }
+    return projectId;
   } catch (error) {
     if (error instanceof Error) {
       throw new Error('falha na criação do novo projeto', error);

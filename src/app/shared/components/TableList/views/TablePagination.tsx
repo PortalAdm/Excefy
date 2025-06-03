@@ -1,9 +1,10 @@
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { TTableListContent } from '../../../types/TTableListContent';
 import { paginationNumberButtonTv } from '../TableListTV';
+import { Project } from '../../../types/Project';
 
 interface TablePaginationProps {
-  data: TTableListContent[];
+  data: TTableListContent[] | Project[];
   prevDisable: boolean;
   nextDisable: boolean;
   currentPage: number;

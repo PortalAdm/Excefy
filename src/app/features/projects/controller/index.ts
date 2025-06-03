@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
-import { TTableListContent } from '~types/TTableListContent';
 import { useUserInfo } from '~/src/app/shared/hooks/useUserInfo';
 import { getAllProjects } from '../services';
+import { Project } from '~/src/app/shared/types/Project';
 
 const itemsPerPage = 5;
 
@@ -10,33 +10,27 @@ export const useProjectController = () => {
   const { user } = useUserInfo();
   const [isFiltring, setIsFiltring] = useState(false);
   const [value, setValue] = useState('');
-  const [filtaredContent, setFiltaredContent] = useState<TTableListContent[]>([]);
+  const [filtaredContent, setFiltaredContent] = useState<Project[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const getProject = useCallback(async () => {
-    const userProject = await getAllProjects(user?.clientId);
-
-    return userProject;
-  }, [user?.clientId]);
-
-  const { data: userProject, isLoading } = useQuery('userProject', getProject, {
-    refetchOnWindowFocus: false
-  });
-
-  const ProjectContent: TTableListContent[] = useMemo(
-    () => userProject && JSON.parse(userProject as unknown as string),
-    [userProject]
+  const { data: userProjects, isLoading } = useQuery(
+    'userProjects',
+    () => getAllProjects(user.clientId),
+    {
+      enabled: !!user,
+      refetchOnWindowFocus: false
+    }
   );
 
   const splicedContent = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
 
-    return ProjectContent?.slice(startIndex, endIndex);
-  }, [ProjectContent, currentPage]);
+    return userProjects?.slice(startIndex, endIndex) || [];
+  }, [userProjects, currentPage]);
 
   const increaseFiltaredContent = useCallback(
-    (splicedContent: TTableListContent[]) => setFiltaredContent(splicedContent),
+    (splicedContent: Project[]) => setFiltaredContent(splicedContent),
     []
   );
 
@@ -44,7 +38,7 @@ export const useProjectController = () => {
     increaseFiltaredContent(splicedContent);
   }, [increaseFiltaredContent, splicedContent]);
 
-  const totalPages = Math.ceil((ProjectContent?.length || 0) / itemsPerPage);
+  const totalPages = Math.ceil((userProjects?.length || 0) / itemsPerPage);
 
   const handlePreviousPage = useCallback(() => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
@@ -61,8 +55,8 @@ export const useProjectController = () => {
       return;
     }
 
-    const filteredItems = ProjectContent?.filter((content) =>
-      new RegExp(search, 'i').test(content.commandName)
+    const filteredItems = userProjects?.filter((content) =>
+      new RegExp(search, 'i').test(content.projectName)
     );
 
     if (filteredItems) {
@@ -81,7 +75,7 @@ export const useProjectController = () => {
     tableData,
     currentPage,
     totalPages,
-    ProjectContent,
+    userProjects,
     value,
     isLoading,
     setValue,

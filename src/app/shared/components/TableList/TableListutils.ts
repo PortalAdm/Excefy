@@ -4,12 +4,13 @@ import { IoPlaySkipForwardOutline } from 'react-icons/io5';
 import { BiTrash } from 'react-icons/bi';
 import { TTableListContent } from '~/src/app/shared/types/TTableListContent';
 import { IconType } from 'react-icons/lib';
+import { Project } from '../../types/Project';
 
 export const icons = (
-  editAction?: (listItem: TTableListContent) => void,
+  editAction?: (listItem: TTableListContent | Project) => void,
   statisticAction?: () => void,
   simulateAction?: () => void,
-  deleteAction?: (listItem: TTableListContent) => void
+  deleteAction?: (listItem: TTableListContent | Project) => void
 ) => {
   const icons: {
     element: IconType;

@@ -1,28 +1,29 @@
 import { Modal } from '~/src/app/shared/components/Modal';
 import { Text } from '~/src/app/shared/components/Text';
+import { Project } from '~/src/app/shared/types/Project';
 import { TTableListContent } from '~/src/app/shared/types/TTableListContent';
 
-interface DeleteModalProps {
-  type: 'dashboard' | 'project';
+interface DeleteModalProps<T extends 'dashboard' | 'project'> {
+  type: T;
   modalState: boolean;
-  listItem: TTableListContent;
-  deleteProcess: (listItem: TTableListContent) => Promise<void>;
+  listItem: T extends 'project' ? Project : TTableListContent;
+  deleteItem: (listItem: T extends 'project' ? Project : TTableListContent) => Promise<void>;
   changeModalState: () => void;
 }
 
-export function DeleteModal({
+export function DeleteModal<T extends 'dashboard' | 'project'>({
   type,
-  deleteProcess,
+  deleteItem,
   changeModalState,
   listItem,
   modalState
-}: DeleteModalProps) {
+}: DeleteModalProps<T>) {
   let disabled = false;
 
   const handleDelete = async () => {
     disabled = true;
 
-    await deleteProcess(listItem);
+    await deleteItem(listItem);
 
     disabled = false;
   };

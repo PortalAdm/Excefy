@@ -4,6 +4,7 @@ import { TTableListContent } from '~types/TTableListContent';
 import { getAllProcess } from '../services';
 import { useUserInfo } from '~/src/app/shared/hooks/useUserInfo';
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
+import { useParams } from 'next/navigation';
 
 const itemsPerPage = 5;
 
@@ -15,15 +16,27 @@ export const useDashboardController = () => {
   const [filtaredContent, setFiltaredContent] = useState<TTableListContent[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const projectId = useParams().projectId as string;
+
   useEffect(() => {
     clearLocalDraft();
   }, [clearLocalDraft]);
 
   const getProcess = useCallback(async () => {
-    const userProcess = await getAllProcess(user?.clientId);
+    let userProcess = await getAllProcess(user?.clientId, projectId);
+
+    //TODO: remover createdAt e lastEdited artificial
+    userProcess = JSON.stringify(
+      (JSON.parse(userProcess as unknown as string) as TTableListContent[]).map((p) => {
+        p.createdAt = new Date();
+        p.lastEdited = new Date();
+
+        return p;
+      })
+    ) as any;
 
     return userProcess;
-  }, [user?.clientId]);
+  }, [user?.clientId, projectId]);
 
   const { data: userProcess, isLoading } = useQuery('userProcess', getProcess, {
     refetchOnWindowFocus: false

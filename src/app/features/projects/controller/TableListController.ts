@@ -1,58 +1,24 @@
-import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { diagramXML } from '~/src/app/features/diagramView/DiagramViewUtils';
 import { icons } from '~/src/app/shared/components/TableList/TableListutils';
-import { deleteProject, getXMLByCommandId } from '~/src/app/shared/components/TableList/services';
-import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
+import { deleteProject } from '~/src/app/shared/components/TableList/services';
 import { useToast } from '~/src/app/shared/hooks/useToast';
 import { useUserInfo } from '~/src/app/shared/hooks/useUserInfo';
 import { TTableListContent } from '~/src/app/shared/types/TTableListContent';
-import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
 import { formatDate, formatModificationDate } from '~/src/app/shared/utils/dateUtils';
 import { getAllProjects } from '../services';
+import { Project } from '~/src/app/shared/types/Project';
 
 const THREE_HOURS = 3 * 60 * 60 * 1000; // 3 horas
 
 export const useTableListController = () => {
   const { changeToastActive } = useToast();
-  const { clearLocalDraft, updateLocalDraft } = useLocalBPMN();
   const { user } = useUserInfo();
-  const { push } = useRouter();
 
-  const [choisedListItem, setChoisedListItem] = useState<TTableListContent>();
+  const [choisedListItem, setChoisedListItem] = useState<Project>();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const changeModalState = () => setIsDeleteModalOpen((prev) => !prev);
-
-  const getXml = useCallback(
-    async (commandId: number) => {
-      if (user?.clientId) {
-        const xml = await getXMLByCommandId(user?.clientId, commandId);
-
-        return xml;
-      }
-    },
-    [user?.clientId]
-  );
-
-  const editAction = async (listItem: TTableListContent) => {
-    const xml = await getXml(listItem.commandId);
-
-    if (xml) {
-      clearLocalDraft();
-      updateLocalDraft({
-        commandName: listItem.commandName,
-        commandId: listItem.commandId,
-        id: listItem.id,
-        xml: JSON.parse(xml) || diagramXML,
-        processDescription: listItem.commandDescription,
-        isEdditing: true,
-        createdAt: listItem.createdAt || ''
-      });
-      push(`${APP_ROUTES.private['edit-process'].name}${listItem.commandId}`);
-    }
-  };
 
   const showToast = useCallback(
     (state: 'success' | 'error', title: string, message: string) =>
@@ -84,10 +50,10 @@ export const useTableListController = () => {
       if (!query) return;
 
       const data = query as string;
-      const parsedData = JSON.parse(data) as TTableListContent[];
+      const parsedData = JSON.parse(data) as Project[];
 
       const filteredData = parsedData.filter(
-        (item) => item.commandId !== choisedListItem?.commandId
+        (item) => item.projectId !== choisedListItem?.projectId
       );
       const stringifiedData = JSON.stringify(filteredData);
 
@@ -100,7 +66,7 @@ export const useTableListController = () => {
       const removedItemRes = await deleteProject(
         user.clientId,
         user.userId,
-        choisedListItem.commandId
+        choisedListItem.projectId
       );
 
       if (removedItemRes === '"Base de dados atualizada com sucesso!"') {
@@ -109,28 +75,24 @@ export const useTableListController = () => {
         return showToast(
           'success',
           'Sucesso',
-          `O projeto ${choisedListItem.commandName} foi deletado.`
+          `O projeto ${choisedListItem.projectName} foi deletado.`
         );
       }
 
       return showToast(
         'error',
         'Erro',
-        `O projeto ${choisedListItem.commandName} não pôde ser deletado.`
+        `O projeto ${choisedListItem.projectName} não pôde ser deletado.`
       );
     }
   }, [choisedListItem, mutateAsync, showToast, user]);
 
-  const handleOpenDeleteModal = (listItem: TTableListContent) => {
+  const deleteAction = async (project: Project | TTableListContent) => {
+    setChoisedListItem(project as Project);
     changeModalState();
-    setChoisedListItem(listItem);
   };
 
-  const deleteAction = async (listItem: TTableListContent) => {
-    handleOpenDeleteModal(listItem);
-  };
-
-  const actions = icons(editAction, undefined, undefined, deleteAction);
+  const actions = icons(undefined, undefined, undefined, deleteAction);
 
   const createdAt = (date: string) => formatDate(new Date(date));
 

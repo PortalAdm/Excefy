@@ -8,14 +8,18 @@ import { Message } from '~/src/app/shared/types/Process';
 import { baseEndpoint } from '~/src/app/shared/utils/constants/baseEndpoint';
 import { recipient } from '~/src/app/shared/utils/constants/recipient';
 
-export const getAllProcess = async (clientId: string) => {
+export const getAllProcess = async (clientId: string, projectId: string) => {
   const { data } = await api.post<Message[]>(baseEndpoint, {
     recipient,
-    commandName: 'ProcessSelect',
+    commandName: 'ProjectProcessList',
     commandParameters: [
       {
         name: 'clientId',
         value: clientId
+      },
+      {
+        name: 'projectId',
+        value: projectId
       }
     ]
   });

@@ -56,7 +56,7 @@ export function DashboardContent() {
               modalState={isDeleteModalOpen}
               listItem={choisedListItem}
               changeModalState={changeModalState}
-              deleteProcess={removeProcess}
+              deleteItem={removeProcess}
             />
           )}
           <TableList.header>

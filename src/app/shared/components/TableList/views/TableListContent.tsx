@@ -5,6 +5,7 @@ import { Icon } from '~/src/app/shared/components/Icon';
 import * as tv from '../TableListTV';
 import { ElementType } from 'react';
 import Link from 'next/link';
+import { Project } from '../../../types/Project';
 
 type TTableListActions = {
   element: ElementType;
@@ -12,65 +13,81 @@ type TTableListActions = {
   onClick?: (listItem: TTableListContent) => void;
 };
 
-interface TableListContentProps {
-  type: 'dashboard' | 'projects';
-  content: TTableListContent[];
+interface TableListContentProps<T extends 'dashboard' | 'projects'> {
+  type: T;
+  content: T extends 'dashboard' ? TTableListContent[] : Project[];
   createdAt: (date: string) => string | undefined;
   lastEdited: (date: string) => string;
   actions: TTableListActions[];
 }
 
-export function TableListContent({
+export function TableListContent<T extends 'dashboard' | 'projects'>({
   type,
   content = [],
   createdAt,
   lastEdited,
   actions
-}: TableListContentProps) {
+}: TableListContentProps<T>) {
   if (!content.length) return null;
 
   return (
     <>
       {content.map((item, i) => {
-        const checked = item.enable || false;
+        const checked = type === 'projects' ? true : (item as TTableListContent).enable;
         const tooltipText = checked ? 'Ativar' : 'Inativar';
         return (
           <tr key={i} className={tv.tableListContentTrTv()}>
             <td className={tv.tableListContentNameTv()}>
               {type === 'projects' ? (
                 <Link
-                  href={`/projects/${item.commandId}/dashboard`}
+                  href={`/projects/${(item as Project).projectId}/dashboard`}
                   className="text-primary cursor-pointer font-bold underline transition-all hover:brightness-125"
                 >
-                  {item.commandName}
+                  {(item as Project).projectName}
                 </Link>
               ) : (
-                item.commandName
+                (item as TTableListContent).commandName
               )}
             </td>
-            <td className={tv.tableListContentDescriptionTv()}>{item.commandDescription}</td>
-            <td className={`${tv.tableDateTv()} ${type === 'projects' ? 'w-[470px]' : ''}`}>
-              {createdAt(item.createdAt || '')}
+            <td className={tv.tableListContentDescriptionTv()}>
+              {type === 'projects'
+                ? (item as Project).projectDescription
+                : (item as TTableListContent).commandDescription}
             </td>
 
             {type === 'dashboard' && (
+              <td className={tv.tableDateTv()}>
+                {createdAt((item as TTableListContent).createdAt || '')}
+              </td>
+            )}
+
+            {type === 'dashboard' && (
               <>
-                <td className={tv.tableDateTv()}>{lastEdited(item.lastEdited || '')}</td>
+                <td className={tv.tableDateTv()}>
+                  {lastEdited((item as TTableListContent).lastEdited || '')}
+                </td>
                 <td className={tv.tableListContentStatusTv()}>
                   <Tooltip text={tooltipText}>
-                    <Switch size="small" checked={checked} />
+                    <Switch size="small" checked={checked || false} />
                   </Tooltip>
                 </td>
               </>
             )}
 
-            <td className={tv.tableListContentStatusTv()}>
+            <td
+              className={`${tv.tableListContentStatusTv()} ${
+                type === 'projects' ? 'w-[550px] flex justify-end items-center' : ''
+              }`}
+            >
               <div className={tv.tableListButtonsTv()}>
                 {actions
                   .filter((icon) => !!icon.onClick)
                   .map((icon, i) => (
                     <Tooltip key={i} text={icon.name}>
-                      <Icon icon={icon.element} onClick={() => icon.onClick!(item)} />
+                      <Icon
+                        icon={icon.element}
+                        onClick={() => icon.onClick!(item as TTableListContent)}
+                      />
                     </Tooltip>
                   ))}
               </div>

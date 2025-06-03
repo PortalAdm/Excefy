@@ -35,7 +35,7 @@ export const getXMLByCommandId = async (
 export const deleteProject = async (
   clientId: string,
   userId: string,
-  commandId: number
+  projectId: number
 ): Promise<string | undefined> => {
   try {
     const processConfig = {
@@ -51,8 +51,8 @@ export const deleteProject = async (
           value: userId
         },
         {
-          name: 'commandId',
-          value: commandId
+          name: 'projectId',
+          value: projectId
         }
       ]
     };
