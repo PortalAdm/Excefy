@@ -27,7 +27,11 @@ export const getAllProcess = async (clientId: string, projectId: string) => {
   return data?.[0].content;
 };
 
-export const createNewDraftProcess = async (clientId: string, userId: string) => {
+export const createNewDraftProcess = async (
+  clientId: string,
+  userId: string,
+  projectId: string
+) => {
   try {
     const processConfig = {
       recipient,
@@ -63,12 +67,31 @@ export const createNewDraftProcess = async (clientId: string, userId: string) =>
     const { data } = await api.post<TProcessInsertContentResponse[]>(baseEndpoint, processConfig);
 
     if (data) {
-      const parsedContent: TProcessInsertContent[] = JSON.parse(data?.[0].content);
+      const [{ commandId, commandName }]: TProcessInsertContent[] = JSON.parse(data?.[0].content);
+
+      await api.post(baseEndpoint, {
+        recipient,
+        commandName: 'ProjectsProcessInsert',
+        commandParameters: [
+          {
+            name: 'clientId',
+            value: clientId
+          },
+          {
+            name: 'projectId',
+            value: projectId
+          },
+          {
+            name: 'commandId',
+            value: commandId
+          }
+        ]
+      });
 
       const draft: TBPMNDraft = {
         id: data?.[0].id,
-        commandId: parsedContent[0].commandId,
-        commandName: parsedContent[0].commandName,
+        commandId,
+        commandName,
         xml: '',
         isEdditing: false
       };

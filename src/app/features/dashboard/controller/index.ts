@@ -23,17 +23,7 @@ export const useDashboardController = () => {
   }, [clearLocalDraft]);
 
   const getProcess = useCallback(async () => {
-    let userProcess = await getAllProcess(user?.clientId, projectId);
-
-    //TODO: remover createdAt e lastEdited artificial
-    userProcess = JSON.stringify(
-      (JSON.parse(userProcess as unknown as string) as TTableListContent[]).map((p) => {
-        p.createdAt = new Date();
-        p.lastEdited = new Date();
-
-        return p;
-      })
-    ) as any;
+    const userProcess = await getAllProcess(user?.clientId, projectId);
 
     return userProcess;
   }, [user?.clientId, projectId]);
