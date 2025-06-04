@@ -1,4 +1,4 @@
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { getAllProcess } from '~/src/app/features/dashboard/services';
@@ -8,6 +8,7 @@ import { deleteProcess, getXMLByCommandId } from '~/src/app/shared/components/Ta
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 import { useToast } from '~/src/app/shared/hooks/useToast';
 import { useUserInfo } from '~/src/app/shared/hooks/useUserInfo';
+import { Project } from '~/src/app/shared/types/Project';
 import { TTableListContent } from '~/src/app/shared/types/TTableListContent';
 import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
 import { formatDate, formatModificationDate } from '~/src/app/shared/utils/dateUtils';
@@ -19,6 +20,8 @@ export const useTableListController = () => {
   const { clearLocalDraft, updateLocalDraft } = useLocalBPMN();
   const { user } = useUserInfo();
   const { push } = useRouter();
+
+  const projectId = useParams().projectId as string;
 
   const [choisedListItem, setChoisedListItem] = useState<TTableListContent>();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -36,7 +39,9 @@ export const useTableListController = () => {
     [user?.clientId]
   );
 
-  const editAction = async (listItem: TTableListContent) => {
+  const editAction = async (listItemOrProject: TTableListContent | Project) => {
+    const listItem = listItemOrProject as TTableListContent;
+
     const xml = await getXml(listItem.commandId);
 
     if (xml) {
@@ -71,10 +76,10 @@ export const useTableListController = () => {
   );
 
   const getProcess = useCallback(async () => {
-    const userProcess = await getAllProcess(user?.clientId);
+    const userProcess = await getAllProcess(user?.clientId, projectId);
 
     return userProcess;
-  }, [user?.clientId]);
+  }, [user?.clientId, projectId]);
 
   const queryClient = useQueryClient();
 
@@ -129,8 +134,8 @@ export const useTableListController = () => {
     setChoisedListItem(listItem);
   };
 
-  const deleteAction = async (listItem: TTableListContent) => {
-    handleOpenDeleteModal(listItem);
+  const deleteAction = async (listItem: TTableListContent | Project) => {
+    handleOpenDeleteModal(listItem as TTableListContent);
   };
 
   const actions = icons(editAction, statisticAction, simulateAction, deleteAction);
