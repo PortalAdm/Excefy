@@ -13,7 +13,7 @@ export const BpmnContentFallbackTv = tv({
 });
 
 export const EventDetailRootTv = tv({
-  base: 'absolute duration-500 bg-white ring-1 ring-primary w-96 h-[calc(100%+5.8rem)] right-0 z-50 -top-[6rem]',
+  base: 'absolute duration-500 bg-white ring-1 ring-primary w-96 h-[calc(100%+5.8rem)] right-0 z-[101] -top-[6rem]',
   variants: {
     isDetailsOpen: {
       true: '-translate-x-0',
