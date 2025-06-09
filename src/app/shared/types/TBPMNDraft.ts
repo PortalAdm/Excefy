@@ -1,5 +1,6 @@
 export type TBPMNDraft = {
   id: string;
+  projectId: string;
   commandId: number;
   commandName: string;
   processDescription?: string;

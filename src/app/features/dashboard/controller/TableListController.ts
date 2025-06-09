@@ -47,6 +47,7 @@ export const useTableListController = () => {
     if (xml) {
       clearLocalDraft();
       updateLocalDraft({
+        projectId,
         commandName: listItem.commandName,
         commandId: listItem.commandId,
         id: listItem.id,

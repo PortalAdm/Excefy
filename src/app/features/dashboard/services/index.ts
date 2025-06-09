@@ -89,6 +89,7 @@ export const createNewDraftProcess = async (
       });
 
       const draft: TBPMNDraft = {
+        projectId,
         id: data?.[0].id,
         commandId,
         commandName,
