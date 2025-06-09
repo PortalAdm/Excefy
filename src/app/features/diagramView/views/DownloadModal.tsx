@@ -17,9 +17,9 @@ export const DownloadModal = (
 ) => (
   <Modal.root modalState={modalState}>
     <Modal.content>
-      <Modal.header changeModalState={changeModalState} title="Baixar" />
+      <Modal.header changeModalState={changeModalState} title="Exportar" />
       <Modal.body>
-        <Text text="Selecione o tipo de arquivo que deseja baixar" weigth="bold" />
+        <Text text="Selecione o tipo de arquivo que deseja exportar" weigth="bold" />
         {labels.map((label, i) => (
           <CheckboxComp
             checked={value.includes(label.value[0])}
@@ -33,7 +33,7 @@ export const DownloadModal = (
       <Modal.footer>
         <Modal.action
           size="small"
-          actionLabel="cancelar"
+          actionLabel="Cancelar"
           color="primary"
           onClick={handleCancelDownload}
           actionBackground="transparent"
@@ -42,7 +42,7 @@ export const DownloadModal = (
         <Modal.action
           disabled={value.length === 0}
           size="small"
-          actionLabel="Baixar"
+          actionLabel="Exportar"
           color="white"
           onClick={downloading}
           actionBackground="primary"

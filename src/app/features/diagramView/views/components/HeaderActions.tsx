@@ -26,7 +26,7 @@ export function HeaderActions({
       <Button.root disabled={runDisabled} size="small" onClick={runAction}>
         <Button.contentWrapper>
           <Button.icon icon={IoPlaySkipForwardOutline} color="white" />
-          <Button.label color="white" text={runDisabled ? '...' : 'Run'} />
+          <Button.label color="white" text={runDisabled ? '...' : 'Executar'} />
         </Button.contentWrapper>
       </Button.root>
     </div>

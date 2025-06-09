@@ -84,7 +84,7 @@ export const useDiagramViewController = (viewer: BpmnViewer) => {
     },
     {
       icon: CiImport,
-      text: 'Baixar'
+      text: 'Exportar'
     }
   ];
 

@@ -19,7 +19,7 @@ export function ProcessStateActions({
         onClick={() => changeProcessState('design')}
       >
         <Button.contentWrapper>
-          <Button.label text="Design" color={processState === 'design' ? 'primary' : 'black'} />
+          <Button.label text="Modelar" color={processState === 'design' ? 'primary' : 'black'} />
         </Button.contentWrapper>
       </Button.root>
       <Button.root
@@ -30,7 +30,7 @@ export function ProcessStateActions({
       >
         <Button.contentWrapper>
           <Button.label
-            text="implementação"
+            text="Automatizar"
             color={processState === 'implementation' ? 'primary' : 'black'}
           />
         </Button.contentWrapper>

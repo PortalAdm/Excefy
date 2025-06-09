@@ -50,7 +50,7 @@ export const infos: TKeyboardShotcutInfo[] = [
     shotcut: 'ctrl + O'
   },
   {
-    shotcutName: 'Baixar diagrama BPMN 2.0',
+    shotcutName: 'Exportar diagrama BPMN 2.0',
     shotcut: 'ctrl + S'
   },
   {
