@@ -7,7 +7,7 @@ import { Providers } from '../providers';
 import { MainContainer } from '../features/MainContainer';
 import { Toast } from '../features/toast';
 import { Menu } from '~/src/app/(pages)/Menu';
-// import { ChatBotComp } from '../features/chatbot';
+import { Copilot } from '../features/copilot/components';
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -28,7 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <Menu />
             <div className="flex flex-col w-screen h-screen">
               {children}
-              {/* <ChatBotComp /> */}
+              <Copilot />
               <SpeedInsights />
             </div>
           </MainContainer>
