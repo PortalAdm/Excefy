@@ -1,17 +1,71 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 import { BiChat } from 'react-icons/bi';
 import { IoClose } from 'react-icons/io5';
 import { CopilotChatSubmit } from './Submit';
 import { CopilotChatMessage } from './Message';
+import { useQuery } from 'react-query';
+import { CopilotService } from '../../CopilotService';
+
+type Message = { sender: 'me' | 'copilot'; message: string };
 
 type Props = {
   onHeaderMouseDown: (event: MouseEvent<HTMLDivElement>) => void;
+  onNewMessageAdded: () => void;
   onClose: () => void;
 };
 
-export function CopilotChat({ onHeaderMouseDown, onClose }: Props) {
+export function CopilotChat({ onHeaderMouseDown, onNewMessageAdded, onClose }: Props) {
+  const [chatHistory, setChatHistory] = useState<Message[]>([
+    { sender: 'copilot', message: 'Como posso ajudar?' }
+  ]);
+  const historyEndRef = useRef<HTMLDivElement>(null);
+
+  const [isCopilotTyping, setIsCopilotTyping] = useState(false);
+
+  const { data: accessToken, isLoading: isLoadingAccessToken } = useQuery({
+    queryKey: ['copilotAccessToken'],
+    queryFn: CopilotService.generateToken,
+    staleTime: 10 * 60 * 1000,
+    refetchOnWindowFocus: false
+  });
+
+  useEffect(() => {
+    onNewMessageAdded();
+
+    historyEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatHistory, isCopilotTyping]);
+
+  async function sendMessage(question: string) {
+    if (!accessToken) return;
+
+    setChatHistory((history) => [...history, { sender: 'me', message: question }]);
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    try {
+      setIsCopilotTyping(true);
+
+      const { response } = await CopilotService.chatCompletion(question, {
+        customerId: 0,
+        screenId: 0,
+        objectType: 0,
+        objectId: 0,
+        accessToken: accessToken.access_token
+      });
+
+      setChatHistory((history) => [...history, { sender: 'copilot', message: response }]);
+    } catch (error) {
+      setChatHistory((history) => [
+        ...history,
+        { sender: 'copilot', message: 'Ocorreu um erro na resposta... Tente novamente.' }
+      ]);
+    } finally {
+      setIsCopilotTyping(false);
+    }
+  }
+
   return (
-    <div className="shadow-lg rounded-lg bg-white border border-[#b6b6b6] overflow-hidden flex flex-col min-w-[380px]">
+    <div className="shadow-lg rounded-lg bg-white border border-[#b6b6b6] overflow-hidden flex flex-col min-w-[380px] max-h-[80vh]">
       <header
         className="select-none relative flex justify-center px-4 py-2.5 bg-primary text-white cursor-move"
         onMouseDown={onHeaderMouseDown}
@@ -30,22 +84,23 @@ export function CopilotChat({ onHeaderMouseDown, onClose }: Props) {
         </button>
       </header>
 
-      <div className="min-h-[320px] overflow-y-auto p-4 space-y-2 text-sm">
-        <CopilotChatMessage sender="Você">
-          Texto grande so para ocupar o espcao daqui tgudo gbveleza amigos eess eeu meu prompt
-          safado bonito gostoso grande
-        </CopilotChatMessage>
+      <div className="min-h-[320px] max-h-[500px] overflow-y-auto p-4 space-y-2 text-sm">
+        {chatHistory.map(({ sender, message }, index) => (
+          <CopilotChatMessage key={`${sender}-${index}`} sender={sender}>
+            {message}
+          </CopilotChatMessage>
+        ))}
 
-        <CopilotChatMessage sender="Copilot">
-          Texto grande so para **ocupar** o espcao daqui tgudo gbveleza amigos eess eeu meu prompt
-          safado bonito gostoso grande
-        </CopilotChatMessage>
+        {isCopilotTyping && <CopilotChatMessage sender="copilot" isTypingMessage />}
 
-        <CopilotChatMessage sender="Copilot" isTypingMessage />
+        <div ref={historyEndRef} />
       </div>
 
       <footer className="p-2 border-t border-t-black/5">
-        <CopilotChatSubmit onSubmit={console.log} />
+        <CopilotChatSubmit
+          onSubmit={sendMessage}
+          isLoading={isLoadingAccessToken || isCopilotTyping}
+        />
       </footer>
     </div>
   );

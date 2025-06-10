@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import Markdown from 'react-markdown';
 
 type Props = {
-  sender: string;
+  sender: 'me' | 'copilot';
   isTypingMessage?: boolean;
   children?: ReactNode;
 };
@@ -23,9 +23,9 @@ export function CopilotChatMessage({ sender, isTypingMessage = false, children }
   }, []);
 
   return (
-    <div data-me={sender === 'Você'} className="group flex data-[me=true]:justify-end">
+    <div data-me={sender === 'me'} className="group flex data-[me=true]:justify-end">
       <div className="max-w-xs px-4 py-2 flex flex-col gap-0.5 rounded-xl bg-[#d1d5dc] text-[#1e2939] group-data-[me=true]:bg-[#6da8ff] group-data-[me=true]:text-white">
-        <strong className="tracking-[-0.15px]">{sender}</strong>
+        <strong className="tracking-[-0.15px]">{sender === 'me' ? 'Você' : 'Copilot'}</strong>
 
         {isTypingMessage && (
           <span className="italic opacity-80 animate-pulse inline-block w-20 select-none">

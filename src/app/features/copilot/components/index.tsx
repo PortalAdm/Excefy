@@ -7,11 +7,11 @@ import { CopilotChat } from './CopilotChat';
 const DRAG_THRESHOLD = 5;
 
 export function Copilot() {
-  const [isOpen, _setIsOpen] = useState(true);
+  const [isOpen, _setIsOpen] = useState(false);
 
   const [position, setPosition] = useState({
-    top: window.innerHeight / 2, //65
-    left: window.innerWidth / 2 //135
+    top: window.innerHeight - 65,
+    left: window.innerWidth - 135
   });
 
   const startPositionRef = useRef({ x: 0, y: 0 });
@@ -153,7 +153,11 @@ export function Copilot() {
       )}
 
       {isOpen && (
-        <CopilotChat onHeaderMouseDown={handleMouseDown} onClose={() => setIsOpen(false)} />
+        <CopilotChat
+          onHeaderMouseDown={handleMouseDown}
+          onNewMessageAdded={snapToEdge}
+          onClose={() => setIsOpen(false)}
+        />
       )}
     </div>
   );

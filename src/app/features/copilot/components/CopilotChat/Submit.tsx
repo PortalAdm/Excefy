@@ -3,9 +3,10 @@ import { IoIosSend } from 'react-icons/io';
 
 type Props = {
   onSubmit: (question: string) => void;
+  isLoading: boolean;
 };
 
-export function CopilotChatSubmit({ onSubmit }: Props) {
+export function CopilotChatSubmit({ onSubmit, isLoading }: Props) {
   const [questionText, setQuestionText] = useState('');
 
   const isValidQuestionText = !!questionText.trim().length;
@@ -20,7 +21,7 @@ export function CopilotChatSubmit({ onSubmit }: Props) {
   }
 
   function preSubmit() {
-    if (!isValidQuestionText) {
+    if (!isValidQuestionText || isLoading) {
       return;
     }
 
@@ -42,7 +43,7 @@ export function CopilotChatSubmit({ onSubmit }: Props) {
         type="button"
         className="text-[#1e2939] disabled:opacity-60 disabled:pointer-events-none transition-colors hover:text-primary w-6 h-6"
         onClick={preSubmit}
-        disabled={!isValidQuestionText}
+        disabled={!isValidQuestionText || isLoading}
       >
         <IoIosSend className="w-full h-full" />
       </button>
