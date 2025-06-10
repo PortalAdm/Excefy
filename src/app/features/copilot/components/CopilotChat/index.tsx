@@ -3,8 +3,7 @@ import { BiChat } from 'react-icons/bi';
 import { IoClose } from 'react-icons/io5';
 import { CopilotChatSubmit } from './Submit';
 import { CopilotChatMessage } from './Message';
-import { useQuery } from 'react-query';
-import { CopilotService } from '../../CopilotService';
+import { useCopilotChatCompletion } from '../../hooks/useCopilotChatCompletion';
 
 type Message = { sender: 'me' | 'copilot'; message: string };
 
@@ -22,12 +21,7 @@ export function CopilotChat({ onHeaderMouseDown, onNewMessageAdded, onClose }: P
 
   const [isCopilotTyping, setIsCopilotTyping] = useState(false);
 
-  const { data: accessToken, isLoading: isLoadingAccessToken } = useQuery({
-    queryKey: ['copilotAccessToken'],
-    queryFn: CopilotService.generateToken,
-    staleTime: 10 * 60 * 1000,
-    refetchOnWindowFocus: false
-  });
+  const chatCompletion = useCopilotChatCompletion();
 
   useEffect(() => {
     onNewMessageAdded();
@@ -37,21 +31,13 @@ export function CopilotChat({ onHeaderMouseDown, onNewMessageAdded, onClose }: P
   }, [chatHistory, isCopilotTyping]);
 
   async function sendMessage(question: string) {
-    if (!accessToken) return;
-
     setChatHistory((history) => [...history, { sender: 'me', message: question }]);
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     try {
       setIsCopilotTyping(true);
 
-      const { response } = await CopilotService.chatCompletion(question, {
-        customerId: 0,
-        screenId: 0,
-        objectType: 0,
-        objectId: 0,
-        accessToken: accessToken.access_token
-      });
+      const { response } = await chatCompletion(question);
 
       setChatHistory((history) => [...history, { sender: 'copilot', message: response }]);
     } catch (error) {
@@ -97,10 +83,7 @@ export function CopilotChat({ onHeaderMouseDown, onNewMessageAdded, onClose }: P
       </div>
 
       <footer className="p-2 border-t border-t-black/5">
-        <CopilotChatSubmit
-          onSubmit={sendMessage}
-          isLoading={isLoadingAccessToken || isCopilotTyping}
-        />
+        <CopilotChatSubmit onSubmit={sendMessage} isLoading={isCopilotTyping} />
       </footer>
     </div>
   );

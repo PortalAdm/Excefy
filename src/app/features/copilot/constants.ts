@@ -1,0 +1,13 @@
+export enum COPILOT_SCREEN_ID {
+  UNKNOWN = 0,
+  PROJECTS_LIST = 1,
+  PROCESSES_LIST = 2,
+  NEW_PROCESS = 3,
+  EDIT_PROCESS = 4
+}
+
+export enum COPILOT_OBJECT_TYPE {
+  NONE = 0,
+  PROJECT = 1,
+  PROCESS = 2
+}
