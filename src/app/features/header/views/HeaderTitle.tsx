@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
-import { IoMdArrowBack } from 'react-icons/io';
 import { PiPackage } from 'react-icons/pi';
 import { useQuery } from 'react-query';
 import { VariantProps } from 'tailwind-variants';
@@ -40,14 +39,27 @@ export function HeaderTitle({ position }: HeaderTitleProps) {
     <div className={HeaderTitleRootTv()}>
       {pathname.includes('dashboard') && (
         <div className="flex items-center gap-1.5">
-          <Link href="/projects">
+          <Link href="/projects" className="flex items-center gap-1.5">
             <Title
-              title={<IoMdArrowBack strokeWidth={3} className="mt-1 ml-1.5 " />}
+              title={<PiPackage strokeWidth={3} className="mt-1" />}
               color="primary"
-              size="md"
+              size="lg"
               className={`${HeaderTitleTv({ position: titleSize })} w-fit`}
             />
+            <Title
+              title={currentRoute.label}
+              color="primary"
+              size="lg"
+              className={HeaderTitleTv({ position: titleSize })}
+            />
           </Link>
+
+          <Title
+            title=">"
+            color="primary"
+            size="lg"
+            className={`${HeaderTitleTv({ position: titleSize })} w-fit`}
+          />
 
           {selectedProject ? (
             <Title
@@ -59,19 +71,6 @@ export function HeaderTitle({ position }: HeaderTitleProps) {
           ) : (
             <TbLoader2 className="w-6 h-6 text-primary animate-spin" />
           )}
-
-          <Title
-            title=">"
-            color="primary"
-            size="lg"
-            className={`${HeaderTitleTv({ position: titleSize })} w-fit`}
-          />
-          <Title
-            title="Processos"
-            color="primary"
-            size="lg"
-            className={HeaderTitleTv({ position: titleSize })}
-          />
         </div>
       )}
 

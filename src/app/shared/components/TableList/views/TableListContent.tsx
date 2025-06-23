@@ -6,6 +6,7 @@ import * as tv from '../TableListTV';
 import { ElementType } from 'react';
 import Link from 'next/link';
 import { Project } from '../../../types/Project';
+import { ITEM_ICON } from '~/src/app/features/copilot/constants';
 
 type TTableListActions = {
   element: ElementType;
@@ -35,24 +36,51 @@ export function TableListContent<T extends 'dashboard' | 'projects'>({
       {content.map((item, i) => {
         const checked = type === 'projects' ? true : (item as TTableListContent).enable;
         const tooltipText = checked ? 'Ativar' : 'Inativar';
+
+        const ItemIcon = ITEM_ICON.PROCESS;
+
         return (
           <tr key={i} className={tv.tableListContentTrTv()}>
             <td className={tv.tableListContentNameTv()}>
-              {type === 'projects' ? (
-                <Link
-                  href={`/projects/${(item as Project).projectId}/dashboard`}
-                  className="text-primary cursor-pointer font-bold underline transition-all hover:brightness-125"
-                >
-                  {(item as Project).projectName}
-                </Link>
-              ) : (
-                (item as TTableListContent).commandName
-              )}
+              <div className="w-52 truncate">
+                {type === 'projects' ? (
+                  <Link
+                    title={(item as Project).projectName}
+                    href={`/projects/${(item as Project).projectId}/dashboard`}
+                    className="text-primary truncate cursor-pointer font-bold underline transition-all hover:brightness-125"
+                  >
+                    {(item as Project).projectName}
+                  </Link>
+                ) : (
+                  <div className="flex gap-2 items-center truncate">
+                    <ItemIcon className="w-5 h-5 text-primary/80" />
+
+                    <div className="flex flex-col truncate">
+                      <span
+                        title={(item as TTableListContent).commandName}
+                        className="text-[16px] text-black/80 leading-4 truncate"
+                      >
+                        {(item as TTableListContent).commandName || '-'}
+                      </span>
+                      <span className="text-[13px]">Processo</span>
+                    </div>
+                  </div>
+                )}
+              </div>
             </td>
             <td className={tv.tableListContentDescriptionTv()}>
-              {type === 'projects'
-                ? (item as Project).projectDescription
-                : (item as TTableListContent).commandDescription}
+              <p
+                title={
+                  type === 'projects'
+                    ? (item as Project).projectDescription
+                    : (item as TTableListContent).commandDescription
+                }
+                className="w-40 truncate"
+              >
+                {type === 'projects'
+                  ? (item as Project).projectDescription
+                  : (item as TTableListContent).commandDescription}
+              </p>
             </td>
 
             {type === 'dashboard' && (

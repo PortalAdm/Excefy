@@ -4,7 +4,6 @@ import { IoSearchOutline } from 'react-icons/io5';
 import { dashboardContentWrapperTv } from '~/src/app/features/dashboard/DashboardTV';
 import { useDashboardController } from '~/src/app/features/dashboard/controller';
 import { useTableListController } from '~/src/app/features/dashboard/controller/TableListController';
-import { listHeaders } from '~/src/app/features/dashboard/dashboardUtils';
 import { Icon } from '~/src/app/shared/components/Icon';
 import { Search } from '~/src/app/shared/components/Search';
 import { TableList } from '~/src/app/shared/components/TableList';
@@ -60,7 +59,13 @@ export function DashboardContent() {
             />
           )}
           <TableList.header>
-            <TableList.name titles={listHeaders} />
+            <th className="text-start w-[222px] p-2 text-sm text-black font-black">Nome</th>
+            <th className="text-start w-[178px] p-2 text-sm text-black font-black">Descrição</th>
+            <th className="text-start w-[134px] p-2 text-sm text-black font-black">Criação</th>
+            <th className="text-start w-[120px] p-2 text-sm text-black font-black">
+              Última Edição
+            </th>
+            <th className="text-start w-[70px] p-2 text-sm text-black font-black">Status</th>
           </TableList.header>
           <TableList.body>
             {isLoading && <TableList.Skeleton />}

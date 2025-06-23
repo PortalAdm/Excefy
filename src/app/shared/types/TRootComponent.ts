@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
 export type TRootComponent = {
-  children: ReactNode;
+  children?: ReactNode;
   className?: string;
 };

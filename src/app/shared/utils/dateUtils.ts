@@ -6,8 +6,10 @@ export const formatDate = (date: Date | null, format = 'dd/MM/yyyy') => {
   return dateFNS.format(date, format);
 };
 
-export const formateHour = (stringDate: string | null) => {
-  if (!stringDate) return;
+export const formateHour = (originalDate: string | Date | null) => {
+  if (!originalDate) return;
+
+  const stringDate = typeof originalDate === 'string' ? originalDate : originalDate.toISOString();
 
   const formattedTime = (time: number) => (time < 10 ? `0${time}` : time);
 
