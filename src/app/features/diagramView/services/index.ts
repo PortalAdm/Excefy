@@ -19,7 +19,7 @@ export const updateItem = async (
   params: UpdateItemParams,
   errorHandler: () => void
 ): Promise<string | undefined> => {
-  const { userId, clientId, commandId, objectType } = params;
+  const { userId, clientId, commandId } = params;
 
   try {
     const body: TUpdateProcessRequest = {
@@ -39,7 +39,7 @@ export const updateItem = async (
           value: commandId
         },
         {
-          name: objectType === COPILOT_OBJECT_TYPE.PROCESS ? 'xml' : 'json',
+          name: 'xml',
           value: typeof content === 'object' ? JSON.stringify(content) : content
         }
       ]

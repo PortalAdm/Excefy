@@ -62,10 +62,12 @@ export default function EditFormPage() {
         throw new Error('Formulário não encontrado.');
       }
 
+      const [{ model }] = JSON.parse(formSchemaStringified!) as { model: string }[];
+
       return {
         id: item.commandId,
         name: item.commandName,
-        schema: JSON.parse(formSchemaStringified!) as FormSchema
+        schema: JSON.parse(model) as FormSchema
       } as FormItem;
     },
     onError(error) {
