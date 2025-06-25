@@ -30,14 +30,9 @@ export const APP_ROUTES = {
       subtitle: 'Novo Processo'
     },
     'edit-form': {
-      name: '/edit-form/',
+      name: '/projects/%/edit-form/',
       label: 'Formulários',
       subtitle: 'Editar Formulário'
-    },
-    'new-form': {
-      name: '/new-form',
-      label: 'Formulários',
-      subtitle: 'Novo Formulário'
     },
     'process-config': {
       name: '/process-config',

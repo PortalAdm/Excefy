@@ -58,6 +58,7 @@ export function useCopilotChatCompletion() {
 
     const completion = await CopilotService.chatCompletion(question, {
       customerId: user.clientId,
+      userId: user.userId,
       screenId: params.screenId,
       objectType: params.objectType || COPILOT_OBJECT_TYPE.NONE,
       objectId: params.objectId || 0

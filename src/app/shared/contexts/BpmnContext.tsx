@@ -4,10 +4,11 @@ import { FormEvent, ReactNode, createContext, useCallback, useEffect, useState }
 import download from 'downloadjs';
 import BpmnViewer from 'bpmn-js/lib/Modeler';
 import { useToast } from '../hooks/useToast';
-import { updateProcess } from '~/src/app/features/diagramView/services';
+import { updateItem } from '~/src/app/features/diagramView/services';
 import { AuthResponse } from '../types/responses/AuthResponse';
 import { TBPMNDraft } from '../types';
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
+import { COPILOT_OBJECT_TYPE } from '../../features/copilot/constants';
 
 const diagramXML = `
 <?xml version="1.0" encoding="UTF-8"?>
@@ -76,11 +77,14 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
         const errorHandler = () =>
           setToast('Ocorreu um erro!', 'Suas alterações não serão salvas', 'error');
 
-        const updateRes = await updateProcess(
+        const updateRes = await updateItem(
           xml,
-          user?.userId,
-          user?.clientId,
-          draft?.commandId,
+          {
+            userId: user?.userId,
+            clientId: user?.clientId,
+            commandId: draft?.commandId,
+            objectType: COPILOT_OBJECT_TYPE.PROCESS
+          },
           errorHandler
         );
         if (updateRes) {

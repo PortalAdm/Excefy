@@ -3,7 +3,7 @@ import { TProcessInsertContentResponse } from '~/src/app/shared/types';
 import { baseEndpoint } from '~/src/app/shared/utils/constants/baseEndpoint';
 import { recipient } from '~/src/app/shared/utils/constants/recipient';
 
-export const getXMLByCommandId = async (
+export const getContentByCommandId = async (
   clientId: string,
   commandId: number
 ): Promise<string | undefined> => {
@@ -27,7 +27,7 @@ export const getXMLByCommandId = async (
     return data[0].content;
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error('Falha ao buscar o xml do usuário', error);
+      throw new Error('Falha ao buscar o conteúdo do item', error);
     }
   }
 };

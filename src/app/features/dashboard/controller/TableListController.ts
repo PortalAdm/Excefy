@@ -4,7 +4,10 @@ import { useMutation, useQueryClient } from 'react-query';
 import { getAllProcess } from '~/src/app/features/dashboard/services';
 import { diagramXML } from '~/src/app/features/diagramView/DiagramViewUtils';
 import { icons } from '~/src/app/shared/components/TableList/TableListutils';
-import { deleteProcess, getXMLByCommandId } from '~/src/app/shared/components/TableList/services';
+import {
+  deleteProcess,
+  getContentByCommandId
+} from '~/src/app/shared/components/TableList/services';
 import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 import { useToast } from '~/src/app/shared/hooks/useToast';
 import { useUserInfo } from '~/src/app/shared/hooks/useUserInfo';
@@ -12,6 +15,7 @@ import { Project } from '~/src/app/shared/types/Project';
 import { TTableListContent } from '~/src/app/shared/types/TTableListContent';
 import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
 import { formatDate, formatModificationDate } from '~/src/app/shared/utils/dateUtils';
+import { COPILOT_OBJECT_TYPE } from '../../copilot/constants';
 
 const THREE_HOURS = 3 * 60 * 60 * 1000; // 3 horas
 
@@ -31,7 +35,7 @@ export const useTableListController = () => {
   const getXml = useCallback(
     async (commandId: number) => {
       if (user?.clientId) {
-        const xml = await getXMLByCommandId(user?.clientId, commandId);
+        const xml = await getContentByCommandId(user?.clientId, commandId);
 
         return xml;
       }
@@ -41,6 +45,11 @@ export const useTableListController = () => {
 
   const editAction = async (listItemOrProject: TTableListContent | Project) => {
     const listItem = listItemOrProject as TTableListContent;
+
+    if (listItem.objectType === COPILOT_OBJECT_TYPE.FORM) {
+      push(`/projects/${projectId}/edit-form/${listItem.commandId}`);
+      return;
+    }
 
     const xml = await getXml(listItem.commandId);
 

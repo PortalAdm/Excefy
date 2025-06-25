@@ -7,8 +7,9 @@ import {
 import { Message } from '~/src/app/shared/types/Process';
 import { baseEndpoint } from '~/src/app/shared/utils/constants/baseEndpoint';
 import { recipient } from '~/src/app/shared/utils/constants/recipient';
+import { COPILOT_OBJECT_TYPE } from '../../copilot/constants';
 
-export const getAllProcess = async (clientId: string, projectId: string) => {
+export async function getAllProcess(clientId: string, projectId: string) {
   const { data } = await api.post<Message[]>(baseEndpoint, {
     recipient,
     commandName: 'ProjectProcessList',
@@ -25,13 +26,14 @@ export const getAllProcess = async (clientId: string, projectId: string) => {
   });
 
   return data?.[0].content;
-};
+}
 
-export const createNewDraftProcess = async (
+export async function createNewItem(
   clientId: string,
   userId: string,
-  projectId: string
-) => {
+  projectId: string,
+  objectType: COPILOT_OBJECT_TYPE
+) {
   try {
     const processConfig = {
       recipient,
@@ -60,6 +62,10 @@ export const createNewDraftProcess = async (
         {
           name: 'executionPriority',
           value: '1'
+        },
+        {
+          name: 'objectType',
+          value: String(objectType)
         }
       ]
     };
@@ -101,7 +107,7 @@ export const createNewDraftProcess = async (
     }
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error('falha na criação do novo processo', error);
+      throw new Error('falha na criação do novo item:', error);
     }
   }
-};
+}

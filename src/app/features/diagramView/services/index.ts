@@ -5,14 +5,22 @@ import { baseEndpoint } from '~/src/app/shared/utils/constants/baseEndpoint';
 import { recipient } from '~/src/app/shared/utils/constants/recipient';
 import FormData from 'form-data';
 import { TRunBpmnIntoCamundaResponse } from '~/src/app/shared/types';
+import { COPILOT_OBJECT_TYPE } from '../../copilot/constants';
 
-export const updateProcess = async (
-  xml: string,
-  userId: string,
-  clientId: string,
-  commandId: number,
+type UpdateItemParams = {
+  userId: string;
+  clientId: string;
+  commandId: number;
+  objectType: COPILOT_OBJECT_TYPE;
+};
+
+export const updateItem = async (
+  content: string | object,
+  params: UpdateItemParams,
   errorHandler: () => void
 ): Promise<string | undefined> => {
+  const { userId, clientId, commandId, objectType } = params;
+
   try {
     const body: TUpdateProcessRequest = {
       commandName: 'UpdateModelProcess',
@@ -31,8 +39,8 @@ export const updateProcess = async (
           value: commandId
         },
         {
-          name: 'xml',
-          value: xml
+          name: objectType === COPILOT_OBJECT_TYPE.PROCESS ? 'xml' : 'json',
+          value: typeof content === 'object' ? JSON.stringify(content) : content
         }
       ]
     };
@@ -44,7 +52,7 @@ export const updateProcess = async (
     }
   } catch (err) {
     errorHandler();
-    if (err instanceof Error) throw new Error('Falha na atualização do Processo', err);
+    if (err instanceof Error) throw new Error('Falha na atualização', err);
   }
 };
 

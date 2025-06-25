@@ -11,11 +11,27 @@ export const api: AxiosInstance = axios.create({
 });
 
 api.interceptors.request.use(async (config) => {
-  const cookies = parseCookies();
-  const execfyCookies = cookies[sysSession];
-  const parsedExecfyCookies: AuthResponse = JSON.parse(execfyCookies);
-  const token = parsedExecfyCookies.access_token;
-  const tokenType = parsedExecfyCookies.token_type;
+  let token: string | null = null;
+  let tokenType: string | null = null;
+
+  getToken: {
+    const cookies = parseCookies();
+    const execfyCookies = cookies[sysSession];
+
+    if (!execfyCookies) {
+      break getToken;
+    }
+
+    try {
+      const parsedExecfyCookies: AuthResponse = JSON.parse(execfyCookies);
+      token = parsedExecfyCookies.access_token;
+      tokenType = parsedExecfyCookies.token_type;
+      // eslint-disable-next-line no-empty
+    } catch {
+      destroyCookie(null, sysSession);
+      window.location.href = '/';
+    }
+  }
 
   if (token) {
     config.headers.Authorization = `${tokenType} ${token}`;

@@ -6,7 +6,8 @@ import * as tv from '../TableListTV';
 import { ElementType } from 'react';
 import Link from 'next/link';
 import { Project } from '../../../types/Project';
-import { ITEM_ICON } from '~/src/app/features/copilot/constants';
+import { COPILOT_OBJECT_TYPE, ITEM_ICON } from '~/src/app/features/copilot/constants';
+import { IconType } from 'react-icons/lib';
 
 type TTableListActions = {
   element: ElementType;
@@ -37,12 +38,26 @@ export function TableListContent<T extends 'dashboard' | 'projects'>({
         const checked = type === 'projects' ? true : (item as TTableListContent).enable;
         const tooltipText = checked ? 'Ativar' : 'Inativar';
 
-        const ItemIcon = ITEM_ICON.PROCESS;
+        let ItemIcon: IconType | null = null;
+        let typeLabel: string | null = null;
+
+        if (type === 'dashboard') {
+          switch ((item as TTableListContent).objectType) {
+            case COPILOT_OBJECT_TYPE.PROCESS:
+              ItemIcon = ITEM_ICON.PROCESS;
+              typeLabel = 'Processo';
+              break;
+            case COPILOT_OBJECT_TYPE.FORM:
+              ItemIcon = ITEM_ICON.FORM;
+              typeLabel = 'Formulário';
+              break;
+          }
+        }
 
         return (
           <tr key={i} className={tv.tableListContentTrTv()}>
-            <td className={tv.tableListContentNameTv()}>
-              <div className="w-52 truncate">
+            <td className={`${type === 'dashboard' ? 'w-52' : ''} p-2 text-sm h-16`}>
+              <div className={type === 'dashboard' ? 'w-52 truncate' : 'w-40 truncate'}>
                 {type === 'projects' ? (
                   <Link
                     title={(item as Project).projectName}
@@ -53,7 +68,7 @@ export function TableListContent<T extends 'dashboard' | 'projects'>({
                   </Link>
                 ) : (
                   <div className="flex gap-2 items-center truncate">
-                    <ItemIcon className="w-5 h-5 text-primary/80" />
+                    {ItemIcon && <ItemIcon className="w-5 h-5 shrink-0 text-primary/80" />}
 
                     <div className="flex flex-col truncate">
                       <span
@@ -62,13 +77,14 @@ export function TableListContent<T extends 'dashboard' | 'projects'>({
                       >
                         {(item as TTableListContent).commandName || '-'}
                       </span>
-                      <span className="text-[13px]">Processo</span>
+
+                      {typeLabel && <span className="text-[13px]">{typeLabel}</span>}
                     </div>
                   </div>
                 )}
               </div>
             </td>
-            <td className={tv.tableListContentDescriptionTv()}>
+            <td className={`${type === 'dashboard' ? 'w-40' : ''} p-2 text-sm`}>
               <p
                 title={
                   type === 'projects'
@@ -104,7 +120,7 @@ export function TableListContent<T extends 'dashboard' | 'projects'>({
 
             <td
               className={`${tv.tableListContentStatusTv()} ${
-                type === 'projects' ? 'w-[550px] flex justify-end items-center' : ''
+                type === 'projects' ? 'w-[518px] flex justify-end items-center' : ''
               }`}
             >
               <div className={tv.tableListButtonsTv()}>

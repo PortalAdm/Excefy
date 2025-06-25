@@ -1,3 +1,5 @@
+import { COPILOT_OBJECT_TYPE } from '../../features/copilot/constants';
+
 export type TTableListContent = {
   commandDescription: string;
   commandName: string;
@@ -6,4 +8,5 @@ export type TTableListContent = {
   lastEdited: string | null;
   enable: boolean | null;
   id: string;
+  objectType: COPILOT_OBJECT_TYPE;
 };

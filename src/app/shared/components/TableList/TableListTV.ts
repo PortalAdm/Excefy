@@ -12,13 +12,6 @@ export const tableListContentTrTv = tv({
   base: 'text-placeholder'
 });
 
-export const tableListContentNameTv = tv({
-  base: 'w-52 p-2 text-sm h-16'
-});
-
-export const tableListContentDescriptionTv = tv({
-  base: 'w-40 p-2 text-sm'
-});
 export const tableDateTv = tv({
   base: 'w-40 p-2 text-sm h-16'
 });

@@ -19,6 +19,7 @@ import { Tooltip } from '../../shared/components/Tooltip';
 import { CiExport, CiImport } from 'react-icons/ci';
 import download from 'downloadjs';
 import { useToast } from '../../shared/hooks/useToast';
+import { EMPTY_FORM } from '../../features/form/constants';
 
 type Props = {
   name: string;
@@ -52,7 +53,7 @@ export function FormPanel({ name, item, onSave }: Props) {
         }
 
         editorRef.current
-          .importSchema(item?.schema || { type: 'default', components: [] })
+          .importSchema(item?.schema || EMPTY_FORM)
           .then(({ warnings }) => {
             if (warnings?.length) {
               // eslint-disable-next-line no-console
