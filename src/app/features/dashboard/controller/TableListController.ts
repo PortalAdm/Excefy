@@ -35,7 +35,9 @@ export const useTableListController = () => {
   const getXml = useCallback(
     async (commandId: number) => {
       if (user?.clientId) {
-        const xml = await getContentByCommandId(user?.clientId, commandId);
+        const modelStringified = await getContentByCommandId(user?.clientId, commandId);
+
+        const [{ model: xml }] = JSON.parse(modelStringified!) as { model: string }[];
 
         return xml;
       }
@@ -60,7 +62,7 @@ export const useTableListController = () => {
         commandName: listItem.commandName,
         commandId: listItem.commandId,
         id: listItem.id,
-        xml: JSON.parse(xml) || diagramXML,
+        xml: xml || diagramXML,
         processDescription: listItem.commandDescription,
         isEdditing: true,
         createdAt: listItem.createdAt || ''
