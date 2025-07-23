@@ -20,7 +20,7 @@ interface AuthContextProps {
 }
 
 interface AuthContextProviderProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export const AuthContext = createContext({} as AuthContextProps);

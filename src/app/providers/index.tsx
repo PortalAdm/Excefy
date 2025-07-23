@@ -17,7 +17,7 @@ export function Providers({ children }: TRootComponent) {
         ({ children }: TRootComponent): JSX.Element;
       }[]
     ) =>
-    (props: { children: ReactNode }) =>
+    (props: { children?: ReactNode }) =>
       providers.reduceRight(
         (children, Provider) => <Provider {...props}>{children}</Provider>,
         props.children

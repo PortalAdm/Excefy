@@ -36,7 +36,7 @@ interface BpmnContext {
 }
 
 interface BpmnContextProviderProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export const BPMNFileName = 'diagram.bpmn';
@@ -49,6 +49,22 @@ export const BpmnContextProvider = ({ children }: BpmnContextProviderProps) => {
 
   const { changeToastActive } = useToast();
   const [updatedXml, setUpdatedXml] = useState<string | File>(draft?.xml || diagramXML);
+  useEffect(() => {
+    const handler = () => {
+      const updated = localStorage.getItem('draft');
+      if (updated) {
+        try {
+          const parsed = JSON.parse(updated);
+          if (parsed.xml) setUpdatedXml(parsed.xml);
+        } catch {
+          /* empty */
+        }
+      }
+    };
+    window.addEventListener('refresh-bpmn', handler);
+    return () => window.removeEventListener('refresh-bpmn', handler);
+  }, []);
+
   const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [lastUpdate, setLastUpdate] = useState('');

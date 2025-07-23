@@ -15,7 +15,7 @@ interface ToastContextProps {
 }
 
 interface ToastContextProviderProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const timeRef = 2500; // 2.5s

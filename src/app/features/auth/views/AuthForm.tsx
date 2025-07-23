@@ -30,7 +30,7 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
   return (
     <FormProvider {...authFormSchema}>
       <Form onSubmit={handleSubmit(onSubmit)} className={authFormTv()}>
-        <Title title="EXECFY" size="xl" color="primary" />
+        <Title title="Execfy" size="xl" color="primary" />
         <Text
           text="Bem Vindo!"
           size="lg"
@@ -76,7 +76,7 @@ export function AuthForm({ handleForgetPassword }: AuthFormProps) {
 
         <Button.root onClick={handleForgetPassword} color="transparent" size="small" type="button">
           <Button.contentWrapper>
-            <Button.label text="Esquceu sua senha?" size="sm" color="primary" />
+            <Button.label text="Esqueceu sua senha?" size="sm" color="primary" />
           </Button.contentWrapper>
         </Button.root>
       </Form>

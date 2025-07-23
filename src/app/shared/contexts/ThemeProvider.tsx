@@ -9,7 +9,7 @@ export interface IthemeContextProps {
 }
 
 interface IappThemeProviderProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export const ThemeContext = createContext<IthemeContextProps>({});

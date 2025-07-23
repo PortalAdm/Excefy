@@ -94,6 +94,8 @@ export async function createNewItem(
         ]
       });
 
+      localStorage.setItem('processId', data?.[0].id);
+
       const draft: TBPMNDraft = {
         projectId,
         id: data?.[0].id,

@@ -13,6 +13,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="pt-BR">
       <title>Execfy</title>
+      <link rel="icon" href="/favicon.ico" />
       <body className="scroll-smooth overflow-hidden">
         <link
           rel="stylesheet"

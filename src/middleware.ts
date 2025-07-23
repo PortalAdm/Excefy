@@ -16,7 +16,9 @@ export default async function middlwware(nextRequest: NextRequest) {
   const signURL = new URL(APP_ROUTES.public.home, nextRequest.url);
 
   if (!token) {
-    if (nextRequest.nextUrl.pathname === APP_ROUTES.public.home) {
+    const allowedWithoutAuth = [APP_ROUTES.public.home, '/new-process'];
+
+    if (allowedWithoutAuth.includes(nextRequest.nextUrl.pathname)) {
       return NextResponse.next();
     }
 

@@ -14,9 +14,17 @@ type Props = {
 };
 
 export function CopilotChat({ onHeaderMouseDown, onNewMessageAdded, onClose }: Props) {
-  const [chatHistory, setChatHistory] = useState<Message[]>([
-    { sender: 'copilot', message: 'Como posso ajudar?' }
-  ]);
+  const [chatHistory, setChatHistory] = useState<Message[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('copilotChatHistory');
+      return saved ? JSON.parse(saved) : [{ sender: 'copilot', message: 'Como posso ajudar?' }];
+    }
+    return [{ sender: 'copilot', message: 'Como posso ajudar?' }];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('copilotChatHistory', JSON.stringify(chatHistory));
+  }, [chatHistory]);
   const historyEndRef = useRef<HTMLDivElement>(null);
 
   const [isCopilotTyping, setIsCopilotTyping] = useState(false);

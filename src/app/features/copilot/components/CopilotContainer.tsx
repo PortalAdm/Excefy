@@ -22,6 +22,13 @@ export function CopilotContainer() {
 
   const snapAfterOpenRef = useRef(false);
 
+  const resetPosition = () => {
+    setPosition({
+      top: window.innerHeight - 65,
+      left: window.innerWidth - 135
+    });
+  };
+
   const snapToEdge = useCallback(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -156,7 +163,10 @@ export function CopilotContainer() {
         <CopilotChat
           onHeaderMouseDown={handleMouseDown}
           onNewMessageAdded={snapToEdge}
-          onClose={() => setIsOpen(false)}
+          onClose={() => {
+            resetPosition();
+            setIsOpen(false);
+          }}
         />
       )}
     </div>
