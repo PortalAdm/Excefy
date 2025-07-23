@@ -12,6 +12,7 @@ type ChatCompletionParams = {
 type ChatCompletionResponse = {
   Command: string;
   ObjectUpdate: boolean;
+  UpdatedXml: string;
   Response: string;
 };
 
@@ -29,6 +30,7 @@ async function chatCompletion(question: string, params: ChatCompletionParams) {
   return {
     command: response.data.Command,
     hasUpdatedObject: response.data.ObjectUpdate,
+    updatedXML: response.data.UpdatedXml || null,
     response: response.data.Response
   };
 }

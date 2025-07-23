@@ -101,6 +101,7 @@ export function BpmnView({ children }: TRootComponent) {
     updateXml(viewer, getupdatedXml);
 
     const copilotUpdateBPMN = () => {
+      console.log('opa tudo bom', draft?.xml);
       getInitialXML(viewer, draft?.xml || String(updatedXml));
     };
 

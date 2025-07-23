@@ -70,6 +70,11 @@ export function useCopilotChatCompletion() {
       objectId: params.objectId || 0
     });
 
+    if (completion.hasUpdatedObject && completion.updatedXML) {
+      const event = new Event('copilot-update-bpmn');
+      window.dispatchEvent(event);
+    }
+
     return completion;
   }
 
