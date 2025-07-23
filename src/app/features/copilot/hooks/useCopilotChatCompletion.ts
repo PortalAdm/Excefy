@@ -4,6 +4,7 @@ import { useParams, usePathname } from 'next/navigation';
 import { CopilotService } from '../CopilotService';
 import { useUserInfo } from '~/src/app/shared/hooks/useUserInfo';
 import { COPILOT_OBJECT_TYPE, COPILOT_SCREEN_ID } from '../constants';
+import { useLocalBPMN } from '~/src/app/shared/hooks/useLocalBPMN';
 
 type ParamsMapped = {
   screenId: COPILOT_SCREEN_ID;
@@ -14,6 +15,7 @@ type ParamsMapped = {
 export function useCopilotChatCompletion() {
   const pathname = usePathname();
   const params = useParams();
+  const localBPMN = useLocalBPMN();
 
   const { user } = useUserInfo();
 
@@ -35,7 +37,11 @@ export function useCopilotChatCompletion() {
     }
 
     if (pathname === '/new-process') {
-      return { screenId: COPILOT_SCREEN_ID.NEW_PROCESS, objectType: COPILOT_OBJECT_TYPE.PROCESS };
+      return {
+        screenId: COPILOT_SCREEN_ID.NEW_PROCESS,
+        objectType: COPILOT_OBJECT_TYPE.PROCESS,
+        objectId: localBPMN?.draft?.commandId
+      };
     }
 
     if ('commandId' in params) {

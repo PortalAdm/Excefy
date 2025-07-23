@@ -55,20 +55,18 @@ export const useTableListController = () => {
 
     const xml = await getXml(listItem.commandId);
 
-    if (xml) {
-      clearLocalDraft();
-      updateLocalDraft({
-        projectId,
-        commandName: listItem.commandName,
-        commandId: listItem.commandId,
-        id: listItem.id,
-        xml: xml || diagramXML,
-        processDescription: listItem.commandDescription,
-        isEdditing: true,
-        createdAt: listItem.createdAt || ''
-      });
-      push(`${APP_ROUTES.private['edit-process'].name}${listItem.commandId}`);
-    }
+    clearLocalDraft();
+    updateLocalDraft({
+      projectId,
+      commandName: listItem.commandName,
+      commandId: listItem.commandId,
+      id: listItem.id,
+      xml: xml || diagramXML,
+      processDescription: listItem.commandDescription,
+      isEdditing: true,
+      createdAt: listItem.createdAt || ''
+    });
+    push(`${APP_ROUTES.private['edit-process'].name}${listItem.commandId}`);
   };
 
   const statisticAction = () => {};
