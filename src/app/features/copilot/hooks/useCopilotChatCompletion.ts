@@ -71,7 +71,7 @@ export function useCopilotChatCompletion() {
     });
 
     if (completion.hasUpdatedObject && completion.updatedXML) {
-      const event = new Event('copilot-update-bpmn');
+      const event = new CustomEvent('copilot-update-bpmn', { detail: completion.updatedXML });
       window.dispatchEvent(event);
     }
 

@@ -100,12 +100,18 @@ export function BpmnView({ children }: TRootComponent) {
 
     updateXml(viewer, getupdatedXml);
 
-    const copilotUpdateBPMN = () => {
-      console.log('opa tudo bom', draft?.xml);
-      getInitialXML(viewer, draft?.xml || String(updatedXml));
+    const copilotUpdateBPMN = (eventOrXML: Event | string) => {
+      const updatedXML =
+        typeof eventOrXML === 'string' ? eventOrXML : (eventOrXML as CustomEvent).detail;
+
+      getInitialXML(viewer, updatedXML || String(updatedXml));
+
+      if (typeof eventOrXML !== 'string') {
+        updateLocalDraft({ ...draft, xml: updatedXML });
+      }
     };
 
-    copilotUpdateBPMN();
+    copilotUpdateBPMN(draft?.xml);
     window.addEventListener('copilot-update-bpmn', copilotUpdateBPMN);
 
     return () => {
@@ -153,30 +159,6 @@ export function BpmnView({ children }: TRootComponent) {
 
     return () => observer.disconnect();
   }, [draft, processState, updateLocalDraft]);
-
-  useEffect(() => {
-    //if (headerViewer && updatedXml) {
-    if (updatedXml) {
-      // eslint-disable-next-line no-console
-      console.log('📦 Atualizando diagrama com novo updatedXml: ', updatedXml.toString());
-      // // eslint-disable-next-line no-console
-      // console.log('📦 importa string vazia para forçar limpar');
-      // headerViewer.importXML('', (err: any) => {
-      //   if (err) {
-      //     // eslint-disable-next-line no-console
-      //     console.error('Erro ao limpar XML:', err);
-      //   }
-      // });
-      // // eslint-disable-next-line no-console
-      // console.log('📦 Atualizando diagrama com novo updatedXml');
-      // headerViewer.importXML(updatedXml.toString(), (err: any) => {
-      //   if (err) {
-      //     // eslint-disable-next-line no-console
-      //     console.error('Erro ao importar XML:', err);
-      //   }
-      // });
-    }
-  }, [updatedXml, headerViewer]);
 
   return (
     <section className="w-full h-full">
