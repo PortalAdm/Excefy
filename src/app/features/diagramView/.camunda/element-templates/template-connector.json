@@ -1,0 +1,82 @@
+{
+    "$schema": "https://unpkg.com/@camunda/element-templates-json-schema/resources/schema.json",
+    "name": "Template Connector",
+    "id": "template-connector",
+    "appliesTo": ["bpmn:ServiceTask"],
+    "icon": {
+      "contents": ""
+    },
+    "scopes": [
+      {
+        "type": "camunda:Connector",
+        "properties": [
+          {
+            "label": "ConnectorId",
+            "type": "Hidden",
+            "value": "TemplateConnector",
+            "binding": {
+                "type": "property",
+              "name": "connectorId",
+              "source": "TemplateConnector"
+            }
+          },
+          {
+            "label": "Ação",
+            "type": "Dropdown",
+            "value": "",
+            "choices": [
+              { "name": "Processar Template", "value": "process_template" }
+            ],
+            "binding": {
+              "type": "camunda:inputParameter",
+              "name": "action"
+            },
+            "constraints": {
+                "notEmpty": true,
+                "pattern": {
+                  "message": "Selecione uma ação"
+                }
+            }
+          },
+          {
+            "label": "Template",
+            "type": "Dropdown",
+            "value": "",
+            "choices": [
+              { "name": "Cumprimento", "value": "welcome_email" },
+              { "name": "Resetar Senha", "value": "password_reset" }
+            ],
+            "binding": {
+              "type": "camunda:inputParameter",
+              "name": "templateId"
+            },
+            "constraints": {
+                "notEmpty": true,
+                "pattern": {
+                    "message": "Selecione um modelo"
+                }
+            }
+          },
+          {
+            "label": "Propriedades",
+            "type": "String",
+            "value": "",
+            "binding": {
+              "type": "camunda:inputParameter",
+              "name": "properties"
+            }
+          },
+          {
+            "label": "Response Template",
+            "type": "Hidden",
+            "value": "templateResponse",
+            "binding": {
+              "type": "camunda:outputParameter",
+              "source": "${templateResponse}"
+            }
+          }
+        ]
+      }
+    ],
+    "properties": []
+  }

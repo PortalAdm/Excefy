@@ -4,6 +4,8 @@ import sqlConnector from './sql-connector.json';
 import twilioConnector from './twilio-connector.json';
 import chatGptConnector from './chat-gpt-connector.json';
 import emailConnector from './email-connector.json';
+import templateConnector from './template-connector.json';
+import webAutomationConnector from './webautomation-connector.json';
 
 export const templates = [
   restConnector,
@@ -11,5 +13,7 @@ export const templates = [
   sqlConnector,
   twilioConnector,
   chatGptConnector,
-  emailConnector
+  emailConnector,
+  templateConnector,
+  webAutomationConnector
 ];
