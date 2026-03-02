@@ -9,6 +9,13 @@ COPY package.json package-lock.json* yarn.lock* ./
 RUN yarn
 
 COPY . .
+
+# --- INÍCIO DA ALTERAÇÃO ---
+# Recebe a URL como argumento de build e a define como variável de ambiente para o Next.js
+ARG NEXT_PUBLIC_BASE_URL
+ENV NEXT_PUBLIC_BASE_URL=$NEXT_PUBLIC_BASE_URL
+# --- FIM DA ALTERAÇÃO ---
+
 RUN yarn build
 
 FROM base AS production
@@ -36,5 +43,5 @@ EXPOSE 3000
 ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
-# Standalone output para não precisar usar todas as libs dentro do node_modules
+# Standalone output
 CMD ["node", "server.js"]
