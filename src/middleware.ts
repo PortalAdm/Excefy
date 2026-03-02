@@ -1,19 +1,16 @@
-/**
- * use /routePathName/:path* para validar todas a rotas a partir da routePathName
- */
-
 import { NextRequest, NextResponse } from 'next/server';
 import { AuthResponse } from '~/src/app/shared/types/responses/AuthResponse';
 import { APP_ROUTES } from '~/src/app/shared/utils/constants/app-routes';
 
-export default async function middlwware(nextRequest: NextRequest) {
+export default async function middleware(nextRequest: NextRequest) {
   const stringifiedSessionCustomer = nextRequest.cookies.get('_Exy_')?.value;
 
   const sessionCustomer: AuthResponse =
     stringifiedSessionCustomer && JSON.parse(stringifiedSessionCustomer);
   const token = sessionCustomer?.refresh_token;
 
-  const signURL = new URL(APP_ROUTES.public.home, nextRequest.url);
+  const signURL = nextRequest.nextUrl.clone();
+  signURL.pathname = APP_ROUTES.public.home;
 
   if (!token) {
     const allowedWithoutAuth = [APP_ROUTES.public.home, '/new-process'];
@@ -26,7 +23,9 @@ export default async function middlwware(nextRequest: NextRequest) {
   }
 
   if (nextRequest.nextUrl.pathname === APP_ROUTES.public.home) {
-    const projectsUrl = new URL(APP_ROUTES.private.projects.name, nextRequest.url);
+    const projectsUrl = nextRequest.nextUrl.clone();
+    projectsUrl.pathname = APP_ROUTES.private.projects.name;
+
     return NextResponse.redirect(projectsUrl);
   }
 }
